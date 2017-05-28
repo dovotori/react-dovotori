@@ -15,6 +15,10 @@ module.exports = {
         loader: 'babel-loader',
         query: { presets: ['es2015', 'react'] },
       },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        loader: 'file-loader?name=/app/assets/img/[name].[ext]',
+      },
     ],
   },
   resolve: {

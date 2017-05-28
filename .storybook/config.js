@@ -5,3 +5,11 @@ function loadStories() {
 }
 
 configure(loadStories, module);
+
+// const req = require.context('../app/components', true, /\.stories\.jsx$/);
+
+// function loadStories() {
+//   req.keys().forEach(filename => req(filename));
+// }
+
+// configure(loadStories, module);
