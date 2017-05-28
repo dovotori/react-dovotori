@@ -9,11 +9,11 @@ const style = css({
   borderRadius: 4,
   cursor: 'pointer',
   ':hover': {
-    background: '#d4d4d4'
+    background: '#d4d4d4',
   },
   '@media(max-width: 300px)': {
     display: 'none',
-  }
+  },
 });
 
 class Button extends Component {

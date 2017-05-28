@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import { css } from 'glamor';
 
-import Button from '../components/Button';
+import Homepage from './Homepage';
+
+const style = css({
+  background: '#555555',
+  padding: 0,
+  margin: 0,
+  '@media(max-width: 300px)': {
+  },
+});
 
 class App extends Component {
   shouldComponentUpdate() {
@@ -8,10 +17,8 @@ class App extends Component {
   }
 
   render() {
-    return (<div>
-      <Button label="btn 1" />
-      <h1>Welcome</h1>
-      <Button label="btn 2" />
+    return (<div {...style}>
+      <Homepage />
     </div>);
   }
 }
