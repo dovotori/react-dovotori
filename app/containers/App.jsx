@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
-import { css } from 'glamor';
+import { ThemeProvider, injectGlobal } from 'styled-components';
 
 import Homepage from './Homepage';
 import SvgDisplayer from '../components/SvgDisplayer';
+import mainTheme from '../themes/main';
 
-const style = css({
-  fontFamily: '"nimbus-sans", Helvetica, Arial, "Helvetica Neue", Geneva, sans-serif',
-  fontWeight: 'light',
-  background: '#999999',
-  padding: 0,
-  margin: 0,
-  textAlign: 'center',
-  '@media(max-width: 300px)': {
-  },
-});
+injectGlobal`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 class App extends Component {
-  componentWillMount() {
-    // css.global('html, body', { padding: 0 });
-  }
-
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
   render() {
-    return (<div {...style}>
+    return (<div>
       <SvgDisplayer />
-      <Homepage />
+      <ThemeProvider theme={mainTheme}>
+        <Homepage />
+      </ThemeProvider>
     </div>);
   }
 }

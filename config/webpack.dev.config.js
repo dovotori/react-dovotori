@@ -1,11 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const port = 8080;
+
 module.exports = {
-  entry: './app/index.jsx',
+  entry: [
+    'webpack-dev-server/client?http://0.0.0.0:' + port,
+    'webpack/hot/only-dev-server',
+    './app/index',
+  ],
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, '../build'),
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -13,7 +20,7 @@ module.exports = {
         test: /\.jsx$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: { presets: ['es2015', 'react', 'react-hmre'] },
+        query: { presets: ['es2015', 'react'] },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -27,4 +34,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ],
+  devServer: {
+    inline: true,
+    port,
+  },
 };

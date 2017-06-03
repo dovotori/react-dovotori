@@ -1,13 +1,4 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-import { css } from 'glamor';
-
-import { primaryColor } from '../constants/styleVariables';
-
-const style = css({
-  fill: '#333333',
-  color: primaryColor,
-});
 
 class Svg extends Component {
   shouldComponentUpdate() {
@@ -15,9 +6,11 @@ class Svg extends Component {
   }
 
   render() {
-    return (<svg className="icon" >
-      <use {...style} xlinkHref="#logo" />
-    </svg>);
+    return (
+      <svg key="svg" className="icon">
+        <use xlinkHref="#logo" />
+      </svg>
+    );
   }
 }
 

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-
-const style = css({
-});
 
 class Card extends Component {
   shouldComponentUpdate() {
@@ -11,9 +7,7 @@ class Card extends Component {
   }
 
   render() {
-    return (<div
-      {...style}
-    >
+    return (<div>
       {this.props.label}
     </div>);
   }
