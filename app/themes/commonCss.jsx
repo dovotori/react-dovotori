@@ -1,5 +1,8 @@
 import theme from '../themes/main';
 
+// const elastic = 'cubic-bezier(0.64, 0.57, 0.67, 1.53)';
+const transition = 'cubic-bezier(.33,.72,.58,1)';
+
 const commonCss = `body {
   margin: 0;
   padding: 0;
@@ -13,7 +16,7 @@ const commonCss = `body {
 
 .fader-enter.fader-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transition: opacity 300ms ease-in;
 }
 
 .fader-leave {
@@ -26,21 +29,23 @@ const commonCss = `body {
 }
 
 .route-enter {
+  z-index: 2;
   transform: translate3d(100%,0,0);
 }
 
 .route-enter.route-enter-active {
   transform: translate3d(0,0,0);
-  transition: transform 500ms ease-in;
+  transition: transform 300ms ${transition};
 }
 
 .route-leave {
+  z-index: 1;
   transform: translate3d(0,0,0);
 }
 
 .route-leave.route-leave-active {
   transform: translate3d(100%,0,0);
-  transition: transform 300ms ease-in;
+  transition: transform 300ms ${transition};
 }
 `;
 

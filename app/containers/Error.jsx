@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import { logo } from '../constants/imagesPaths';
+import { withMainColumn } from '../components/hoc';
 
-class NoRoute extends Component {
+class Error extends Component {
   shouldComponentUpdate() {
     return false;
   }
@@ -16,10 +18,13 @@ class NoRoute extends Component {
   }
 }
 
-NoRoute.propTypes = {
+Error.propTypes = {
 };
 
-NoRoute.defaultProps = {
+Error.defaultProps = {
 };
 
-export default connect()(NoRoute);
+export default compose(
+  connect(() => (<Error />)),
+  withMainColumn,
+)(() => (<Error />));

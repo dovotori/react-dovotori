@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import Main from '../containers/Main';
+import Routes from '../containers/Routes';
 import Header from '../containers/Header';
 import SvgDisplayer from '../components/SvgDisplayer';
 import commonCss from '../themes/commonCss';
@@ -17,17 +17,22 @@ class App extends Component {
   // }
 
   render() {
-    console.log(this.props.location);
     return (<div>
       <SvgDisplayer />
       <Header />
-      <Main location={this.props.location} />
+      <Routes location={this.props.location} />
     </div>);
   }
 }
 
 App.propTypes = {
-  location: PropTypes.element.isRequired,
+  location: PropTypes.shape({
+    hash: PropTypes.string,
+    key: PropTypes.string,
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+    state: PropTypes.string,
+  }).isRequired,
 };
 
 App.defaultProps = {
