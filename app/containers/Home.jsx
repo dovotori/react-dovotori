@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 
 import Button from '../components/Button';
-import Svg from '../components/Svg';
+import Logo from '../components/Logo';
 import Fader from '../components/Fader';
+import Title from '../components/Title';
 import { logo } from '../constants/imagesPaths';
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: ${props => props.theme.primaryColor};
-`;
-
-class Homepage extends Component {
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
+class Home extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
 
   render() {
     return (<div>
       <Fader>
-        <Svg />
+        <Logo />
       </Fader>
       <Button label="btn 1" />
       <Title>Welcome</Title>
@@ -31,10 +25,10 @@ class Homepage extends Component {
   }
 }
 
-Homepage.propTypes = {
+Home.propTypes = {
 };
 
-Homepage.defaultProps = {
+Home.defaultProps = {
 };
 
-export default connect()(Homepage);
+export default connect()(Home);

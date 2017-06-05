@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import Button from '../components/Button';
-import Link from '../components/Link';
-import Title from '../components/Title';
-import Card from '../components/Card';
+import Button from '../app/components/Button';
+import Link from '../app/components/Link';
+import Title from '../app/components/Title';
+import Card from '../app/components/Card';
 
 storiesOf('Button', module)
 .addDecorator(story => (
@@ -22,7 +22,7 @@ storiesOf('Link', module)
 
 storiesOf('Title', module)
   .add('without props', () => (<Title />))
-  .add('with some props', () => (<Title label="Title" />),
+  .add('with some props', () => (<Title>Test</Title>),
 );
 
 storiesOf('Card', module)

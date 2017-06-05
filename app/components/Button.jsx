@@ -32,10 +32,10 @@ ButtonComponent.defaultProps = {
 
 const Button = styled(ButtonComponent)`
   background: transparent;
-  border: solid 1px red;
-  color: red;
-  font-family: 'Helvetica';
+  border: solid 1px ${props => props.theme.grey};
+  color: ${props => props.theme.grey};
   padding: 10px;
+  margin: 10px;
 `;
 
 export default Button;

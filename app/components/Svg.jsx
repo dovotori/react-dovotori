@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Svg extends Component {
   shouldComponentUpdate() {
@@ -7,14 +8,16 @@ class Svg extends Component {
 
   render() {
     return (
-      <svg key="svg" className="icon">
-        <use xlinkHref="#logo" />
+      <svg>
+        <use xlinkHref={`#${this.props.useid}`} />
       </svg>
     );
   }
 }
 
-Svg.propTypes = {};
+Svg.propTypes = {
+  useid: PropTypes.string.isRequired,
+};
 
 Svg.defaultProps = {};
 

@@ -5,7 +5,7 @@ const port = 8080;
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:' + port,
+    `webpack-dev-server/client?http://0.0.0.0:${port}`,
     'webpack/hot/only-dev-server',
     './app/index',
   ],
@@ -33,6 +33,11 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('developement'),
+      },
+    }),
   ],
   devServer: {
     inline: true,
