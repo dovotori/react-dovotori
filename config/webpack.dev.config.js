@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'url-loader?name=/app/assets/img/[name].[ext]?[hash]?limit=100000',
+        loader: 'url-loader?name=/img/[name].[ext]?[hash]?limit=100000',
       },
     ],
   },

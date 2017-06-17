@@ -9,14 +9,17 @@
   },
   "license": "GPL-2.0",
   "scripts": {
-    "build": "webpack --progress --profile --colors --optimize-minimize --config ./config/webpack.prod.config.jsx",
     "start": "yarn run open-dev && node config/server.js",
+    "build": "webpack --progress --profile --colors --optimize-minimize --config ./config/webpack.prod.config.js",
     "storybook": "yarn run open-storybook && start-storybook -p 9001 -c .storybook",
     "open-dev": "opn http://localhost:8080/ -- chrome",
     "open-storybook": "opn http://localhost:9001/ -- chrome"
   },
   "dependencies": {
     "@kadira/storybook": "^2.35.3",
+    "compression-webpack-plugin": "^0.4.0",
+    "html-webpack-inline-source-plugin": "^0.0.9",
+    "html-webpack-plugin": "^2.28.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

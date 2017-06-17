@@ -1,11 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+
 module.exports = {
   entry: './app/index.jsx',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '../app/build/'),
+    path: path.resolve(__dirname, '../build/'),
   },
   module: {
     rules: [
@@ -17,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
-        loader: 'file-loader?name=/app/assets/img/[name].[ext]',
+        loader: 'url-loader?name=/img/[name].[ext]',
       },
     ],
   },
@@ -25,6 +29,22 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Dovotori',
+      filename: 'index.html',
+      inject: 'body',
+      template: path.resolve(__dirname, '../templates/index.ejs'),
+      minify: {
+        collapseWhitespace: true,
+        preserveLineBreaks: false,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+      },
+      inlineSource: '.(js|css)$',
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
@@ -45,6 +65,13 @@ module.exports = {
         warnings: true,
       },
       comments: false,
+    }),
+    new CompressionPlugin({
+      test: /\.(js|html)$/,
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      threshold: 10240,
+      minRatio: 0.8,
     }),
   ],
 };
