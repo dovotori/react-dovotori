@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import Button from '../components/Button';
-import Logo from '../components/Logo';
-import Title from '../components/Title';
-import { logo } from '../constants/imagesPaths';
+import ListEntries from '../components/ListEntries';
 import { withMainColumn } from '../components/hoc';
 
 class Home extends Component {
@@ -15,22 +13,30 @@ class Home extends Component {
 
   render() {
     return (<div>
-      <Logo />
-      <Button label="btn 1" />
-      <Title>Welcome</Title>
-      <Button label="btn 2" />
-      <img alt="Logotype dovotori" src={logo} />
+      <ListEntries
+        entries={this.props.entries}
+        categories={this.props.categories}
+      />
     </div>);
   }
 }
 
 Home.propTypes = {
+  entries: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.objectOf(PropTypes.string),
 };
 
 Home.defaultProps = {
+  entries: [],
+  categories: {},
 };
 
+const mapStateToProps = state => ({
+  entries: state.entries,
+  categories: state.categories,
+});
+
 export default compose(
-  connect(() => (<Home />)),
+  connect(mapStateToProps),
   withMainColumn,
-)(() => (<Home />));
+)(Home);
