@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const H5 = styled.h5`
   font-weight: 100;
@@ -16,17 +17,25 @@ class TeaserItemComponent extends Component {
   }
 
   render() {
-    return (<div className={this.props.className}>
-      <div className="infos">
-        <H5>{this.props.entry.title}</H5>
-        <p>{this.props.entry.date}</p>
-      </div>
-      <div className="losange">
-        <div className="los1">
-          <img src="" alt="" width="255" height="320" />
+    const {
+      className,
+      entry,
+    } = this.props;
+    return (
+      <Link to={`/view/${entry.slug}`}>
+        <div className={className}>
+          <div className="infos">
+            <H5>{entry.title}</H5>
+            <p>{entry.date}</p>
+          </div>
+          <div className="losange">
+            <div className="los1">
+              <img src="" alt="" width="255" height="320" />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>);
+      </Link>
+    );
   }
 }
 
@@ -79,9 +88,9 @@ margin: 10px 0;
   border-width: 1px;
   border-style: solid;
   transform: rotate(45deg) translateY(10px) scale(1);
-  transition: border-width 200ms ease-out, transform 200ms ease-out;
+  transition: border-width 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out;
   box-sizing: content-box;
-  box-shadow: 6px 6px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 0 #aaaaaa;
 }
 .losange .los1 {
   transform: rotate(-45deg) translateY(-74px);
@@ -95,6 +104,7 @@ margin: 10px 0;
   .losange {
     transform: rotate(45deg) translateY(10px) scale(1.2);
     border-width: 40px;
+    box-shadow: 40px 40px 4px 4px #aaaaaa;
   }
 }
 `;

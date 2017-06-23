@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import ListEntries from '../components/ListEntries';
+// import ListEntries from '../components/ListEntries';
 import { withMainColumn } from '../components/hoc';
 
 class Home extends Component {
@@ -13,27 +13,30 @@ class Home extends Component {
 
   render() {
     return (<div>
+      {/*
       <ListEntries
         entries={this.props.entries}
         categories={this.props.categories}
       />
+      */}
+      <h1>Home</h1>
     </div>);
   }
 }
 
 Home.propTypes = {
-  entries: PropTypes.arrayOf(PropTypes.object),
-  categories: PropTypes.objectOf(PropTypes.string),
+  // entries: PropTypes.arrayOf(PropTypes.object),
+  // categories: PropTypes.objectOf(PropTypes.string),
 };
 
 Home.defaultProps = {
-  entries: [],
-  categories: {},
+  // entries: [],
+  // categories: {},
 };
 
 const mapStateToProps = state => ({
-  entries: state.entries,
-  categories: state.categories,
+  // entries: state.entries,
+  // categories: state.categories,
 });
 
 export default compose(

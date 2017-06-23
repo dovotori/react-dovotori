@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Routes from './Routes';
 import Header from '../components/Header';
+import Common from './Common';
 import SvgDisplayer from '../components/SvgDisplayer';
 import commonCss from '../themes/commonCss';
 
@@ -35,6 +36,7 @@ class App extends Component {
     >
       <SvgDisplayer />
       <Header />
+      <Common />
       <Routes location={this.props.location} />
     </div>);
   }

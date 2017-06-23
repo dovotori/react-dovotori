@@ -10,8 +10,6 @@ class Nav extends Component {
     return (
       <ul>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/view">View</Link></li>
-        <li><Link to="/fsgr">Error</Link></li>
       </ul>
     );
   }
