@@ -1,18 +1,16 @@
-/* globals window */
 import React, { Component } from 'react';
 import { injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Routes from './Routes';
-import Header from '../components/Header';
-import Common from './Common';
+import Navigation from './Navigation';
+import Home from './Home';
 import SvgDisplayer from '../components/SvgDisplayer';
 import commonCss from '../themes/commonCss';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0 };
   }
 
   componentWillMount() {
@@ -24,20 +22,10 @@ class App extends Component {
   // }
 
   render() {
-    const x = ((this.state.x / window.innerWidth) - 0.5) * 10;
-    const y = ((this.state.y / window.innerHeight) - 0.5) * 10;
-    return (<div
-      onMouseMove={(e) => { this.setState({ x: e.clientX, y: e.clientY }); }}
-      style={{
-        transform: `rotateY(${x}deg) rotateX(${y}deg)`
-        + ` translateX(${-x}px) translateY(${-y}px)`,
-        height: '100%',
-      }}
-    >
+    return (<div>
       <SvgDisplayer />
-      <Header />
-      <Common />
-      <Routes location={this.props.location} />
+      {/* <Routes location={this.props.location} /> */}
+      <Home />
     </div>);
   }
 }

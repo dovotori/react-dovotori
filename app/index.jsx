@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import theme from './themes/main';
+import theme from './themes/theme';
 import configureStore from './store/configureStore';
 
 // import reducers from './reducers';
@@ -33,7 +33,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app'),
 );
-
-if (module.hot) {
-  module.hot.accept();
-}

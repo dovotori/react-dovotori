@@ -1,7 +1,5 @@
-import theme from '../themes/main';
-
-const elastic = 'cubic-bezier(0.64, 0.57, 0.67, 1.53)';
-// const transition = 'cubic-bezier(.33,.72,.58,1)';
+import theme from '../themes/theme';
+import { stripes } from '../constants/imagesPaths';
 
 const commonCss = `
 * {
@@ -11,21 +9,24 @@ const commonCss = `
 }
 
 html, body, #app {
+  width: 100%;
   height: 100%;
 }
 
 body {
-  background-color: ${theme.lightgrey};
-  font-family: Tahoma, Geneva, Kalimati, sans-serif;
+  overflow: hidden;
+  background: url(${stripes}) repeat ${theme.back};
+  background-attachment: fixed;
+  font-family: Tahoma, Geneva, Kalimati, Helvetica, sans-serif;
 }
 
 #app {
-  perspective: 1000px;
-  margin: 40px;
+  // perspective: 1000px;
+  // margin: 40px;
 }
 
 .route-transition > div {
-  transition: transform 200ms ${elastic};
+  transition: transform 200ms ${theme.elastic};
 }
 `;
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import Title from '../components/Title';
+import Project from '../components/Project';
 import { withMainColumn } from '../components/hoc';
 
 class View extends Component {
@@ -12,10 +12,10 @@ class View extends Component {
   }
 
   render() {
-    return (<div>
-      <Title>{this.props.entry.title}</Title>
-      <p>{this.props.entry.description}</p>
-    </div>);
+    return (<Project
+      title={this.props.entry.title}
+      description={this.props.entry.description}
+    />);
   }
 }
 

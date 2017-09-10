@@ -6,6 +6,13 @@ import { compose } from 'redux';
 // import ListEntries from '../components/ListEntries';
 import { withMainColumn } from '../components/hoc';
 
+import CenterToPage from '../components/CenterToPage';
+import InteractionFloating from '../components/InteractionFloating';
+import AnimationAppear from '../components/AnimationAppear';
+import Footer from '../components/Footer';
+import Logo from '../components/Logo';
+import Signature from '../components/Signature';
+
 class Home extends Component {
   shouldComponentUpdate() {
     return false;
@@ -13,13 +20,15 @@ class Home extends Component {
 
   render() {
     return (<div>
-      {/*
-      <ListEntries
-        entries={this.props.entries}
-        categories={this.props.categories}
-      />
-      */}
-      <h1>Home</h1>
+      <Logo />
+      <CenterToPage>
+        <AnimationAppear>
+          <InteractionFloating>
+            <Signature />
+          </InteractionFloating>
+        </AnimationAppear>
+      </CenterToPage>
+      <Footer />
     </div>);
   }
 }
@@ -41,5 +50,4 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
-  withMainColumn,
 )(Home);

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const H5 = styled.h5`
+  font-size: 10px;
   font-weight: 100;
   color: ${props => props.theme.grey};
   letter-spacing: 0.5em;
@@ -12,8 +13,8 @@ const H5 = styled.h5`
 `;
 
 class TeaserItemComponent extends Component {
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    return newProps.onLeft !== this.props.onLeft;
   }
 
   render() {
@@ -50,26 +51,32 @@ TeaserItemComponent.propTypes = {
     date: PropTypes.number,
     description: PropTypes.string,
   }),
+  onLeft: PropTypes.bool,
 };
 
 TeaserItemComponent.defaultProps = {
   className: '',
   entry: {},
+  onLeft: false,
 };
 
 const TeaserItem = styled(TeaserItemComponent)`
 position: relative;
 margin: 10px 0;
+transition: transform 300ms ease-out;
+transform: translateX(${props => (props.onLeft ? 'calc(-50% - 60px)' : 0)});
 .infos {
   position: absolute;
-  left: calc(50% + 60px);
+  left: 50%;
   top: 50%;
   z-index: 2;
+  transition: transform 300ms ease-out;
+  transform: translateX(${props => (props.onLeft ? '-100%' : '60px')});
 
   p {
     font-family: Monaco, "DejaVu Sans Mono", "Lucida Console", "Andale Mono", monospace;
     font-size: 9px;
-    color: ${props => props.theme.primaryColor};
+    color: ${props => props.theme.primary};
   }
 }
 .losange,
@@ -84,13 +91,13 @@ margin: 10px 0;
 .losange {
   z-index: 1;
   background-color: ${props => props.theme.grey};
-  border-color: ${props => props.theme.primaryColor};
+  border-color: ${props => props.theme.primary};
   border-width: 1px;
   border-style: solid;
-  transform: rotate(45deg) translateY(10px) scale(1);
+  transform: rotate(45deg) scale(1);
   transition: border-width 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out;
   box-sizing: content-box;
-  box-shadow: 0 0 0 0 #aaaaaa;
+  box-shadow: 0 0 0 0 #aaa;
 }
 .losange .los1 {
   transform: rotate(-45deg) translateY(-74px);
@@ -101,10 +108,14 @@ margin: 10px 0;
   background-color: #f00;
 }
 &:hover {
+  .infos {
+    // transform: scale(2) translateX(70px);
+  }
+
   .losange {
-    transform: rotate(45deg) translateY(10px) scale(1.2);
+    transform: rotate(45deg) scale(1.2);
     border-width: 40px;
-    box-shadow: 40px 40px 4px 4px #aaaaaa;
+    box-shadow: 40px 40px 4px 4px #aaa;
   }
 }
 `;

@@ -21,6 +21,8 @@ const initialState = {
       tags: [],
       date: 1,
       description: 'Datavisualisation désignant les différentes institutions "ennemies d\'Internet" à travers le monde. Projet réalisé au sein de l\'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher.',
+      sources: '',
+      context: '',
     },
     {
       id: 1,
@@ -30,6 +32,8 @@ const initialState = {
       tags: [],
       date: 1,
       description: 'Datavisualisation désignant les pays qui utilisent la religion comme moyen de censure. Projet réalisé au sein de l\'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher. Source : - Pew Research, Religion and Public Life Project, 21 novembre 2012 - Zeev Maoz and Errol A. Henderson. “The World Religion Dataset, 1945-2010: Logic, Estimates, and trends.” International Interactions, 39(3).',
+      sources: '',
+      context: '',
     },
     {
       id: 2,
@@ -39,6 +43,8 @@ const initialState = {
       tags: [],
       date: 1,
       description: '',
+      sources: '',
+      context: '',
     },
   ],
 };
