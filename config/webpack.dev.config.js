@@ -2,15 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 
 const port = 8080;
+const host = 'localhost'
 
 module.exports = {
   entry: [
-    `webpack-dev-server/client?http://0.0.0.0:${port}`,
+    'react-hot-loader/patch',
+    `webpack-dev-server/client?http://${host}:${port}`,
     'webpack/hot/only-dev-server',
     './app/index',
   ],
   output: {
-    filename: 'main.js',
+    filename: 'dovotori-main.js',
     path: path.resolve(__dirname, '../build'),
     publicPath: '/',
   },
@@ -19,8 +21,7 @@ module.exports = {
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { presets: ['es2015', 'react'] },
+        loaders: ['react-hot-loader/webpack', 'babel-loader'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -40,7 +41,11 @@ module.exports = {
     }),
   ],
   devServer: {
+    host,
+    historyApiFallback: true,
+    hot: true,
     inline: true,
     port,
+    publicPath: '/',
   },
 };

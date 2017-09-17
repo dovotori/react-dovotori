@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { logo } from '../constants/imagesPaths';
-import { withMainColumn } from '../components/hoc';
+import { withColumn } from '../components/withColumn';
 
 class Error extends Component {
   shouldComponentUpdate() {
@@ -26,5 +26,5 @@ Error.defaultProps = {
 
 export default compose(
   connect(() => (<Error />)),
-  withMainColumn,
+  withColumn,
 )(() => (<Error />));

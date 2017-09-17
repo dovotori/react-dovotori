@@ -2,51 +2,71 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ListEntries from './ListEntries';
+import SocialLinks from './SocialLinks';
 import Logo from './Logo';
+import ButtonShy from './ButtonShy';
+import SvgAnimation from './SvgAnimation';
+import FullscreenView from './FullscreenView';
 
-class HeaderComponent extends Component {
-  shouldComponentUpdate(newProps) {
-    return newProps.onLeft !== this.props.onLeft;
+const Styled = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  width: auto;
+`;
+
+
+class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.click = this.click.bind(this);
+    this.mouseEnter = this.mouseEnter.bind(this);
+
+    this.state = { open: false, over: false };
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    return newState.open !== this.state.open
+      || newState.over !== this.state.over;
+  }
+
+  click() {
+    this.setState(prevState => ({ open: !prevState.open }))
+  }
+
+  mouseEnter() {
+    this.setState(prevState => ({ over: !prevState.over }))
   }
 
   render() {
-    const { entries, categories, onLeft } = this.props;
     return (
-      <div className={this.props.className}>
-        <ListEntries
-          entries={entries}
-          categories={categories}
-          onLeft={onLeft}
-        />
-        <Logo
-          onLeft={onLeft}
-        />
+      <div>
+        <FullscreenView in={this.state.open}>
+          {this.state.open && <SocialLinks/>}
+        </FullscreenView>
+        <Styled>
+          <ButtonShy
+            onClick={this.click}
+            onMouseEnter={this.mouseEnter}
+          >
+            <SvgAnimation
+              toggleAnim={this.state.over}
+            >
+              <Logo />
+            </SvgAnimation>
+          </ButtonShy>
+        </Styled>
       </div>
     );
   }
 }
 
-HeaderComponent.propTypes = {
-  className: PropTypes.string,
-  entries: PropTypes.arrayOf(PropTypes.object),
-  categories: PropTypes.objectOf(PropTypes.string),
-  onLeft: PropTypes.bool,
+Header.propTypes = {
 };
 
-HeaderComponent.defaultProps = {
-  className: '',
-  entries: [],
-  categories: {},
-  onLeft: false,
+Header.defaultProps = {
 };
-
-const Header = styled(HeaderComponent)`
-  position: absolute;
-  z-index: 3;
-  width: 100%;
-  // transition: transform 300ms ease-out;
-  // transform: ${props => (props.slided ? 'scale(0.5) translateX(-100%)' : 'none')};
-`;
 
 export default Header;

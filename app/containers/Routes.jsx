@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Home from '../containers/Home';
+import HomeContainer from '../containers/HomeContainer';
 import View from '../containers/View';
 import Error from '../containers/Error';
 
@@ -10,7 +10,7 @@ const Routes = (props) => {
   const { location } = props;
   return (<div>
     <Switch key={location.pathname} location={location}>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={HomeContainer} />
       <Route path="/view/:slug" component={View} />
       <Route component={Error} />
     </Switch>

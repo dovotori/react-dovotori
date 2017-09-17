@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import Project from '../components/Project';
-import { withMainColumn } from '../components/hoc';
+import { withColumn } from '../components/withColumn';
 
 class View extends Component {
   shouldComponentUpdate() {
@@ -47,5 +47,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(
   connect(mapStateToProps),
-  withMainColumn,
+  withColumn,
 )(View);

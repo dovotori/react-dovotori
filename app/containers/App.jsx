@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 
 import Routes from './Routes';
 import Navigation from './Navigation';
-import Home from './Home';
+import HomeContainer from './HomeContainer';
 import SvgDisplayer from '../components/SvgDisplayer';
 import commonCss from '../themes/commonCss';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +28,9 @@ class App extends Component {
     return (<div>
       <SvgDisplayer />
       {/* <Routes location={this.props.location} /> */}
-      <Home />
+      <HomeContainer />
+      <Header />
+      <Footer />
     </div>);
   }
 }

@@ -1,44 +1,41 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 
 // import ListEntries from '../components/ListEntries';
-import { withMainColumn } from '../components/hoc';
+import { withColumn } from '../components/withColumn';
 
 import CenterToPage from '../components/CenterToPage';
 import InteractionFloating from '../components/InteractionFloating';
 import AnimationAppear from '../components/AnimationAppear';
-import Footer from '../components/Footer';
-import Logo from '../components/Logo';
 import Signature from '../components/Signature';
+import Home from '../components/Home';
 
-class Home extends Component {
+class HomeContainer extends Component {
   shouldComponentUpdate() {
     return false;
   }
 
   render() {
     return (<div>
-      <Logo />
-      <CenterToPage>
+      {/* <CenterToPage>
         <AnimationAppear>
           <InteractionFloating>
             <Signature />
           </InteractionFloating>
         </AnimationAppear>
-      </CenterToPage>
-      <Footer />
+      </CenterToPage> */}
+      <Home />
     </div>);
   }
 }
 
-Home.propTypes = {
+HomeContainer.propTypes = {
   // entries: PropTypes.arrayOf(PropTypes.object),
   // categories: PropTypes.objectOf(PropTypes.string),
 };
 
-Home.defaultProps = {
+HomeContainer.defaultProps = {
   // entries: [],
   // categories: {},
 };
@@ -48,6 +45,5 @@ const mapStateToProps = state => ({
   // categories: state.categories,
 });
 
-export default compose(
-  connect(mapStateToProps),
-)(Home);
+export default connect(mapStateToProps)(HomeContainer);
+

@@ -8,7 +8,7 @@ const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin
 module.exports = {
   entry: './app/index.jsx',
   output: {
-    filename: 'main.js',
+    filename: 'dovotori-main.js',
     path: path.resolve(__dirname, '../build/'),
   },
   module: {

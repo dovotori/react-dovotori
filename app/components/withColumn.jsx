@@ -13,7 +13,7 @@ const Column = styled.div`
   width: 400px;
 `;
 
-export const withMainColumn = Component => props => (
+export const withColumn = Component => props => (
   <Wrapper>
     <Column>
       <Component {...props} />

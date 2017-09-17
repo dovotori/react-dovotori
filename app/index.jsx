@@ -1,14 +1,16 @@
 /* global document */
-import React from 'react';
+import 'core-js/es6/map';
+import 'core-js/es6/set';
+
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import theme from './themes/theme';
 import configureStore from './store/configureStore';
-
-// import reducers from './reducers';
 import App from './containers/App';
 
 const store = configureStore();
@@ -19,17 +21,27 @@ const store = configureStore();
 //   whyDidYouUpdate(React);
 // }
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Route
-          render={({ location }) => (
-            <App location={location} />
-          )}
-        />
-      </BrowserRouter>
-    </ThemeProvider>
-  </Provider>,
-  document.getElementById('app'),
-);
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Route
+              render={({ location }) => (
+                <Component location={location} />
+              )}
+            />
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </AppContainer>,
+    document.getElementById('dovotori-app')
+  )
+}
+
+render(App);
+
+if (module.hot) {
+  module.hot.accept('./containers/App', () => { render(App) });
+}

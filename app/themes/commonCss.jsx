@@ -1,4 +1,4 @@
-import theme from '../themes/theme';
+import theme from './theme';
 import { stripes } from '../constants/imagesPaths';
 
 const commonCss = `
@@ -8,19 +8,20 @@ const commonCss = `
   box-sizing: border-box;
 }
 
-html, body, #app {
+html, body, #dovotori-app {
   width: 100%;
   height: 100%;
 }
 
 body {
   overflow: hidden;
-  background: url(${stripes}) repeat ${theme.back};
+  // background: url(${stripes}) repeat ${theme.back};
+  background: ${theme.grey};
   background-attachment: fixed;
-  font-family: Tahoma, Geneva, Kalimati, Helvetica, sans-serif;
+  font-family: ${theme.font1};
 }
 
-#app {
+#dovotori-app {
   // perspective: 1000px;
   // margin: 40px;
 }
