@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Canvas from '../components/Canvas';
-import withView from '../components/withView';
+import Scene from './webgl/Scene';
+import withView from './withView';
 
 class Home extends Component {
   shouldComponentUpdate() {
@@ -11,7 +11,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Canvas />
+      <Scene />
     );
   }
 }

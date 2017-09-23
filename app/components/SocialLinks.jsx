@@ -76,12 +76,14 @@ class SocialLinks extends Component {
       <Mail />
     ];
 
+    const motion = { stiffness: 300, damping: 20 };
+
     return (<StaggeredMotion
       defaultStyles={[{h: 0}, {h: 0}, {h: 0}, {h: 0}]}
       styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) => {
         return i === 0
-          ? {h: spring(1)}
-          : {h: spring(prevInterpolatedStyles[i - 1].h)}
+          ? {h: spring(1, motion)}
+          : {h: spring(prevInterpolatedStyles[i - 1].h, motion)}
       })}>
       {interpolatingStyles =>
         <Styled>
