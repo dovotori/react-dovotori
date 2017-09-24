@@ -32,8 +32,10 @@ class Program extends Component {
     const fragmentData = `
     precision mediump float;
 
+    uniform vec4 color;
+
     void main() {
-      gl_FragColor = vec4(102.0 / 255.0, 1.0, 204.0 / 255.0, 1.0);
+      gl_FragColor = color;
     }
     `;
 
@@ -78,6 +80,8 @@ class Program extends Component {
     this.program.pMatLoc = gl.getUniformLocation(this.program, "projection");
     this.program.mMatLoc = gl.getUniformLocation(this.program, "model");
     this.program.vMatLoc = gl.getUniformLocation(this.program, "view");
+
+    this.program.cVecLoc = gl.getUniformLocation(this.program, "color");
   }
 
 
@@ -92,9 +96,18 @@ class Program extends Component {
   }
 
 
+  setColor() {
+    const { gl } = this.context;
+    const { color } = this.props;
+    gl.useProgram(this.program);
+    gl.uniform4f(this.program.cVecLoc, color[0], color[1], color[2], color[3]);
+  }
+
+
   render() {
     if (this.program) {
       this.setMatrices();
+      this.setColor();
     }
     return Children.map(this.props.children,
       (child) => cloneElement(child, {
@@ -111,6 +124,7 @@ Program.propTypes = {
   projection: PropTypes.object,
   model: PropTypes.object,
   view: PropTypes.object,
+  color: PropTypes.array,
 };
 
 Program.defaultProps = {
@@ -120,6 +134,7 @@ Program.defaultProps = {
   projection: {},
   model: {},
   view: {},
+  color: [1,1,1,1],
 };
 
 Program.contextTypes = {

@@ -7,7 +7,7 @@ import Mat4 from '../geometry/Mat4.js';
 class Camera extends Component {
   constructor(props) {
     super(props);
-    this.position = new Vec3(0, 0, 10);
+    this.position = new Vec3(0, 0, 2);
     this.cible = new Vec3(0, 0, 0);
 
     this.matIdentity = new Mat4();
@@ -46,7 +46,7 @@ class Camera extends Component {
   render() {
     this.cpt++;
     this.matIdentity.identity();
-    this.matIdentity.rotate(Math.cos(this.cpt * 0.01) * 360, 1,1,1);
+    this.matIdentity.rotate(Math.cos(this.cpt * 0.004) * 360, 1,1,0);
     return Children.map(this.props.children,
       (child) => cloneElement(child, {
         model: this.matIdentity.get(),

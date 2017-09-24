@@ -9,12 +9,9 @@ class Objet extends Component {
 		this.nbPoints = 0;
 		this.modeDessin;
 		this.modeCalcul;
-		this.points = new Array(5);
 		this.vbo = new Array(5);
 
-		for(let i = 0; i < 5; i++)
-		{
-			this.points[i] = null;
+		for (let i = 0; i < 5; i++) {
 			this.vbo[i] = null;
 		}
 	}
@@ -22,20 +19,26 @@ class Objet extends Component {
 
 	componentDidMount() {
 		const { gl } = this.context;
-		this.modeDessin =
-			// gl.POINTS;
-			gl.TRIANGLES;
-			// gl.LINES;
-			// gl.LINE_STRIP;
-			// gl.LINE_LOOP;
+		const { mode } = this.props;
+
+		switch(mode) {
+			case 'TRIANGLES': default: this.modeDessin = gl.TRIANGLES; break;
+			case 'LINES': this.modeDessin = gl.LINES; break;
+			case 'POINTS': this.modeDessin = gl.POINTS; break;
+			case 'LINE_STRIP': this.modeDessin = gl.LINE_STRIP; break;
+			case 'LINE_LOOP': this.modeDessin = gl.LINE_LOOP; break;
+		}
+
 		this.modeCalcul =
 			gl.STATIC_DRAW;
 			// gl.STATIC_DRAW // change pas
 			// gl.DYNAMIC_DRAW // repete
 			// gl.STREAM_DRAW // une fois au moins
-		this.setupCube();
-	}
 
+		// this.setupCube();
+		// this.setupPlane();
+		this.applyIndex();
+	}
 
 	setupPlane() {
 		const points = [
@@ -101,14 +104,32 @@ class Objet extends Component {
 		}
 	}
 
+
 	updateBuffer(points) {
 		const { gl } = this.context;
-		this.points[0] = points;
 		this.nbPoints = points.length / 3;
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.points[0]), this.modeCalcul);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), this.modeCalcul);
 		gl.bindBuffer(gl.ARRAY_BUFFER, null);
+	}
+
+
+	applyIndex() {
+		const { points, indices } = this.props;
+		const { gl } = this.context;
+		this.nbPoints = indices.length;
+
+		// VERTICE
+		this.vbo[0] = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), this.modeCalcul);
+
+		// INDICES
+		this.vbo[3] = gl.createBuffer();
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[3]);
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.modeCalcul);
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
 	}
 
 
@@ -119,29 +140,11 @@ class Objet extends Component {
 		if (program) {
 			gl.useProgram(program);
 
-			if(program.vLoc > -1 && this.points[0] != null) {
+			if(program.vLoc > -1) {
 				gl.enableVertexAttribArray(program.vLoc);
 				gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
 				gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
 			}
-
-			// if(program.nLoc > -1 && this.points[1] != null) {
-			// 	gl.enableVertexAttribArray(program.nLoc);
-			// 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[1]);
-			// 	gl.vertexAttribPointer(program.nLoc, 3, gl.FLOAT, false, 0, 0);
-			// }
-
-			// if(program.tLoc > -1 && this.points[2] != null) {
-			// 	gl.enableVertexAttribArray(program.tLoc);
-			// 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[2]);
-			// 	gl.vertexAttribPointer(program.tLoc, 2, gl.FLOAT, false, 0, 0);
-			// }
-
-			// if(program.cLoc > -1 && this.points[3] != null) {
-			// 	gl.enableVertexAttribArray(program.cLoc);
-			// 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[3]);
-			// 	gl.vertexAttribPointer(program.cLoc, 3, gl.FLOAT, false, 0, 0);
-			// }
 
 			gl.drawArrays(this.modeDessin, 0, this.nbPoints);
 			gl.bindBuffer(gl.ARRAY_BUFFER, null);
@@ -150,54 +153,46 @@ class Objet extends Component {
 	}
 
 
-	// drawIndex(program) {
-	// 	const { gl } = this.context;
-	// 	gl.useProgram(program);
+	drawIndex() {
+		const { program } = this.props;
+		const { gl } = this.context;
 
-	// 	if(program.vLoc > -1 && this.points[0] != null) {
-	// 		gl.enableVertexAttribArray(program.vLoc);
-	// 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
-	// 		gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
-	// 	}
+		if (program) {
+			gl.useProgram(program);
+			if(program.vLoc > -1) {
+				gl.enableVertexAttribArray(program.vLoc);
+				gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
+				gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
+			}
 
-	// 	if(program.nLoc > -1 && this.points[1] != null) {
-	// 		gl.enableVertexAttribArray(program.nLoc);
-	// 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[1]);
-	// 		gl.vertexAttribPointer(program.nLoc, 3, gl.FLOAT, false, 0, 0);
-	// 	}
+			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[3]);
+			gl.drawElements(this.modeDessin, this.nbPoints, gl.UNSIGNED_SHORT, 0);
+			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+			gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
-	// 	if(program.tLoc > -1 && this.points[2] != null) {
-	// 		gl.enableVertexAttribArray(program.tLoc);
-	// 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[2]);
-	// 		gl.vertexAttribPointer(program.tLoc, 2, gl.FLOAT, false, 0, 0);
-	// 	}
-
-	// 	if(program.cLoc > -1 && this.points[3] != null) {
-	// 		gl.enableVertexAttribArray(program.cLoc);
-	// 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[3]);
-	// 		gl.vertexAttribPointer(program.cLoc, 3, gl.FLOAT, false, 0, 0);
-	// 	}
-
-	// 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[3]);
-	// 	gl.drawElements(this.modeDessin, this.nbPoints, gl.UNSIGNED_SHORT, 0);
-	// 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-	// 	gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-	// 	gl.useProgram(null);
-	// }
+			gl.useProgram(null);
+		}
+	}
 
 
 	render() {
-		this.draw();
+		// this.draw();
+		this.drawIndex();
     return null;
   }
 }
 
 Objet.propTypes = {
+	mode: PropTypes.string,
+	points: PropTypes.array,
+	indices: PropTypes.array,
 	program: PropTypes.object,
 };
 
 Objet.defaultProps = {
+	mode: 'TRIANGLES',
+	points: [],
+	indices: [],
 	program: {},
 };
 

@@ -1,22 +1,7 @@
 /* global windows, document */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import Camera from './Camera';
-import Objet from './Objet';
-import Program from './Program';
-import Loop from './Loop';
-
-const Styled = styled.div`
-  width: 100%;
-  text-align: center;
-  canvas {
-    margin: 0 auto;
-    width: 600px;
-    height: 600px;
-  }
-`;
 
 class Scene extends Component {
   getChildContext() {
@@ -26,9 +11,10 @@ class Scene extends Component {
   constructor(props) {
     super(props);
 
+    const { width, height } = this.props;
     this.canvas = document.createElement('canvas');
-    this.canvas.setAttribute("width", this.props.width);
-    this.canvas.setAttribute("height", this.props.height);
+    this.canvas.setAttribute("width", width);
+    this.canvas.setAttribute("height", height);
     this.gl;
 
     try {
@@ -38,11 +24,16 @@ class Scene extends Component {
       console.log(e.error);
     }
 
-    if (this.gl) {
-      this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
-      this.gl.enable(this.gl.DEPTH_TEST);
-      this.gl.depthFunc(this.gl.LEQUAL);
-      this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    const { gl } = this;
+    if (gl) {
+      gl.clearColor(0.0, 0.0, 0.0, 0.0);
+      gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      gl.enable(gl.CULL_FACE);
+      gl.cullFace(gl.FRONT);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     }
   }
 
@@ -55,31 +46,21 @@ class Scene extends Component {
   }
 
   render() {
-    return (<Styled>
-      <Loop>
-        <Camera
-          width={this.props.width}
-          height={this.props.height}
-        >
-          <Program
-            vertex="basique"
-            fragment="basique"
-          >
-            <Objet />
-          </Program>
-        </Camera>
-      </Loop>
+    return (<div>
+      {this.props.children}
       <div id="canvas" />
-    </Styled>);
+    </div>);
   }
 }
 
 Scene.propTypes = {
+  children: PropTypes.node,
   width: PropTypes.number,
   height: PropTypes.number,
 };
 
 Scene.defaultProps = {
+  children: null,
   width: 100,
   height: 100,
 };
