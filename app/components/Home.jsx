@@ -11,7 +11,10 @@ class Home extends Component {
 
   render() {
     return (
-      <Scene />
+      <Scene
+        width={600}
+        height={600}
+      />
     );
   }
 }

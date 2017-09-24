@@ -1,5 +1,4 @@
 class Vec4 {
-
   constructor(x = 0, y = 0, z = 0, w = 0) {
     this.x = this.y = this.z = 0; this.w = 0;
     this.set(x, y, z, w);
@@ -9,15 +8,13 @@ class Vec4 {
   normaliser() {
     const longueur = this.longueur();
 
-    if(longueur != 0.0)
-    {
+    if(longueur != 0.0) {
       this.x /= longueur;
       this.y /= longueur;
       this.z /= longueur;
       this.w /= longueur;
     }
   }
-
 
 
   get() {
@@ -35,16 +32,13 @@ class Vec4 {
   }
 
 
-
-
-
-  /* //////////////////// OPERATOR /////////////////////// */
+  //////////////////// OPERATOR ///////////////////////
 
   set(x, y, z, w) {
-    if(x != null){ this.x = x; }
-    if(y != null){ this.y = y; } else if(x != null){ this.y = x; }
-    if(z != null){ this.z = z; } else if(x != null){ this.z = x; }
-    if(w != null){ this.w = w; } else if(x != null){ this.w = x; }
+    if (x != null) { this.x = x; }
+    if (y != null) { this.y = y; } else if (x != null) { this.y = x; }
+    if (z != null) { this.z = z; } else if (x != null) { this.z = x; }
+    if (w != null) { this.w = w; } else if (x != null) { this.w = x; }
   }
 
 
@@ -54,7 +48,6 @@ class Vec4 {
     this.z = v.z;
     this.w = v.w;
   }
-
 
 
   plus(v) {
@@ -109,10 +102,10 @@ class Vec4 {
 
   multiplierMatrice(matrice) {
     const resultat = new Vec4();
-    resultat.x = matrice.d[0]*this.x + matrice.d[1]*this.y + matrice.d[2]*this.z + matrice.d[3]*this.w;
-    resultat.y = matrice.d[4]*this.x + matrice.d[5]*this.y + matrice.d[6]*this.z + matrice.d[7]*this.w;
-    resultat.z = matrice.d[8]*this.x + matrice.d[9]*this.y + matrice.d[10]*this.z + matrice.d[11]*this.w;
-    resultat.w = matrice.d[12]*this.x + matrice.d[13]*this.y + matrice.d[14]*this.z + matrice.d[15]*this.w;
+    resultat.x = matrice.d[0] * this.x + matrice.d[1] * this.y + matrice.d[2] * this.z + matrice.d[3] * this.w;
+    resultat.y = matrice.d[4] * this.x + matrice.d[5] * this.y + matrice.d[6] * this.z + matrice.d[7] * this.w;
+    resultat.z = matrice.d[8] * this.x + matrice.d[9] * this.y + matrice.d[10] * this.z + matrice.d[11] * this.w;
+    resultat.w = matrice.d[12] * this.x + matrice.d[13] * this.y + matrice.d[14] * this.z + matrice.d[15] * this.w;
     return resultat;
   }
 
@@ -148,7 +141,7 @@ class Vec4 {
 
 
   distance(vec42) {
-    return Math.sqrt(((vec42.x - this.x)*(vec42.x - this.x)) + ((vec42.y - this.y)*(vec42.y - this.y)) 
+    return Math.sqrt(((vec42.x - this.x)*(vec42.x - this.x)) + ((vec42.y - this.y)*(vec42.y - this.y))
       + ((vec42.z - this.z)*(vec42.z - this.z)) + ((vec42.w - this.w)*(vec42.w - this.w)));
   }
 }

@@ -7,8 +7,7 @@ class Vec3 {
   normaliser() {
     const longueur = this.longueur();
 
-    if(longueur != 0.0)
-    {
+    if (longueur != 0.0) {
       this.x /= longueur;
       this.y /= longueur;
       this.z /= longueur;
@@ -17,9 +16,8 @@ class Vec3 {
 
   limiter(max) {
     const longueurCarre = (this.x * this.x) + (this.y * this.y) + (this.z * this.z);
-      
-    if( ( longueurCarre > max * max ) && ( longueurCarre > 0 ) ) 
-    {
+
+    if( ( longueurCarre > max * max ) && ( longueurCarre > 0 ) ){
         const ratio = max / Math.sqrt( longueurCarre );
         this.x *= ratio;
         this.y *= ratio;
@@ -27,26 +25,22 @@ class Vec3 {
     }
   }
 
-  // cross 
-  produitVectoriel(vecteur2) {
-    let resultat = new Vec3();
-    resultat.x = this.y * vecteur2.z - this.z * vecteur2.y;
-    resultat.y = this.z * vecteur2.x - this.x * vecteur2.z;
-    resultat.z = this.x * vecteur2.y - this.y * vecteur2.x;
-    return resultat;
+  // cross
+  produitVectoriel(v) {
+    return new Vec3(
+      this.y * v.z - this.z * v.y,
+      this.z * v.x - this.x * v.z,
+      this.x * v.y - this.y * v.x
+    );
   }
 
   // dot
-  produitScalaire(vecteur2) { 
-    return (this.x * vecteur2.x) + (this.y * vecteur2.y) + (this.z * vecteur2.z);
+  produitScalaire(v) {
+    return (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
   }
 
   get() {
-    const valeurs = new Array(3);
-    valeurs[0] = this.x;
-    valeurs[1] = this.y;
-    valeurs[2] = this.z;
-    return valeurs;
+    return [this.x, this.y, this.z];
   }
 
   longueur() {
@@ -54,18 +48,19 @@ class Vec3 {
   }
 
   directionVers(v) {
-    const resultat = new Vec3();
-    resultat.x = v.x - this.x;
-    resultat.y = v.y - this.y;
-    resultat.z = v.z - this.z;
-    return resultat;
+    return new Vec3(
+      v.x - this.x,
+      v.y - this.y,
+      v.z - this.z
+    );
   }
 
   //////////////////// OPERATOR ///////////////////////
+
   set(x, y, z) {
-    if(x != null){ this.x = x; }
-    if(y != null){ this.y = y; } else if(x != null){ this.y = x; }
-    if(z != null){ this.z = z; } else if(x != null){ this.z = x; }
+    if (x != null) { this.x = x; }
+    if (y != null) { this.y = y; } else if (x != null) { this.y = x; }
+    if (z != null) { this.z = z; } else if (x != null) { this.z = x; }
   }
 
   egale(v) {
@@ -75,75 +70,75 @@ class Vec3 {
   }
 
   plus(v) {
-    const resultat = new Vec3();
-    resultat.x = this.x + v.x;
-    resultat.y = this.y + v.y;
-    resultat.z = this.z + v.z;
-    return resultat;
+    return new Vec3(
+      this.x + v.x,
+      this.y + v.y,
+      this.z + v.z
+    );
   }
 
   plusValeur(valeur) {
-    const resultat = new Vec3();
-    resultat.x = this.x + valeur;
-    resultat.y = this.y + valeur;
-    resultat.z = this.z + valeur;
-    return resultat;
+    return new Vec3(
+      this.x + valeur,
+      this.y + valeur,
+      this.z + valeur
+    );
   }
 
   moins(v) {
-    const resultat = new Vec3();
-    resultat.x = this.x - v.x;
-    resultat.y = this.y - v.y;
-    resultat.z = this.z - v.z;
-    return resultat;
+    return new Vec3(
+      this.x - v.x,
+      this.y - v.y,
+      this.z - v.z
+    );
   }
 
   moinsValeur(valeur) {
-    const resultat = new Vec3();
-    resultat.x = this.x - valeur;
-    resultat.y = this.y - valeur;
-    resultat.z = this.z - valeur;
-    return resultat;
+    return new Vec3(
+      this.x - valeur,
+      this.y - valeur,
+      this.z - valeur
+    );
   }
 
   multiplierValeur(valeur) {
-    const resultat = new Vec3();
-    resultat.x = this.x * valeur;
-    resultat.y = this.y * valeur;
-    resultat.z = this.z * valeur;
-    return resultat;
+    return new Vec3(
+      this.x * valeur,
+      this.y * valeur,
+      this.z * valeur
+    );
   }
 
   multiplierMatrice(matrice) {
-    const resultat = new Vec3();
-    resultat.x = matrice.d[0]*this.x + matrice.d[1]*this.y + matrice.d[2]*this.z;
-    resultat.y = matrice.d[3]*this.x + matrice.d[4]*this.y + matrice.d[5]*this.z;
-    resultat.z = matrice.d[6]*this.x + matrice.d[7]*this.y + matrice.d[8]*this.z;
-    return resultat;
+    return new Vec3(
+      matrice.d[0]*this.x + matrice.d[1]*this.y + matrice.d[2]*this.z,
+      matrice.d[3]*this.x + matrice.d[4]*this.y + matrice.d[5]*this.z,
+      matrice.d[6]*this.x + matrice.d[7]*this.y + matrice.d[8]*this.z
+    );
   }
 
   multiplier(v) {
-    const resultat = new Vec3();
-    resultat.x = this.x * v.x;
-    resultat.y = this.y * v.y;
-    resultat.z = this.z * v.z;
-    return resultat;
+    return new Vec3(
+      this.x * v.x,
+      this.y * v.y,
+      this.z * v.z
+    );
   }
 
   diviserValeur(valeur) {
-    const resultat = new Vec3();
-    resultat.x = this.x / valeur;
-    resultat.y = this.y / valeur;
-    resultat.z = this.z / valeur;
-    return resultat;
+    return new Vec3(
+      this.x / valeur,
+      this.y / valeur,
+      this.z / valeur
+    );
   }
 
   diviser(v) {
-    const resultat = new Vec3();
-    resultat.x = this.x / v.x;
-    resultat.y = this.y / v.y;
-    resultat.z = this.z / v.z;
-    return resultat;
+    return new Vec3(
+      this.x / v.x,
+      this.y / v.y,
+      this.z / v.z
+    );
   }
 
   distance(vec32) {
@@ -155,9 +150,7 @@ class Vec3 {
     const cosAngle = dot / (this.longueur() * v.longueur());
     const angleRadian = Math.acos(cosAngle);
     const angle = (angleRadian * 180) / Math.PI;
-
     const sens = signe( (this.x * v.y) + (this.y * v.x) ); // sens de l'angle
-
     return angle * (-sens);
   }
 
@@ -167,8 +160,8 @@ class Vec3 {
     const V = new Vec3();
     U.egale(v2.moins(this));
     V.egale(v3.moins(this));
-    if(sens){ // inverser le produit vectoriel pour inverser la normale  
-      resultat.egale(V.produitVectoriel(U)); 
+    if (sens) { // inverser le produit vectoriel pour inverser la normale
+      resultat.egale(V.produitVectoriel(U));
     } else {
       resultat.egale(U.produitVectoriel(V));
     }

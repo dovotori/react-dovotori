@@ -1,20 +1,27 @@
+import Vec3 from './Vec3';
+
 class Mat4 {
 
   constructor() {
     this.d = new Float32Array(16);
     this.sauvegardePrecedente;
     this.empilement;
-    
+
     this.init();
   }
 
+
   init() {
-    for(let i = 0; i < 16; i++)
-    {
-      this.d[i] = 0.0;
-    } 
+    this.reset();
     this.sauvegardePrecedente = new Array();
     this.empilement = 0;
+  }
+
+
+  reset() {
+    for(let i = 0; i < 16; i++) {
+      this.d[i] = 0.0;
+    }
   }
 
 
@@ -24,88 +31,75 @@ class Mat4 {
 
 
   set(a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4) {
-    this.d[0] = a1; 
-    this.d[1] = a2; 
-    this.d[2] = a3; 
-    this.d[3] = a4; 
-    
-    this.d[4] = b1; 
-    this.d[5] = b2; 
-    this.d[6] = b3; 
-    this.d[7] = b4; 
-    
-    this.d[8] = c1; 
-    this.d[9] = c2; 
-    this.d[10] = c3; 
-    this.d[11] = c4; 
-    
-    this.d[12] = d1; 
-    this.d[13] = d2; 
-    this.d[14] = d3; 
-    this.d[15] = d4; 
-  }
+    this.d[0] = a1;
+    this.d[1] = a2;
+    this.d[2] = a3;
+    this.d[3] = a4;
 
+    this.d[4] = b1;
+    this.d[5] = b2;
+    this.d[6] = b3;
+    this.d[7] = b4;
+
+    this.d[8] = c1;
+    this.d[9] = c2;
+    this.d[10] = c3;
+    this.d[11] = c4;
+
+    this.d[12] = d1;
+    this.d[13] = d2;
+    this.d[14] = d3;
+    this.d[15] = d4;
+  }
 
 
   getMatrice3x3() {
     const resultat = new Float32Array(9);
-    resultat[0] = this.d[0];	
-    resultat[1] = this.d[1];	
-    resultat[2] = this.d[2];	
-    resultat[3] = this.d[4];	
-    resultat[4] = this.d[5];	
-    resultat[5] = this.d[6];	
-    resultat[6] = this.d[8];	
-    resultat[7] = this.d[9];	
-    resultat[8] = this.d[10];	
+    resultat[0] = this.d[0];
+    resultat[1] = this.d[1];
+    resultat[2] = this.d[2];
+    resultat[3] = this.d[4];
+    resultat[4] = this.d[5];
+    resultat[5] = this.d[6];
+    resultat[6] = this.d[8];
+    resultat[7] = this.d[9];
+    resultat[8] = this.d[10];
     return resultat;
   }
 
 
-  //////////////////////////////////////////////////////////
   //////////////////////OPERATIONS//////////////////////
-  //////////////////////////////////////////////////////////
 
   multiplier(matrice2) {
     const resultat = new Mat4();
-    for(let k = 0; k < 4; k++)
-    {
-      for(let j = 0; j < 4; j++)
-      {
-        for(let i = 0; i < 4; i++)
-        {
+    for(let k = 0; k < 4; k++) {
+      for(let j = 0; j < 4; j++) {
+        for(let i = 0; i < 4; i++) {
           resultat.d[4*j+k] += this.d[4*j+i] * matrice2.d[4*i+k];
         }
       }
     }
 
-    for(let i = 0; i < 16; i++)
-    {
+    for(let i = 0; i < 16; i++) {
       this.d[i] = resultat.d[i];
     }
   }
 
 
-  egale(matrice2) 
-  {
-    for(let i = 0; i < 16; i++)
-    {
+  egale(matrice2) {
+    for(let i = 0; i < 16; i++) {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
-    
   }
 
 
-  //////////////////////////////////////////////////////////
   ////////////////////// IMBRICATION //////////////////////
-  //////////////////////////////////////////////////////////
 
   push() {
     this.empilement++;
     let cpt = 0;
-    for(let i = (this.empilement-1)*16; i < this.empilement*16; i++)
-    {
+    for(let i = (this.empilement-1)*16; i < this.empilement*16; i++) {
       this.sauvegardePrecedente[i] = this.d[cpt];
       cpt++;
     }
@@ -113,11 +107,9 @@ class Mat4 {
 
 
   pop() {
-    if(this.empilement > 0)
-    {
+    if(this.empilement > 0) {
       let cpt = 0;
-      for(let i = (this.empilement-1)*16; i < this.empilement*16; i++)
-      {
+      for (let i = (this.empilement-1) * 16; i < this.empilement * 16; i++) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
         cpt++;
@@ -129,10 +121,7 @@ class Mat4 {
   }
 
 
-  //////////////////////////////////////////////////////////
   //////////////////////TRANSFORMATIONS//////////////////////
-  //////////////////////////////////////////////////////////
-
 
   translate(x, y, z) {
     const translation = new Mat4();
@@ -154,11 +143,11 @@ class Mat4 {
   }
 
 
-  rotate(angle, x, y, z) {  
+  rotate(angle, x, y, z) {
     const rotation = new Mat4();
     angle *= (Math.PI / 180);
 
-    const axe = new vec3(x, y, z);
+    const axe = new Vec3(x, y, z);
     axe.normaliser();
 
     rotation.d[0] = axe.x * axe.x * (1 - Math.cos(angle)) + Math.cos(angle);
@@ -179,12 +168,7 @@ class Mat4 {
   }
 
 
-
-
-
-  /////////////////////////////////////////////////////////
   //////////////////////MODIFICATIONS//////////////////////
-  //////////////////////////////////////////////////////////
 
   identity() {
     this.init();
@@ -195,71 +179,64 @@ class Mat4 {
   }
 
 
-  perspective(angleP, ratio, near, far) {
-    const projection = new Mat4();
-    const f = 1 / Math.tan((angleP / 2) * Math.PI / 180);
+  perspective(angle, ratio, near, far) {
+    const fieldOfViewYInRadians = angle * ( Math.PI / 180);
+    const f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewYInRadians);
+    const rangeInv = 1.0 / (near - far);
 
-    projection.d[0] = f / ratio;
-    projection.d[5] = f;
-    projection.d[10] = (near + far) / (near-far);
-    projection.d[11] = (2 * near * far) / (near - far);
-    projection.d[14] = -1.0;
+    this.d[0]  = f / ratio;
+    this.d[1]  = 0;
+    this.d[2]  = 0;
+    this.d[3]  = 0;
 
-    this.multiplier(projection);
-  }    
+    this.d[4]  = 0;
+    this.d[5]  = f;
+    this.d[6]  = 0;
+    this.d[7]  = 0;
 
+    this.d[8]  = 0;
+    this.d[9]  = 0;
+    this.d[10] = (near + far) * rangeInv;
+    this.d[11] = -1;
 
-  lookAt(e0,e1,e2, c0,c1,c2, a0,a1,a2) {
-    const eye = new vec3(e0, e1, e2);
-    const cible = new vec3(c0, c1, c2);
-    const axe = new vec3(a0, a1, a2);
-    const regard = new vec3(cible.x - eye.x, cible.y - eye.y, cible.z - eye.z);
-    const normale = new vec3();
-    const newAxe = new vec3();
-    normale = regard.produitVectoriel(axe);
-    newAxe = normale.produitVectoriel(regard);
-    normale.normaliser();
-    regard.normaliser();
-    newAxe.normaliser();
-
-    const matrice = new Mat4();
-    matrice.d[0] = normale.x;
-    matrice.d[1] = normale.y;
-    matrice.d[2] = normale.z;
-
-    matrice.d[4] = newAxe.x;
-    matrice.d[5] = newAxe.y;
-    matrice.d[6] = newAxe.z;
-
-    matrice.d[8] = -regard.x;
-    matrice.d[9] = -regard.y;
-    matrice.d[10] = -regard.z;
-
-    matrice.d[15] = 1.0;
-
-    this.multiplier(matrice);
-    
-    this.translate(-eye.x, -eye.y, -eye.z);
+    this.d[12] = 0;
+    this.d[13] = 0;
+    this.d[14] = near * far * rangeInv * 2;
+    this.d[15] = 0;
   }
 
 
+  lookAt(e0,e1,e2, c0,c1,c2, a0,a1,a2) {
+    const eye = new Vec3(e0, e1, e2);
+    const cible = new Vec3(c0, c1, c2);
+    const axe = new Vec3(a0, a1, a2);
+
+    const vz = eye.moins(cible);
+    vz.normaliser();
+    const vx = axe.produitVectoriel(vz);
+    vx.normaliser();
+    const vy = vz.produitVectoriel(vx);
+    this.set(
+      vx.x, vx.y, vx.z, 0,
+      vy.x, vy.y, vy.z, 0,
+      vz.x, vz.y, vz.z, 0,
+      eye.x, eye.y, eye.z, 1
+    );
+    this.inverser();
+  }
 
 
   transpose() {
     const ordre = new Float32Array(16);
     let cpt = 0;
-    for(let j = 0; j < 4; j++)
-    {
-      for(let i = 0; i < 4; i++)
-      {
+    for(let j = 0; j < 4; j++) {
+      for(let i = 0; i < 4; i++) {
         ordre[cpt] = this.d[(i*4)+j];
         cpt++;
       }
     }
-
     return ordre;
   }
-
 
 
   inverser() {
@@ -311,16 +288,13 @@ class Mat4 {
   }
 
 
-
   getDeterminant() {
-
     return this.d[0] * this.getCofacteur(this.d[5],this.d[6],this.d[7], this.d[9],this.d[10],this.d[11], this.d[13],this.d[14],this.d[15]) -
     this.d[1] * this.getCofacteur(this.d[4],this.d[6],this.d[7], this.d[8],this.d[10],this.d[11], this.d[12],this.d[14],this.d[15]) +
     this.d[2] * this.getCofacteur(this.d[4],this.d[5],this.d[7], this.d[8],this.d[9], this.d[11], this.d[12],this.d[13],this.d[15]) -
     this.d[3] * this.getCofacteur(this.d[4],this.d[5],this.d[6], this.d[8],this.d[9], this.d[10], this.d[12],this.d[13],this.d[14]);
 
   }
-
 
 
   getCofacteur(m0, m1, m2, m3, m4, m5, m6, m7, m8) {

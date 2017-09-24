@@ -1,20 +1,18 @@
 import Vec3 from './Vec3';
 
 class Mat3 {
-  
   constructor() {
     this.d = new Float32Array(9);
     this.sauvegardePrecedente;
     this.empilement;
-    
+
     this.init();
   }
 
   init() {
-    for(var i = 0; i < 9; i++)
-    {
+    for (let i = 0; i < 9; i++) {
       this.d[i] = 0.0;
-    } 
+    }
     this.sauvegardePrecedente = new Array();
     this.empilement = 0;
   }
@@ -26,24 +24,24 @@ class Mat3 {
 
 
   set(a1, a2, a3, b1, b2, b3, c1, c2, c3) {
-    this.d[0] = a1; 
-    this.d[1] = a2; 
-    this.d[2] = a3; 
-    
-    this.d[3] = b1; 
-    this.d[4] = b2; 
-    this.d[5] = b3; 
-    
-    this.d[6] = c1; 
-    this.d[7] = c2; 
-    this.d[8] = c3; 
+    this.d[0] = a1;
+    this.d[1] = a2;
+    this.d[2] = a3;
+
+    this.d[3] = b1;
+    this.d[4] = b2;
+    this.d[5] = b3;
+
+    this.d[6] = c1;
+    this.d[7] = c2;
+    this.d[8] = c3;
   }
 
 
-
   set(valeur) {
-    for(let i = 0; i < 9; i++)
-      this.d[i] = valeur[i]; 
+    for(let i = 0; i < 9; i++) {
+      this.d[i] = valeur[i];
+    }
   }
 
 
@@ -51,44 +49,36 @@ class Mat3 {
 
   multiplier(matrice2) {
     const resultat = new Mat3();
-    for(let k = 0; k < 3; k++)
-    {
-      for(let j = 0; j < 3; j++)
-      {
-        for(let i = 0; i < 3; i++)
-        {
+    for(let k = 0; k < 3; k++) {
+      for(let j = 0; j < 3; j++) {
+        for(let i = 0; i < 3; i++) {
           resultat.d[3*j+k] += this.d[3*j+i] * matrice2.d[3*i+k];
         }
       }
     }
 
-    for(let i = 0; i < 9; i++)
-    {
+    for(let i = 0; i < 9; i++) {
       this.d[i] = resultat.d[i];
     }
   }
 
 
-  egale(matrice2) 
-  {
+  egale(matrice2) {
     for(let i = 0; i < 9; i++)
     {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
-    
+
   }
 
 
-  //////////////////////////////////////////////////////////
   ////////////////////// IMBRICATION //////////////////////
-  //////////////////////////////////////////////////////////
 
   push() {
     this.empilement++;
     let cpt = 0;
-    for(let i = (this.empilement-1)*9; i < this.empilement*9; i++)
-    {
+    for(let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++){
       this.sauvegardePrecedente[i] = this.d[cpt];
       cpt++;
     }
@@ -96,28 +86,22 @@ class Mat3 {
 
 
   pop() {
-    if(this.empilement > 0)
-    {
+    if(this.empilement > 0) {
       let cpt = 0;
-      for(let i = (this.empilement-1)*9; i < this.empilement*9; i++)
-      {
+      for(let i = (this.empilement-1) * 9; i < this.empilement * 9; i++) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
         cpt++;
       }
       this.empilement--;
     } else {
-      alert("pop de trop");
+      console.log("pop de trop");
     }
   }
 
 
 
-
-
-  /////////////////////////////////////////////////////////
-  //////////////////////MODIFICATIONS//////////////////////
-  //////////////////////////////////////////////////////////
+  ////////////////////// MODIFICATIONS //////////////////////
 
   identity() {
     this.init();
@@ -127,21 +111,16 @@ class Mat3 {
   }
 
 
-
-
   transpose() {
     const ordre = new Float32Array(9);
-    for(let j = 0; j < 3; j++)
-    {
-      for(let i = 0; i < 3; i++)
-      {
+    for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
         ordre[3*i+j] = this.d[3*j+i];
       }
     }
 
     return ordre;
   }
-
 
 
   inverser() {
@@ -158,17 +137,18 @@ class Mat3 {
     copie[0] = this.d[4] * this.d[8] - this.d[5] * this.d[7] / det;
     copie[1] = -(this.d[1] * this.d[8] - this.d[7] * this.d[2]) / det;
     copie[2] = this.d[1] * this.d[5] - this.d[4] * this.d[2] / det;
-    
+
     copie[3] = -(this.d[3] * this.d[8] - this.d[5] * this.d[6]) / det;
     copie[4] = this.d[0] * this.d[8] - this.d[6] * this.d[2] / det;
     copie[5] = -(this.d[0] * this.d[5] - this.d[3] * this.d[2]) / det;
-    
+
     copie[6] = this.d[3] * this.d[7] - this.d[6] * this.d[4] / det;
     copie[7] = -(this.d[0] * this.d[7] - this.d[6] * this.d[1]) / det;
     copie[8] = this.d[0] * this.d[4] - this.d[1] * this.d[3] / det;
 
-    for(let i = 0; i < 9; i++)
+    for (let i = 0; i < 9; i++) {
       this.d[i] = copie[i];
+    }
   }
 
 
@@ -179,9 +159,7 @@ class Mat3 {
   }
 
 
-
-
-  rotate(angle, x, y, z) {  
+  rotate(angle, x, y, z) {
     const rotation = new Mat3();
     angle *= (Math.PI / 180);
 
