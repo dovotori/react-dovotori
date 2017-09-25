@@ -21,6 +21,8 @@ class Loop extends Component {
   }
 
   animationLoop() {
+    const { onAnimate } = this.props;
+    if (onAnimate) { onAnimate(); }
     this.setState(prev => ({ toggle: !prev.toggle }));
     window.requestAnimationFrame(this.animationLoop);
   }
@@ -38,10 +40,12 @@ class Loop extends Component {
 }
 
 Loop.propTypes = {
+  onAnimate: PropTypes.func,
   children: PropTypes.node,
 };
 
 Loop.defaultProps = {
+  onAnimate: null,
   children: null,
 };
 

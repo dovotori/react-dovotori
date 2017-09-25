@@ -12,7 +12,7 @@ class Program extends Component {
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
     const { vertex, fragment } = this.props;
     const { gl } = this.context;
 
@@ -52,6 +52,12 @@ class Program extends Component {
   }
 
 
+  componentWillUpdate() {
+    const { gl } = this.context;
+    gl.useProgram(null);
+  }
+
+
   creerShader(type, source) {
     const { gl } = this.context;
     const s = gl.createShader(type === 'vertex' ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
@@ -85,35 +91,36 @@ class Program extends Component {
   }
 
 
-  setMatrices() {
-    const { projection, model, view } = this.props;
+  setMatrices(gl) {
+    const { projection, view } = this.props;
 
-    const { gl } = this.context;
-    gl.useProgram(this.program);
     gl.uniformMatrix4fv(this.program.pMatLoc, false, projection);
-    gl.uniformMatrix4fv(this.program.mMatLoc, false, model);
     gl.uniformMatrix4fv(this.program.vMatLoc, false, view);
   }
 
 
-  setColor() {
-    const { gl } = this.context;
+  setColor(gl) {
     const { color } = this.props;
-    gl.useProgram(this.program);
     gl.uniform4f(this.program.cVecLoc, color[0], color[1], color[2], color[3]);
   }
 
 
   render() {
+    const { gl } = this.context;
+
     if (this.program) {
-      this.setMatrices();
-      this.setColor();
+      gl.useProgram(this.program);
+
+      this.setMatrices(gl);
+      this.setColor(gl);
+
+      return Children.map(this.props.children,
+        (child) => cloneElement(child, {
+          program: this.program,
+        })
+      );
     }
-    return Children.map(this.props.children,
-      (child) => cloneElement(child, {
-        program: this.program,
-      })
-    );
+    return null;
   }
 }
 
@@ -122,7 +129,6 @@ Program.propTypes = {
   vertex: PropTypes.string,
   fragment: PropTypes.string,
   projection: PropTypes.object,
-  model: PropTypes.object,
   view: PropTypes.object,
   color: PropTypes.array,
 };
@@ -132,7 +138,6 @@ Program.defaultProps = {
   vertex: '',
   fragment: '',
   projection: {},
-  model: {},
   view: {},
   color: [1,1,1,1],
 };
