@@ -6,9 +6,14 @@ import Mat4 from '../geometry/Mat4.js';
 
 
 class Program extends Component {
+  getChildContext() {
+    return { program: this.program };
+  }
+
   constructor(props) {
     super(props);
     this.program = null;
+    this.cpt = 0;
   }
 
 
@@ -18,29 +23,8 @@ class Program extends Component {
 
     this.program = gl.createProgram();
 
-    const vertexData = `
-    attribute vec3 Vertice;
-
-    uniform mat4 projection;
-    uniform mat4 model;
-    uniform mat4 view;
-
-    void main() {
-      gl_Position = projection * view * model * vec4(Vertice, 1.0);
-    }
-    `;
-    const fragmentData = `
-    precision mediump float;
-
-    uniform vec4 color;
-
-    void main() {
-      gl_FragColor = color;
-    }
-    `;
-
-    this.creerShader('vertex', vertexData);
-    this.creerShader('fragment', fragmentData);
+    this.creerShader('vertex', vertex);
+    this.creerShader('fragment', fragment);
     gl.linkProgram(this.program);
 
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
@@ -77,6 +61,8 @@ class Program extends Component {
 
   creerLocations() {
     const { gl } = this.context;
+    const { projection, view } = this.props;
+
     gl.useProgram(this.program);
 
     // ATTRIB
@@ -88,37 +74,37 @@ class Program extends Component {
     this.program.vMatLoc = gl.getUniformLocation(this.program, "view");
 
     this.program.cVecLoc = gl.getUniformLocation(this.program, "color");
+
+    this.program.tex0Loc = gl.getUniformLocation(this.program, "tex0");
+    this.program.tex1Loc = gl.getUniformLocation(this.program, "tex1");
+    this.program.tex2Loc = gl.getUniformLocation(this.program, "tex2");
+    this.program.tex3Loc = gl.getUniformLocation(this.program, "tex3");
+    this.program.tex4Loc = gl.getUniformLocation(this.program, "tex4");
+    this.program.tex5Loc = gl.getUniformLocation(this.program, "tex5");
+
+    this.program.timeLoc = gl.getUniformLocation(this.program, "time");
   }
 
 
-  setMatrices(gl) {
-    const { projection, view } = this.props;
-
+  setMatrices(gl, projection, view) {
     gl.uniformMatrix4fv(this.program.pMatLoc, false, projection);
     gl.uniformMatrix4fv(this.program.vMatLoc, false, view);
   }
 
 
-  setColor(gl) {
-    const { color } = this.props;
-    gl.uniform4f(this.program.cVecLoc, color[0], color[1], color[2], color[3]);
-  }
-
-
   render() {
     const { gl } = this.context;
+    const { projection, view } = this.props;
 
     if (this.program) {
       gl.useProgram(this.program);
 
-      this.setMatrices(gl);
-      this.setColor(gl);
+      this.cpt++;
+      gl.uniform1f(this.program.timeLoc, this.cpt);
 
-      return Children.map(this.props.children,
-        (child) => cloneElement(child, {
-          program: this.program,
-        })
-      );
+      if (projection || view) { this.setMatrices(gl, projection, view); }
+
+      return this.props.children;
     }
     return null;
   }
@@ -130,20 +116,22 @@ Program.propTypes = {
   fragment: PropTypes.string,
   projection: PropTypes.object,
   view: PropTypes.object,
-  color: PropTypes.array,
 };
 
 Program.defaultProps = {
   children: null,
   vertex: '',
   fragment: '',
-  projection: {},
-  view: {},
-  color: [1,1,1,1],
+  projection: null,
+  view: null,
 };
 
 Program.contextTypes = {
   gl: PropTypes.object,
+};
+
+Program.childContextTypes = {
+  program: PropTypes.object,
 };
 
 export default Program;

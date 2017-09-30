@@ -16,7 +16,7 @@ class Camera extends Component {
     this.far = 100.0;
     this.near = 1.0;
 
-    this.angle = 60;
+    this.angle = 50;
   }
 
   componentWillMount() {

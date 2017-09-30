@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Mat4 from '../geometry/Mat4';
 
 class Primitive extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Primitive extends Component {
 
 	componentWillMount() {
 		const { gl } = this.context;
-		const { mode } = this.props;
+		const { mode, type } = this.props;
 
 		switch(mode) {
 			case 'TRIANGLES': default: this.modeDessin = gl.TRIANGLES; break;
@@ -35,8 +36,10 @@ class Primitive extends Component {
 			// gl.DYNAMIC_DRAW // repete
 			// gl.STREAM_DRAW // une fois au moins
 
-		this.setupCube();
-		// this.setupPlane();
+		switch(type) {
+			case 'PLANE': default: this.setupPlane(); break;
+			case 'CUBE': this.setupCube(); break;
+		}
 	}
 
 
@@ -49,8 +52,9 @@ class Primitive extends Component {
 			1,  -1, 0,
 			-1, 1,  0
 		];
-		this.setupCustom(points);
+		this.setup(points);
 	}
+
 
 	setupCube() {
 		const points = [
@@ -91,11 +95,11 @@ class Primitive extends Component {
 			-1.0, 1.0, 1.0,
 			1.0,-1.0, 1.0
 		];
-		this.setupCustom(points);
+		this.setup(points);
 	}
 
 
-	setupCustom(points) {
+	setup(points) {
 		const { gl } = this.context;
 		this.vbo[0] = gl.createBuffer();
 		this.nbPoints = 0;
@@ -117,13 +121,12 @@ class Primitive extends Component {
 
 	setModelMatrice(gl, program) {
     const { model } = this.props;
-		gl.useProgram(program);
     gl.uniformMatrix4fv(program.mMatLoc, false, model);
   }
 
 
 	draw(gl, program) {
-		if(program.vLoc > -1) {
+		if (program.vLoc > -1) {
 			gl.enableVertexAttribArray(program.vLoc);
 			gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
 			gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
@@ -134,17 +137,18 @@ class Primitive extends Component {
 	}
 
 
+	setColor(gl, program, color) {
+    gl.uniform4f(program.cVecLoc, color[0], color[1], color[2], color[3]);
+  }
+
+
 	render() {
-		const { program } = this.props;
-		const { gl } = this.context;
+		const { gl, program, color } = this.context;
 
 		if (program) {
-			gl.useProgram(program);
-
 			this.setModelMatrice(gl, program);
+			if (color) { this.setColor(gl, program, color); }
 			this.draw(gl, program);
-
-			gl.useProgram(null);
 		}
     return null;
   }
@@ -153,21 +157,20 @@ class Primitive extends Component {
 Primitive.propTypes = {
 	model: PropTypes.object,
 	mode: PropTypes.string,
-	points: PropTypes.array,
-	indices: PropTypes.array,
-	program: PropTypes.object,
+	type: PropTypes.string,
+	color: PropTypes.array,
 };
 
 Primitive.defaultProps = {
-	model: {},
+	model: new Mat4().get(),
 	mode: 'TRIANGLES',
-	points: [],
-	indices: [],
-	program: {},
+	type: 'PLANE',
+	color: null,
 };
 
 Primitive.contextTypes = {
-  gl: PropTypes.object,
+	gl: PropTypes.object,
+	program: PropTypes.object,
 };
 
 export default Primitive;

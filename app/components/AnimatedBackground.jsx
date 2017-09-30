@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
-import ParseObj from '../utils/ParseObj';
-
 import Scene from './webgl/Scene';
 import Camera from './webgl/Camera';
 import Vbo from './webgl/Vbo';
 import Objet from './webgl/Objet';
 import Program from './webgl/Program';
+import Primitive from './webgl/Primitive';
 import Loop from './webgl/Loop';
+import Fbo from './webgl/Fbo';
+import Texture from './webgl/Texture';
 import Mat4 from './geometry/Mat4';
+
+import ParseObj from '../utils/ParseObj';
+import basique from '../shaders/basique';
+import shader from '../shaders/glitch';
 
 
 const Styled = styled.div`
@@ -20,8 +24,8 @@ text-align: center;
 
 canvas {
   margin: 0 auto;
-  width: 600px;
-  height: 600px;
+  width: ${p => p.width}px;
+  height: ${p => p.height}px;
 }
 `;
 
@@ -57,61 +61,65 @@ class AnimatedBackground extends Component {
   onAnimate() {
     this.cpt++;
     for (let i = 0; i < this.models.length; i++) {
+      const variant = Math.cos(this.cpt * 0.1) * ((i - (this.models.length / 2)) * 0.4);
       this.models[i].identity();
-      this.models[i].rotate(Math.cos((i + 1) * this.cpt * 0.004) * 360, 1,1,0);
+      this.models[i].rotate(this.cpt, 0,1,0);
+      // this.models[i].translate(0, variant, 0);
     }
   }
 
+
   render() {
-    return (<Styled>
+    return (<Styled
+      width={this.width}
+      height={this.height}
+    >
       <Scene
         width={this.width}
         height={this.height}
       >
-        <Loop
-          onAnimate={this.onAnimate}
-        >
+        <Loop onAnimate={this.onAnimate}>
           <Camera
             width={this.width}
             height={this.height}
           >
             <Program
-              vertex="basique"
-              fragment="basique"
-              color={[102/255, 1, 204/255, 0.1]}
+              vertex={basique.vertex}
+              fragment={basique.fragment}
             >
-              <Vbo
-                points={this.points}
-              >
-                {this.objets.map((obj, idx) => (
-                  <Objet
-                    key={obj.key}
-                    indices={obj.vID}
-                    mode="TRIANGLES"
-                    model={this.models[idx].get()}
-                  />
-                ))}
-              </Vbo>
-            </Program>
-            <Program
-              vertex="basique"
-              fragment="basique"
-              color={[102/255, 1, 204/255, 1]}
-            >
-              <Vbo
-                points={this.points}
-              >
+              <Vbo points={this.points}>
                 {this.objets.map((obj, idx) => (
                   <Objet
                     key={obj.key}
                     indices={obj.vID}
                     mode="LINE_LOOP"
                     model={this.models[idx].get()}
+                    color={[102/255, 1, 204/255, 1]}
                   />
                 ))}
               </Vbo>
             </Program>
           </Camera>
+
+          <Program
+            vertex={shader.vertex}
+            fragment={shader.fragment}
+          >
+            <Fbo
+              width={this.width}
+              height={this.height}
+            >
+              <Texture
+                id={1}
+                width={1024}
+                height={1024}
+              >
+                <Primitive
+                  color={[102/255, 1, 204/255, 1]}
+                />
+              </Texture>
+            </Fbo>
+          </Program>
         </Loop>
       </Scene>
     </Styled>);

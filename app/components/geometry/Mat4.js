@@ -126,9 +126,9 @@ class Mat4 {
   translate(x, y, z) {
     const translation = new Mat4();
     translation.identity();
-    translation.d[3] = x;
-    translation.d[7] = y;
-    translation.d[11] = z;
+    translation.d[12] = x;
+    translation.d[13] = y;
+    translation.d[14] = z;
     this.multiplier(translation);
   }
 

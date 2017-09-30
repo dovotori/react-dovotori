@@ -38,19 +38,14 @@ class Vbo extends Component {
 
 
 	render() {
-    const { gl } = this.context;
-    const { program } = this.props;
+    const { gl, program } = this.context;
 
     if(program.vLoc > -1) {
 			gl.enableVertexAttribArray(program.vLoc);
 			gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
       gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
 
-      return Children.map(this.props.children,
-        (child) => cloneElement(child, {
-          program: this.props.program,
-        })
-      );
+      return this.props.children;
     }
     return null;
   }
@@ -59,17 +54,16 @@ class Vbo extends Component {
 Vbo.propTypes = {
   children: PropTypes.node,
 	points: PropTypes.array,
-	program: PropTypes.object,
 };
 
 Vbo.defaultProps = {
   children: null,
 	points: [],
-	program: {},
 };
 
 Vbo.contextTypes = {
   gl: PropTypes.object,
+  program: PropTypes.object,
 };
 
 export default Vbo;

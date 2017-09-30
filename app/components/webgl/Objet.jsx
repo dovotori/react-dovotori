@@ -53,8 +53,7 @@ class Objet extends Component {
 	}
 
 
-	setModelMatrice(gl, program) {
-    const { model } = this.props;
+	setModelMatrice(gl, program, model) {
     gl.uniformMatrix4fv(program.mMatLoc, false, model);
   }
 
@@ -66,11 +65,17 @@ class Objet extends Component {
 	}
 
 
-	render() {
-		const { program } = this.props;
-    const { gl } = this.context;
+	setColor(gl, program, color) {
+    gl.uniform4f(program.cVecLoc, color[0], color[1], color[2], color[3]);
+  }
 
-    this.setModelMatrice(gl, program);
+
+	render() {
+		const { model, color } = this.props;
+    const { gl, program } = this.context;
+
+    if (model) { this.setModelMatrice(gl, program, model); }
+		if (color) { this.setColor(gl, program, color); }
     this.drawIndex(gl, program);
 
     return null;
@@ -82,19 +87,20 @@ Objet.propTypes = {
 	model: PropTypes.object,
 	mode: PropTypes.string,
 	indices: PropTypes.array,
-	program: PropTypes.object,
+	color: PropTypes.array,
 };
 
 Objet.defaultProps = {
   modeCalcul: 0,
-	model: {},
+	model: null,
 	mode: 'TRIANGLES',
 	indices: [],
-	program: {},
+	color: null,
 };
 
 Objet.contextTypes = {
-  gl: PropTypes.object,
+	gl: PropTypes.object,
+	program: PropTypes.object,
 };
 
 export default Objet;
