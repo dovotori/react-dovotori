@@ -47,9 +47,9 @@ class Scene extends Component {
     document.querySelector("#canvas").appendChild(this.canvas);
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
   render() {
     return (<div>

@@ -50,9 +50,10 @@ class ParseObj {
 
   setFace(line, cpt) {
     const words = line.split(' ');
-    this.objets[cpt].vID.push(parseInt(words[1], 10) - 1);
-    this.objets[cpt].vID.push(parseInt(words[2], 10) - 1);
-    this.objets[cpt].vID.push(parseInt(words[3], 10) - 1);
+    const nbPoints = words.length - 1;
+    for (let i = 1; i <= nbPoints; i++) {
+      this.objets[cpt].vID.push(parseInt(words[i], 10) - 1);
+    }
   }
 
   getVerticesList() { return this.verticesList; }

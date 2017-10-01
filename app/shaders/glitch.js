@@ -17,9 +17,9 @@ varying vec2 fragTexture;
 uniform sampler2D tex0;
 uniform sampler2D tex1;
 uniform float time;
+uniform float amplitude;
 
-#define AMPLITUDE 0.0
-#define SPEED 20.0
+#define SPEED 1.0
 
 vec4 rgbShift(vec2 p , vec4 shift) {
   shift *= 2.0 * shift.w - 1.0;
@@ -59,10 +59,11 @@ void main( ) {
           2.0 * SPEED * time / 25.0
         )
       ), 16.0
-    ) * vec4(AMPLITUDE, AMPLITUDE, AMPLITUDE, 1.0);
+    ) * vec4(amplitude, amplitude, amplitude, 1.0);
 
   color += rgbShift(fragTexture, shift);
 	gl_FragColor = color;
+	// gl_FragColor = vec4(vec3(cos(time)), 1.0);
 }
   `
 };

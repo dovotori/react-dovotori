@@ -10,10 +10,10 @@ class Program extends Component {
     return { program: this.program };
   }
 
+
   constructor(props) {
     super(props);
     this.program = null;
-    this.cpt = 0;
   }
 
 
@@ -83,26 +83,43 @@ class Program extends Component {
     this.program.tex5Loc = gl.getUniformLocation(this.program, "tex5");
 
     this.program.timeLoc = gl.getUniformLocation(this.program, "time");
+    this.program.amplitudeLoc = gl.getUniformLocation(this.program, "amplitude");
   }
 
 
-  setMatrices(gl, projection, view) {
-    gl.uniformMatrix4fv(this.program.pMatLoc, false, projection);
-    gl.uniformMatrix4fv(this.program.vMatLoc, false, view);
+  setMatrices(gl) {
+    const { projection, view } = this.props;
+    if (projection || view) {
+      gl.uniformMatrix4fv(this.program.pMatLoc, false, projection);
+      gl.uniformMatrix4fv(this.program.vMatLoc, false, view);
+    }
+  }
+
+
+  setTime(gl) {
+    const { time } = this.props;
+    if (time !== null) {
+      gl.uniform1f(this.program.timeLoc, time);
+    }
+  }
+
+
+  setAmplitude(gl) {
+    const { amplitude } = this.props;
+    if (amplitude !== null) {
+      gl.uniform1f(this.program.amplitudeLoc, amplitude);
+    }
   }
 
 
   render() {
     const { gl } = this.context;
-    const { projection, view } = this.props;
 
     if (this.program) {
       gl.useProgram(this.program);
-
-      this.cpt++;
-      gl.uniform1f(this.program.timeLoc, this.cpt);
-
-      if (projection || view) { this.setMatrices(gl, projection, view); }
+      this.setMatrices(gl);
+      this.setTime(gl);
+      this.setAmplitude(gl);
 
       return this.props.children;
     }
@@ -116,6 +133,8 @@ Program.propTypes = {
   fragment: PropTypes.string,
   projection: PropTypes.object,
   view: PropTypes.object,
+  time: PropTypes.number,
+  amplitude: PropTypes.number,
 };
 
 Program.defaultProps = {
@@ -124,6 +143,8 @@ Program.defaultProps = {
   fragment: '',
   projection: null,
   view: null,
+  time: null,
+  amplitude: null,
 };
 
 Program.contextTypes = {
