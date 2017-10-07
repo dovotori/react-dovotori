@@ -26,7 +26,7 @@ class Mat4 {
 
 
   get() {
-    return this.d;
+    return this.d.slice();
   }
 
 
@@ -130,6 +130,7 @@ class Mat4 {
     translation.d[13] = y;
     translation.d[14] = z;
     this.multiplier(translation);
+    return this;
   }
 
 
@@ -140,6 +141,7 @@ class Mat4 {
     scale.d[10] = z;
     scale.d[15] = 1.0;
     this.multiplier(scale);
+    return this;
   }
 
 

@@ -58,6 +58,15 @@ class Objet extends Component {
   }
 
 
+	drawFaceByFace(gl, program) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
+		for (let i = 0; i < this.nbPoints; i += 4) {
+			gl.drawElements(this.modeDessin, 4, gl.UNSIGNED_SHORT, i * 2);
+		}
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+	}
+
+
 	drawIndex(gl, program) {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
 		gl.drawElements(this.modeDessin, this.nbPoints, gl.UNSIGNED_SHORT, 0);
@@ -76,7 +85,8 @@ class Objet extends Component {
 
     if (model) { this.setModelMatrice(gl, program, model); }
 		if (color) { this.setColor(gl, program, color); }
-    this.drawIndex(gl, program);
+    // this.drawIndex(gl, program);
+		this.drawFaceByFace(gl, program);
 
     return null;
   }

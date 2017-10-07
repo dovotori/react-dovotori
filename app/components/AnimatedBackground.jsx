@@ -1,3 +1,4 @@
+/* global window */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -12,10 +13,18 @@ import Loop from './webgl/Loop';
 import Fbo from './webgl/Fbo';
 import Texture from './webgl/Texture';
 import Mat4 from './geometry/Mat4';
+import Vec3 from './geometry/Vec3';
+import {
+  easeInOutElastic,
+  degToRad,
+  map
+} from '../utils/numbers';
 
 import ParseObj from '../utils/ParseObj';
 import basique from '../shaders/basique';
-import shader from '../shaders/glitch';
+import shadow from '../shaders/fakeshadow';
+import shader from '../shaders/glitch1and2';
+import fxaa from '../shaders/fxaa';
 
 
 const Styled = styled.div`
@@ -24,8 +33,10 @@ text-align: center;
 
 canvas {
   margin: 0 auto;
-  width: ${p => p.width}px;
-  height: ${p => p.height}px;
+  max-width: ${p => p.width}px;
+  max-height: ${p => p.height}px;
+  width: 100%;
+  height: auto;
 }
 `;
 
@@ -33,16 +44,30 @@ class AnimatedBackground extends Component {
   constructor(props) {
     super(props);
 
-    this.width = 600;
-    this.height = 600;
+    this.toggleGlitching = this.toggleGlitching.bind(this);
+    this.restartRotation = this.restartRotation.bind(this);
+    this.mouseMove = this.mouseMove.bind(this);
+    this.onAnimate = this.onAnimate.bind(this);
+    this.state = { cpt: 0 };
+
+    this.coor = { x: 0, y: 0 };
+
+    this.width = 1024;
+    this.height = 1024;
 
     const p = new ParseObj();
-    p.setup(test);
+    p.setup(walkman);
 
     this.points = p.getVerticesList();
     this.objets = p.getObjets();
 
-    // this.objets = this.objets.slice(1, 2);
+    const p2 = new ParseObj();
+    p2.setup(ribbon);
+
+    this.points2 = p2.getVerticesList();
+    this.objets2 = p2.getObjets();
+
+    // this.objets = this.objets.slice(3, 4);
 
     this.models = new Array(this.objets.length);
     for (let i = 0; i < this.models.length; i++) {
@@ -50,23 +75,117 @@ class AnimatedBackground extends Component {
       this.models[i].identity();
     }
 
-    this.state = { cpt: 0 };
-    this.onAnimate = this.onAnimate.bind(this);
+    this.model = new Mat4();
+    this.model.identity();
+
+    this.model2 = new Mat4();
+    this.model2.identity();
+
+    this.model3 = new Mat4();
+    this.model3.identity();
+
+    this.model4 = new Mat4();
+    this.model4.identity();
+    this.model4.scale(0.9, 0.9, 0.9);
+    this.model4.translate(0, -2, 0);
+
+    this.camPos = new Vec3();
+    this.camAngle = 45;
+    this.camDistance = 14;
+    this.refDate = Date.now();
+    this.timeDelay = 1000;
+    this.finish = false;
+    this.camHeight = 4;
+
+    this.amplitude = 0;
+    this.toggleAmpli = false;
   }
+
 
   // shouldComponentUpdate() {
   //   return false;
   // }
 
 
+  componentWillMount() {
+    window.addEventListener("mousemove", this.mouseMove, false);
+  }
+
+
+  componentDidMount() {
+    this.toggleGlitching();
+  }
+
+
+  componentWillUnmount() {
+    window.removeEventListener("mousemove", this.mouseMove, false);
+  }
+
+
+  mouseMove(e) {
+    this.coor = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+  }
+
+
+  toggleGlitching() {
+    this.amplitude = this.amplitude === 0 ? this.toggleAmpli ? 0.05 : -0.05 : 0;
+    const delay = this.amplitude === 0 ? 10000 : 1000;
+    window.setTimeout(this.toggleGlitching, Math.random() * delay);
+    if (this.amplitude === 0) { this.toggleAmpli = !this.toggleAmpli; }
+  }
+
+
+  restartRotation() {
+    this.refDate = Date.now();
+    this.camAngle = this.camAngle === 315 ? 45 : this.camAngle + 90;
+    this.finish = false;
+  }
+
+
   onAnimate() {
+    const relX = map(this.coor.x / window.innerWidth, 0, 1, 0, Math.PI);
+    const offsetX = Math.cos(relX);
+
     for (let i = 0; i < this.models.length; i++) {
-      const variant = Math.cos(this.state.cpt * 0.05) * ((i - (this.models.length / 2)) * 0.1);
+      const variantX = offsetX * (i - (this.models.length / 2));
       this.models[i].identity();
-      this.models[i].rotate(this.state.cpt, 0,1,0);
-      // this.models[i].translate(0, 0, variant);
+      this.models[i].translate(variantX, 0, 0);
     }
-    // this.cpt++;
+
+    this.model2.identity();
+    this.model2.rotate(this.state.cpt * 4, 0,0,1);
+    this.model2.translate(0.2,0,0);
+
+    this.model3.identity();
+    this.model3.rotate(-this.state.cpt * 4, 0,0,1);
+    this.model3.translate(-1.1,0,0);
+
+    const diffTime = Date.now() - this.refDate;
+    if (diffTime < this.timeDelay) {
+      const tmpAngle = degToRad(
+        easeInOutElastic(
+          diffTime, this.camAngle, 90, this.timeDelay
+        )
+      );
+      this.camPos.set(
+        Math.sin(tmpAngle) * this.camDistance,
+        this.camHeight,
+        Math.cos(tmpAngle) * this.camDistance
+      );
+    } else if (!this.finish) {
+      const angle = degToRad(this.camAngle + 90);
+      this.camPos.set(
+        Math.sin(angle) * this.camDistance,
+        this.camHeight,
+        Math.cos(angle) * this.camDistance
+      );
+      this.req = window.setTimeout(this.restartRotation, 4000);
+      this.finish = true;
+    }
+
     this.setState((prevState) => ({
       cpt: prevState.cpt + 1,
     }));
@@ -86,7 +205,7 @@ class AnimatedBackground extends Component {
           <Camera
             width={this.width}
             height={this.height}
-            position={[-15, 0, 0]}
+            position={this.camPos.get()}
             angle={40}
           >
             <Program
@@ -100,6 +219,47 @@ class AnimatedBackground extends Component {
                     indices={obj.vID}
                     mode="LINE_LOOP"
                     model={this.models[idx].get()}
+                    // model={this.model.get()}
+                    color={[102/255, 1, 204/255, 1]}
+                  />
+                ))}
+              </Vbo>
+            </Program>
+            <Program
+              vertex={basique.vertex}
+              fragment={basique.fragment}
+            >
+              <Vbo points={this.points2}>
+                {this.objets2.map((obj, idx) => (
+                  <span key={obj.key}>
+                    <Objet
+                      indices={obj.vID}
+                      mode="LINE_LOOP"
+                      model={this.model2.get()}
+                      color={[102/255, 1, 204/255, 1]}
+                    />
+                    <Objet
+                      indices={obj.vID}
+                      mode="LINE_LOOP"
+                      model={this.model3.get()}
+                      color={[102/255, 1, 204/255, 1]}
+                    />
+                  </span>
+                ))}
+              </Vbo>
+            </Program>
+
+            <Program
+              vertex={shadow.vertex}
+              fragment={shadow.fragment}
+            >
+              <Vbo points={this.points}>
+                {this.objets.map((obj, idx) => (
+                  <Objet
+                    key={obj.key}
+                    indices={obj.vID}
+                    mode="TRIANGLE_LOOP"
+                    model={this.models[idx].translate(0, -2, 0).get()}
                     color={[102/255, 1, 204/255, 1]}
                   />
                 ))}
@@ -111,7 +271,7 @@ class AnimatedBackground extends Component {
             vertex={shader.vertex}
             fragment={shader.fragment}
             time={this.state.cpt}
-            amplitude={0.05}
+            amplitude={this.amplitude}
           >
             <Fbo
               width={this.width}
@@ -119,15 +279,14 @@ class AnimatedBackground extends Component {
             >
               <Texture
                 id={1}
-                width={1024}
-                height={1024}
+                width={this.width}
+                height={this.height}
               >
-                <Primitive
-                  color={[102/255, 1, 204/255, 1]}
-                />
+                <Primitive />
               </Texture>
             </Fbo>
           </Program>
+
         </Loop>
       </Scene>
     </Styled>);
@@ -141,371 +300,146 @@ AnimatedBackground.defaultProps = {};
 
 export default AnimatedBackground;
 
-const test = `
-# Blender v2.79 (sub 0) OBJ File: 'walkman2.blend'
-# www.blender.org
-o Cube.019
-v 0.091529 1.157520 -1.266488
-v 0.091529 1.157520 -0.999024
-v -0.069741 1.157520 -0.999024
-v -0.069741 1.157520 -1.266488
+const walkman = `
+o cable_short_Cylinder.004
+v 1.887188 -0.775653 -0.072126
+v 1.095178 -0.775653 -0.072126
+v 1.887188 -0.720498 -0.148039
+v 1.095178 -0.720498 -0.148039
+v 1.887188 -0.631257 -0.119043
+v 1.095178 -0.631257 -0.119043
+v 1.887188 -0.631257 -0.025209
+v 1.095178 -0.631257 -0.025209
+v 1.887188 -0.720498 0.003787
+v 1.095178 -0.720498 0.003787
 s off
-f 1 4 3 2
-o Cube.018
-v 0.091529 0.909476 -0.999024
-v -0.069741 0.909476 -0.999024
-v 0.091529 1.157520 -0.999024
-v -0.069741 1.157520 -0.999024
+f 1 2 4 3
+f 3 4 6 5
+f 5 6 8 7
+f 7 8 10 9
+f 9 10 2 1
+o cable_long_Cylinder
+v 4.050622 -0.741657 -0.071737
+v 1.700853 -0.741657 -0.071737
+v 4.050622 -0.669625 -0.113325
+v 1.700853 -0.669625 -0.113325
+v 4.050622 -0.669625 -0.030150
+v 1.700853 -0.669625 -0.030150
 s off
-f 5 7 8 6
-o Cube.017
-v 0.091529 0.909476 -1.266488
-v -0.069741 0.909476 -1.266488
-v 0.091529 1.157520 -1.266488
-v -0.069741 1.157520 -1.266488
+f 11 12 14 13
+f 13 14 16 15
+f 15 16 12 11
+o box_Cube
+v -1.805056 -1.000000 -0.406734
+v 1.513614 -1.000000 -0.406734
+v 1.513614 -1.000000 0.363852
+v -1.805057 -1.000000 0.363852
+v -1.805055 1.000000 -0.406734
+v 1.513615 1.000000 -0.406733
+v 1.513614 1.000000 0.363852
+v -1.805056 1.000000 0.363852
 s off
-f 11 9 10 12
-o Cube.016
-v 0.091529 1.157520 -0.860161
-v 0.091529 1.157520 -0.592698
-v -0.069741 1.157520 -0.592698
-v -0.069741 1.157520 -0.860161
+f 17 18 19 20
+f 21 24 23 22
+f 18 22 23 19
+f 21 17 20 24
+o box_tape_Cube.001
+v -2.031313 -0.795160 -0.196439
+v 0.906743 -0.795160 -0.196439
+v 0.906743 -0.795160 0.544917
+v -2.031314 -0.795160 0.544916
+v -2.031313 0.795160 -0.196439
+v 0.906744 0.795160 -0.196439
+v 0.906742 0.795160 0.544917
+v -2.031314 0.795160 0.544917
 s off
-f 13 16 15 14
-o Cube.015
-v 0.091529 0.909476 -0.592698
-v -0.069741 0.909476 -0.592698
-v 0.091529 1.157520 -0.592698
-v -0.069741 1.157520 -0.592698
+f 25 26 27 28
+f 29 32 31 30
+f 26 30 31 27
+f 29 25 28 32
+o button_middle_Cube.004
+v -1.005882 0.909476 -0.112970
+v -0.738419 0.909476 -0.112970
+v -0.738419 0.909476 0.048300
+v -1.005882 0.909476 0.048300
+v -1.005882 1.157520 -0.112970
+v -0.738419 1.157520 -0.112970
+v -0.738419 1.157520 0.048300
+v -1.005882 1.157520 0.048300
 s off
-f 17 19 20 18
-o Cube.014
-v 0.091529 0.909476 -0.860161
-v -0.069741 0.909476 -0.860161
-v 0.091529 1.157520 -0.860161
-v -0.069741 1.157520 -0.860161
+f 33 34 35 36
+f 37 40 39 38
+f 34 38 39 35
+f 37 33 36 40
+o button_left_Cube.005
+v -1.412209 0.909476 -0.112970
+v -1.144745 0.909476 -0.112970
+v -1.144745 0.909476 0.048300
+v -1.412209 0.909476 0.048300
+v -1.412209 1.157520 -0.112970
+v -1.144745 1.157520 -0.112970
+v -1.144745 1.157520 0.048300
+v -1.412209 1.157520 0.048300
 s off
-f 23 21 22 24
-o Cube.013
-v 0.091529 1.157520 -0.453835
-v 0.091529 1.157520 -0.186371
-v -0.069741 1.157520 -0.186371
-v -0.069741 1.157520 -0.453835
+f 41 42 43 44
+f 45 48 47 46
+f 42 46 47 43
+f 45 41 44 48
+o button_right_Cube.006
+v -0.599556 0.909476 -0.112970
+v -0.332092 0.909476 -0.112970
+v -0.332092 0.909476 0.048300
+v -0.599556 0.909476 0.048300
+v -0.599556 1.157520 -0.112970
+v -0.332092 1.157520 -0.112970
+v -0.332092 1.157520 0.048300
+v -0.599556 1.157520 0.048300
 s off
-f 25 28 27 26
-o Cube.012
-v 0.091529 0.909476 -0.186371
-v -0.069741 0.909476 -0.186371
-v 0.091529 1.157520 -0.186371
-v -0.069741 1.157520 -0.186371
+f 49 50 51 52
+f 53 56 55 54
+f 50 54 55 51
+f 53 49 52 56
+`;
+
+const ribbon = `
+o ribbon_left_Cylinder.007
+v 0.000000 -0.534181 0.070475
+v 0.000000 -0.534181 -0.070475
+v 0.377723 -0.377723 0.070476
+v 0.377724 -0.377723 -0.070475
+v 0.534182 0.000000 0.070476
+v 0.534182 0.000000 -0.070475
+v 0.377723 0.377723 0.070476
+v 0.377724 0.377723 -0.070475
+v 0.000000 0.534181 0.070475
+v 0.000000 0.534181 -0.070475
+v -0.377723 0.377723 0.070475
+v -0.377723 0.377723 -0.070476
+v -0.534181 -0.000000 0.070475
+v -0.534181 -0.000000 -0.070476
+v -0.377723 -0.377723 0.070475
+v -0.377723 -0.377723 -0.070476
 s off
-f 29 31 32 30
-o Cube.011
-v 0.091529 0.909476 -0.453835
-v -0.069741 0.909476 -0.453835
-v 0.091529 1.157520 -0.453835
-v -0.069741 1.157520 -0.453835
+f 1 2 4 3
+f 3 4 6 5
+f 5 6 8 7
+f 7 8 10 9
+f 9 10 12 11
+f 11 12 14 13
+f 13 14 16 15
+f 15 16 2 1
+o little_ribbon_left_Cylinder.011
+v -0.000000 -0.092688 0.013602
+v -0.000000 -0.092688 -0.013602
+v 0.092688 0.000000 0.013602
+v 0.092688 0.000000 -0.013602
+v -0.000000 0.092688 0.013602
+v -0.000000 0.092688 -0.013602
+v -0.092688 0.000000 0.013602
+v -0.092688 -0.000000 -0.013602
 s off
-f 35 33 34 36
-o Cylinder.031_Cylinder.037
-v -0.228049 0.094044 -0.921450
-v -0.200846 0.094044 -0.921450
-v -0.228049 0.001357 -1.014138
-v -0.200846 0.001357 -1.014138
-s off
-f 37 38 40 39
-o Cylinder.030_Cylinder.036
-v -0.228049 0.001357 -0.828762
-v -0.200846 0.001357 -0.828762
-v -0.228049 0.094044 -0.921450
-v -0.200846 0.094044 -0.921450
-s off
-f 41 42 44 43
-o Cylinder.029_Cylinder.035
-v -0.228049 -0.091331 -0.921450
-v -0.200846 -0.091331 -0.921450
-v -0.228049 0.001357 -1.014138
-v -0.200846 0.001357 -1.014138
-s off
-f 47 48 46 45
-o Cylinder.028_Cylinder.034
-v -0.284715 0.001888 -1.455935
-v -0.143764 0.001888 -1.455935
-v -0.284715 -0.375835 -1.299477
-v -0.143764 -0.375835 -1.299477
-s off
-f 49 50 52 51
-o Cylinder.027_Cylinder.033
-v -0.284715 0.379611 -1.299477
-v -0.143764 0.379611 -1.299477
-v -0.284715 0.001888 -1.455935
-v -0.143764 0.001888 -1.455935
-s off
-f 53 54 56 55
-o Cylinder.026_Cylinder.032
-v -0.284715 0.536069 -0.921754
-v -0.143764 0.536069 -0.921754
-v -0.284715 0.379611 -1.299477
-v -0.143764 0.379611 -1.299477
-s off
-f 57 58 60 59
-o Cylinder.025_Cylinder.031
-v -0.284715 0.379611 -0.544030
-v -0.143764 0.379611 -0.544030
-v -0.284715 0.536069 -0.921754
-v -0.143764 0.536069 -0.921754
-s off
-f 61 62 64 63
-o Cylinder.024_Cylinder.030
-v -0.284715 0.001888 -0.387572
-v -0.143764 0.001888 -0.387572
-v -0.284715 0.379611 -0.544030
-v -0.143764 0.379611 -0.544030
-s off
-f 65 66 68 67
-o Cylinder.023_Cylinder.029
-v -0.284715 -0.375836 -0.544030
-v -0.143764 -0.375836 -0.544030
-v -0.284715 0.001888 -0.387572
-v -0.143764 0.001888 -0.387572
-s off
-f 69 70 72 71
-o Cylinder.022_Cylinder.028
-v -0.284715 -0.532294 -0.921754
-v -0.143764 -0.532294 -0.921754
-v -0.284715 -0.375835 -1.299477
-v -0.143764 -0.375835 -1.299477
-s off
-f 75 76 74 73
-o Cylinder.021_Cylinder.027
-v -0.228049 0.094044 0.232279
-v -0.200846 0.094044 0.232279
-v -0.228049 0.001357 0.139591
-v -0.200846 0.001357 0.139591
-s off
-f 77 78 80 79
-o Cylinder.020_Cylinder.026
-v -0.228049 0.001357 0.324967
-v -0.200846 0.001357 0.324967
-v -0.228049 0.094044 0.232279
-v -0.200846 0.094044 0.232279
-s off
-f 81 82 84 83
-o Cylinder.019_Cylinder.025
-v -0.228049 -0.091331 0.232279
-v -0.200846 -0.091331 0.232279
-v -0.228049 0.001357 0.139591
-v -0.200846 0.001357 0.139591
-s off
-f 87 88 86 85
-o Cylinder.018_Cylinder.024
-v -0.284715 0.001888 -0.302225
-v -0.143764 0.001888 -0.302225
-v -0.284715 -0.375835 -0.145767
-v -0.143764 -0.375835 -0.145767
-s off
-f 89 90 92 91
-o Cylinder.017_Cylinder.023
-v -0.284715 0.379611 -0.145767
-v -0.143764 0.379611 -0.145767
-v -0.284715 0.001888 -0.302225
-v -0.143764 0.001888 -0.302225
-s off
-f 93 94 96 95
-o Cylinder.016_Cylinder.022
-v -0.284715 0.536069 0.231957
-v -0.143764 0.536069 0.231957
-v -0.284715 0.379611 -0.145767
-v -0.143764 0.379611 -0.145767
-s off
-f 97 98 100 99
-o Cylinder.015_Cylinder.021
-v -0.284715 0.379611 0.609680
-v -0.143764 0.379611 0.609680
-v -0.284715 0.536069 0.231957
-v -0.143764 0.536069 0.231957
-s off
-f 101 102 104 103
-o Cylinder.014_Cylinder.020
-v -0.284715 0.001888 0.766138
-v -0.143764 0.001888 0.766138
-v -0.284715 0.379611 0.609680
-v -0.143764 0.379611 0.609680
-s off
-f 105 106 108 107
-o Cylinder.013_Cylinder.019
-v -0.284715 -0.375836 0.609680
-v -0.143764 -0.375836 0.609680
-v -0.284715 0.001888 0.766138
-v -0.143764 0.001888 0.766138
-s off
-f 109 110 112 111
-o Cylinder.012_Cylinder.018
-v -0.284715 -0.532294 0.231957
-v -0.143764 -0.532294 0.231957
-v -0.284715 -0.375835 -0.145767
-v -0.143764 -0.375835 -0.145767
-s off
-f 115 116 114 113
-o Cube.010
-v 0.174998 0.795160 -1.885592
-v 0.174998 0.795160 1.052465
-v -0.566358 0.795160 1.052463
-v -0.566357 0.795160 -1.885593
-s off
-f 117 120 119 118
-o Cube.009
-v 0.174998 -0.795160 1.052464
-v -0.566357 -0.795160 1.052464
-v 0.174998 0.795160 1.052465
-v -0.566358 0.795160 1.052463
-s off
-f 121 123 124 122
-o Cube.008
-v 0.174998 -0.795160 -1.885592
-v -0.566357 -0.795160 -1.885593
-v 0.174998 0.795160 -1.885592
-v -0.566357 0.795160 -1.885593
-s off
-f 127 125 126 128
-o Cube.007
-v 0.385293 1.000000 -1.659334
-v 0.385293 1.000000 1.659336
-v -0.385293 1.000000 1.659335
-v -0.385293 1.000000 -1.659335
-s off
-f 129 132 131 130
-o Cube.006_Cube.003
-v 0.385293 -1.000000 1.659335
-v -0.385293 -1.000000 1.659335
-v 0.385293 1.000000 1.659336
-v -0.385293 1.000000 1.659335
-s off
-f 133 135 136 134
-o Cube.005_Cube.002
-v 0.385293 -1.000000 -1.659335
-v -0.385293 -1.000000 -1.659336
-v 0.385293 1.000000 -1.659334
-v -0.385293 1.000000 -1.659335
-s off
-f 139 137 138 140
-o Cylinder.011_Cylinder.017
-v -0.027690 -0.583185 2.032909
-v -0.027690 -0.583185 1.240898
-v -0.056686 -0.672427 2.032909
-v -0.056686 -0.672427 1.240898
-s off
-f 141 142 144 143
-o Cylinder.010_Cylinder.016
-v 0.066144 -0.583185 2.032909
-v 0.066144 -0.583185 1.240898
-v -0.027690 -0.583185 2.032909
-v -0.027690 -0.583185 1.240898
-s off
-f 145 146 148 147
-o Cylinder.009_Cylinder.015
-v 0.095141 -0.672427 2.032909
-v 0.095141 -0.672427 1.240898
-v 0.066144 -0.583185 2.032909
-v 0.066144 -0.583185 1.240898
-s off
-f 149 150 152 151
-o Cylinder.008_Cylinder.014
-v 0.019227 -0.727581 2.032909
-v 0.019227 -0.727581 1.240898
-v -0.056686 -0.672427 2.032909
-v -0.056686 -0.672427 1.240898
-s off
-f 155 156 154 153
-o Cylinder.005_Cylinder.013
-v 0.060427 -0.621554 4.196342
-v 0.060427 -0.621554 1.846573
-v -0.022749 -0.621554 4.196342
-v -0.022749 -0.621554 1.846573
-s off
-f 157 158 160 159
-o Cylinder.002_Cylinder.012
-v 0.018839 -0.693586 4.196342
-v 0.018839 -0.693586 1.846573
-v -0.022749 -0.621554 4.196342
-v -0.022749 -0.621554 1.846573
-s off
-f 163 164 162 161
-o Cylinder.001_Cylinder.010
-v -0.228049 -0.091331 0.232279
-v -0.228049 0.001357 0.324967
-v -0.200846 0.001357 0.324967
-v -0.200846 -0.091331 0.232279
-s off
-f 165 168 167 166
-o Cylinder_Cylinder.004
-v 0.019227 -0.727581 2.032909
-v 0.095141 -0.672427 2.032909
-v 0.095141 -0.672427 1.240898
-v 0.019227 -0.727581 1.240898
-s off
-f 169 172 171 170
-o Cylinder.006_Cylinder
-v 0.018839 -0.693586 4.196342
-v 0.060427 -0.621554 4.196342
-v 0.060427 -0.621554 1.846573
-v 0.018839 -0.693586 1.846573
-s off
-f 173 176 175 174
-o Cube
-v 0.385293 -1.000000 -1.659335
-v 0.385293 -1.000000 1.659335
-v -0.385293 -1.000000 -1.659336
-v -0.385293 -1.000000 1.659335
-s off
-f 177 178 180 179
-o Cube.001
-v 0.174998 -0.795160 -1.885592
-v 0.174998 -0.795160 1.052464
-v -0.566357 -0.795160 -1.885593
-v -0.566357 -0.795160 1.052464
-s off
-f 181 182 184 183
-o Cube.004
-v 0.091529 0.909476 -0.860161
-v 0.091529 0.909476 -0.592698
-v -0.069741 0.909476 -0.860161
-v -0.069741 0.909476 -0.592698
-s off
-f 185 186 188 187
-o Cube.002_Cube.005
-v 0.091529 0.909476 -1.266488
-v 0.091529 0.909476 -0.999024
-v -0.069741 0.909476 -1.266488
-v -0.069741 0.909476 -0.999024
-s off
-f 189 190 192 191
-o Cube.003_Cube.006
-v 0.091529 0.909476 -0.453835
-v 0.091529 0.909476 -0.186371
-v -0.069741 0.909476 -0.453835
-v -0.069741 0.909476 -0.186371
-s off
-f 193 194 196 195
-o Cylinder.003_Cylinder.005
-v -0.284715 -0.532294 0.231957
-v -0.284715 -0.375836 0.609680
-v -0.143764 -0.375836 0.609680
-v -0.143764 -0.532294 0.231957
-s off
-f 197 200 199 198
-o Cylinder.004_Cylinder.007
-v -0.284715 -0.532294 -0.921754
-v -0.284715 -0.375836 -0.544030
-v -0.143764 -0.375836 -0.544030
-v -0.143764 -0.532294 -0.921754
-s off
-f 201 204 203 202
-o Cylinder.007_Cylinder.011
-v -0.228049 -0.091331 -0.921450
-v -0.228049 0.001357 -0.828762
-v -0.200846 0.001357 -0.828762
-v -0.200846 -0.091331 -0.921450
-s off
-f 205 208 207 206
+f 17 18 20 19
+f 19 20 22 21
+f 21 22 24 23
+f 23 24 18 17
 `;

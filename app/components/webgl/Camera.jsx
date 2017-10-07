@@ -36,6 +36,8 @@ class Camera extends Component {
   }
 
   render() {
+    this.lookAt();
+    this.perspective();
     return Children.map(this.props.children,
       (child) => cloneElement(child, {
         view: this.view.get(),

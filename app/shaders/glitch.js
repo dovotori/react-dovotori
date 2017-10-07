@@ -27,15 +27,20 @@ vec4 rgbShift(vec2 p , vec4 shift) {
   vec2 gs = vec2(shift.y, -shift.z);
   vec2 bs = vec2(shift.z, -shift.x);
 
-  float r = texture2D(tex0, p + rs).x;
-  float g = texture2D(tex0, p + gs).y;
-  float b = texture2D(tex0, p + bs).z;
+  return vec4(
+    texture2D(tex0, p + rs).x,
+    texture2D(tex0, p + gs).y,
+    texture2D(tex0, p + bs).z,
+    1.0
+  );
+}
 
+float getAlpha(vec4 color) {
   float limit = 0.0;
-  if (r > limit || g > limit || b > limit) {
-    return vec4(r, g, b, 1.0);
+  if (color.x > limit || color.y > limit || color.z > limit) {
+    return 1.0;
   } else {
-    return vec4(0.0);
+    return 0.0;
   }
 }
 
@@ -62,8 +67,7 @@ void main( ) {
     ) * vec4(amplitude, amplitude, amplitude, 1.0);
 
   color += rgbShift(fragTexture, shift);
-	gl_FragColor = color;
-	// gl_FragColor = vec4(vec3(cos(time)), 1.0);
+	gl_FragColor = vec4(color.xyz, getAlpha(color));
 }
   `
 };

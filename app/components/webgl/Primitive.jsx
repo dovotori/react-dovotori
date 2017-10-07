@@ -143,7 +143,8 @@ class Primitive extends Component {
 
 
 	render() {
-		const { gl, program, color } = this.context;
+		const { gl, program } = this.context;
+		const { color } = this.props;
 
 		if (program) {
 			this.setModelMatrice(gl, program);
@@ -174,5 +175,3 @@ Primitive.contextTypes = {
 };
 
 export default Primitive;
-
-
