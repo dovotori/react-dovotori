@@ -9,7 +9,7 @@ const Styled = styled.div`
   width: 100%;
   // background: ${p => p.theme.gradient};
   background: ${p => p.theme.dark};
-  border-top: solid 1px ${p => p.theme.primary};
+  border-top: solid 2px ${p => p.theme.primary};
 `;
 
 class Footer extends Component {

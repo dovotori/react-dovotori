@@ -37,6 +37,8 @@ canvas {
   max-height: ${p => p.height}px;
   width: 100%;
   height: auto;
+  min-width: 400px;
+  min-height: 400px;
 }
 `;
 
@@ -99,6 +101,9 @@ class AnimatedBackground extends Component {
 
     this.amplitude = 0;
     this.toggleAmpli = false;
+
+    this.offsetX = 0;
+    this.targetOffsetX = 0;
   }
 
 
@@ -127,6 +132,9 @@ class AnimatedBackground extends Component {
       x: e.clientX,
       y: e.clientY,
     };
+
+    const relX = map(this.coor.x / window.innerWidth, 0, 1, 0, Math.PI);
+    this.targetOffsetX = Math.cos(relX);
   }
 
 
@@ -146,11 +154,10 @@ class AnimatedBackground extends Component {
 
 
   onAnimate() {
-    const relX = map(this.coor.x / window.innerWidth, 0, 1, 0, Math.PI);
-    const offsetX = Math.cos(relX);
+    this.offsetX += (this.targetOffsetX - this.offsetX) * 0.04;
 
     for (let i = 0; i < this.models.length; i++) {
-      const variantX = offsetX * (i - (this.models.length / 2));
+      const variantX = this.offsetX * (i - (this.models.length / 2));
       this.models[i].identity();
       this.models[i].translate(variantX, 0, 0);
     }

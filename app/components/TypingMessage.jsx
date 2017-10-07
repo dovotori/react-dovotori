@@ -1,6 +1,18 @@
 /* global window */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+import { blink } from '../themes/animations';
+
+const Cursor = styled.span`
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  margin-left: 4px;
+  animation: .4s infinite ${blink};
+`;
 
 class TypingMessage extends Component {
   constructor(props) {
@@ -72,7 +84,10 @@ class TypingMessage extends Component {
   render() {
     const { message } = this.props;
     return (
-      <p ref={d => this.div = d} />
+      <p>
+        <span ref={d => this.div = d} />
+        <Cursor />
+      </p>
     );
   }
 }

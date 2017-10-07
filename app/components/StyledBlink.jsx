@@ -24,11 +24,8 @@ const inverseblink = keyframes`
 
 const StyledBlink = styled.div`
   svg {
-    display: block;
-    margin: 0 auto;
     fill: ${p => p.theme.back};
     color: ${p => p.theme.primary};
-    height: auto;
 
     .blink {
       animation: ${blink} 4s linear infinite;

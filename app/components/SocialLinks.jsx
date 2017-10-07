@@ -14,6 +14,8 @@ const Styled = styled.div`
   perspective: 1000px;
 
   svg {
+    width: 50%;
+    height: 50%;
     display: inline-block;
     margin: 0 20px;
     fill: #fff;
@@ -24,6 +26,19 @@ const Styled = styled.div`
       transform: scale(2);
     }
   }
+`;
+
+const FlexItem = styled.div`
+  width: 25%;
+  max-width: 120px;
+`;
+
+const P = styled.div`
+  color: ${p => p.theme.dark};
+  letter-spacing: 0.15em;
+  font-size: 0.7em;
+  font-weight: 100;
+  text-align: center;
 `;
 
 
@@ -88,12 +103,12 @@ class SocialLinks extends Component {
       {interpolatingStyles =>
         <Styled>
           {interpolatingStyles.map((style, i) =>
-            <div key={i} style={{
+            <FlexItem key={i} style={{
               transform: `translateZ(${(1 - style.h) * -100}vw)`,
-              opacity: style.h
+              opacity: style.h,
             }}>
-              {links[i]}
-            </div>)
+              <P>{links[i]}</P>
+            </FlexItem>)
           }
         </Styled>
       }

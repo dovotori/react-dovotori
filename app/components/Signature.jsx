@@ -6,7 +6,7 @@ import StyledBlink from './StyledBlink';
 
 const Styled = styled.div`
   svg {
-    width: 50%;
+    width: 100%;
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { injectGlobal } from 'styled-components';
+import { injectGlobal, withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Routes from './Routes';
@@ -23,6 +23,11 @@ class App extends Component {
   // shouldComponentUpdate() {
   //   return false;
   // }
+
+  componentDidMount() {
+    const { theme } = this.props;
+    console.log('%c Hello JS Coders! ', `background: ${theme.primary}; color: #000`);
+  }
 
   render() {
     return (<div>
@@ -48,4 +53,4 @@ App.propTypes = {
 App.defaultProps = {
 };
 
-export default App;
+export default withTheme(App);

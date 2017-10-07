@@ -128,7 +128,7 @@ vec4 glitchRVB() {
           2.0 * SPEED * time / 25.0
         )
       ), 16.0
-    ) * vec4(vec3(amplitude * 0.2), 1.0);
+    ) * vec4(vec3(amplitude * 0.4), 1.0);
 
   color += rgbShift(fragTexture, shift);
   return color;

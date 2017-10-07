@@ -10,13 +10,6 @@ const Tooltip = styled.div`
   top: 200%;
   left: 0;
   width: 100%;
-
-  color: ${p => p.theme.dark};
-  overflow: hidden;
-  letter-spacing: 0.15em;
-  font-weight: 100;
-  font-size: 8px;
-  text-align: center;
 `;
 
 function withTooltip(ComponentToWrap, message) {
