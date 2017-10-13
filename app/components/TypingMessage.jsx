@@ -63,7 +63,7 @@ class TypingMessage extends Component {
             this.tempTxt += message.charAt(this.cptLetter);
           }
           this.div.innerHTML = this.tempTxt;
-          this.cptLetter++;
+          this.cptLetter+= 1;
           this.time = Date.now();
         }
       }

@@ -17,11 +17,11 @@ class Vec3 {
   limiter(max) {
     const longueurCarre = (this.x * this.x) + (this.y * this.y) + (this.z * this.z);
 
-    if( ( longueurCarre > max * max ) && ( longueurCarre > 0 ) ){
-        const ratio = max / Math.sqrt( longueurCarre );
-        this.x *= ratio;
-        this.y *= ratio;
-        this.z *= ratio;
+    if ((longueurCarre > max * max) && (longueurCarre > 0)) {
+      const ratio = max / Math.sqrt(longueurCarre);
+      this.x *= ratio;
+      this.y *= ratio;
+      this.z *= ratio;
     }
   }
 
@@ -30,7 +30,7 @@ class Vec3 {
     return new Vec3(
       this.y * v.z - this.z * v.y,
       this.z * v.x - this.x * v.z,
-      this.x * v.y - this.y * v.x
+      this.x * v.y - this.y * v.x,
     );
   }
 
@@ -51,11 +51,11 @@ class Vec3 {
     return new Vec3(
       v.x - this.x,
       v.y - this.y,
-      v.z - this.z
+      v.z - this.z,
     );
   }
 
-  //////////////////// OPERATOR ///////////////////////
+  // ////////////////// OPERATOR ///////////////////////
 
   set(x, y, z) {
     if (x != null) { this.x = x; }
@@ -73,7 +73,7 @@ class Vec3 {
     return new Vec3(
       this.x + v.x,
       this.y + v.y,
-      this.z + v.z
+      this.z + v.z,
     );
   }
 
@@ -81,7 +81,7 @@ class Vec3 {
     return new Vec3(
       this.x + valeur,
       this.y + valeur,
-      this.z + valeur
+      this.z + valeur,
     );
   }
 
@@ -89,7 +89,7 @@ class Vec3 {
     return new Vec3(
       this.x - v.x,
       this.y - v.y,
-      this.z - v.z
+      this.z - v.z,
     );
   }
 
@@ -97,7 +97,7 @@ class Vec3 {
     return new Vec3(
       this.x - valeur,
       this.y - valeur,
-      this.z - valeur
+      this.z - valeur,
     );
   }
 
@@ -105,15 +105,15 @@ class Vec3 {
     return new Vec3(
       this.x * valeur,
       this.y * valeur,
-      this.z * valeur
+      this.z * valeur,
     );
   }
 
   multiplierMatrice(matrice) {
     return new Vec3(
-      matrice.d[0]*this.x + matrice.d[1]*this.y + matrice.d[2]*this.z,
-      matrice.d[3]*this.x + matrice.d[4]*this.y + matrice.d[5]*this.z,
-      matrice.d[6]*this.x + matrice.d[7]*this.y + matrice.d[8]*this.z
+      matrice.d[0] * this.x + matrice.d[1] * this.y + matrice.d[2] * this.z,
+      matrice.d[3] * this.x + matrice.d[4] * this.y + matrice.d[5] * this.z,
+      matrice.d[6] * this.x + matrice.d[7] * this.y + matrice.d[8] * this.z,
     );
   }
 
@@ -121,7 +121,7 @@ class Vec3 {
     return new Vec3(
       this.x * v.x,
       this.y * v.y,
-      this.z * v.z
+      this.z * v.z,
     );
   }
 
@@ -129,7 +129,7 @@ class Vec3 {
     return new Vec3(
       this.x / valeur,
       this.y / valeur,
-      this.z / valeur
+      this.z / valeur,
     );
   }
 
@@ -137,12 +137,12 @@ class Vec3 {
     return new Vec3(
       this.x / v.x,
       this.y / v.y,
-      this.z / v.z
+      this.z / v.z,
     );
   }
 
   distance(vec32) {
-      return Math.sqrt(((vec32.x - this.x)*(vec32.x - this.x)) + ((vec32.y - this.y)*(vec32.y - this.y)) + ((vec32.z - this.z)*(vec32.z - this.z)));
+    return Math.sqrt(((vec32.x - this.x) * (vec32.x - this.x)) + ((vec32.y - this.y) * (vec32.y - this.y)) + ((vec32.z - this.z) * (vec32.z - this.z)));
   }
 
   angleDegree(v) {
@@ -150,11 +150,11 @@ class Vec3 {
     const cosAngle = dot / (this.longueur() * v.longueur());
     const angleRadian = Math.acos(cosAngle);
     const angle = (angleRadian * 180) / Math.PI;
-    const sens = signe( (this.x * v.y) + (this.y * v.x) ); // sens de l'angle
+    const sens = signe((this.x * v.y) + (this.y * v.x)); // sens de l'angle
     return angle * (-sens);
   }
 
-  calculerNormale(v2,v3, sens) {
+  calculerNormale(v2, v3, sens) {
     const resultat = new Vec3();
     const U = new Vec3();
     const V = new Vec3();

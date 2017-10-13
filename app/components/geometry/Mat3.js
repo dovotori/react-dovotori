@@ -39,46 +39,44 @@ class Mat3 {
 
 
   set(valeur) {
-    for(let i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
       this.d[i] = valeur[i];
     }
   }
 
 
-  //////////////////////OPERATIONS//////////////////////
+  // ////////////////////OPERATIONS//////////////////////
 
   multiplier(matrice2) {
     const resultat = new Mat3();
-    for(let k = 0; k < 3; k++) {
-      for(let j = 0; j < 3; j++) {
-        for(let i = 0; i < 3; i++) {
-          resultat.d[3*j+k] += this.d[3*j+i] * matrice2.d[3*i+k];
+    for (let k = 0; k < 3; k++) {
+      for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < 3; i++) {
+          resultat.d[3 * j + k] += this.d[3 * j + i] * matrice2.d[3 * i + k];
         }
       }
     }
 
-    for(let i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
       this.d[i] = resultat.d[i];
     }
   }
 
 
   egale(matrice2) {
-    for(let i = 0; i < 9; i++)
-    {
+    for (let i = 0; i < 9; i++) {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
-
   }
 
 
-  ////////////////////// IMBRICATION //////////////////////
+  // //////////////////// IMBRICATION //////////////////////
 
   push() {
     this.empilement++;
     let cpt = 0;
-    for(let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++){
+    for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++) {
       this.sauvegardePrecedente[i] = this.d[cpt];
       cpt++;
     }
@@ -86,22 +84,21 @@ class Mat3 {
 
 
   pop() {
-    if(this.empilement > 0) {
+    if (this.empilement > 0) {
       let cpt = 0;
-      for(let i = (this.empilement-1) * 9; i < this.empilement * 9; i++) {
+      for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
         cpt++;
       }
       this.empilement--;
     } else {
-      console.log("pop de trop");
+      console.log('pop de trop');
     }
   }
 
 
-
-  ////////////////////// MODIFICATIONS //////////////////////
+  // //////////////////// MODIFICATIONS //////////////////////
 
   identity() {
     this.init();
@@ -115,7 +112,7 @@ class Mat3 {
     const ordre = new Float32Array(9);
     for (let j = 0; j < 3; j++) {
       for (let i = 0; i < 3; i++) {
-        ordre[3*i+j] = this.d[3*j+i];
+        ordre[3 * i + j] = this.d[3 * j + i];
       }
     }
 
@@ -127,10 +124,9 @@ class Mat3 {
     const copie = new Array(9);
     const det = this.getDeterminant();
 
-    if(Math.abs(det) < 0.0005)
-    {
+    if (Math.abs(det) < 0.0005) {
       this.identity();
-      console.log("Inversement impossible de la matrice");
+      console.log('Inversement impossible de la matrice');
       return;
     }
 

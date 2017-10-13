@@ -32,13 +32,13 @@ width: 100%;
 height: 100%;
 `;
 
-const Fade = ({ children, ...props }) => (
+const Fade = (props) => (
  <CSSTransition
    {...props}
    timeout={500}
    classNames="fade"
  >
-  {children}
+  {props.children}
  </CSSTransition>
 );
 

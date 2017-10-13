@@ -75,7 +75,7 @@ void main() {
 	// gl_FragColor = vec4(color, getAlpha(color));
 	gl_FragColor = texture2D(tex0, fragTexture);
 }
-`
+`,
 };
 
 export default fxaa;

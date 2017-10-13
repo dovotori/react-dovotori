@@ -42,7 +42,7 @@ class InteractionFloating extends Component {
 
   interact() {
     if (this.balise) {
-      this.cpt++;
+      this.cpt+= 1;
       const cos = Math.cos(this.cpt * 0.01);
       const sin = Math.sin(this.cpt * 0.01);
       const x = this.coor.x + (cos * 6);

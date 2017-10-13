@@ -21,7 +21,7 @@ class Signature extends Component {
   render() {
     return (<Styled>
       <StyledBlink>
-        <svg width="186" height="70" version="1.1" viewBox="0 -1 186 70" className="signature" filter="url(#blur)">
+        <svg width="186" height="70" version="1.1" viewBox="0 -1 186 70" className="signature">
           <path className="blink stroke" fill="currentColor" d="m66.1 35.7-1e-6 19.8-25.1-1e-6c-3.97 0-3.97-3.97-3.97-3.97v-15.9s0-3.97 3.97-3.97h21.2c3.97 0 3.97 3.97 3.97 3.97zm-22.5 0c-2.65 0-2.65 2.65-2.65 2.65l1e-6 13.2h18.5c2.65 0 2.65-2.65 2.65-2.65v-13.2z" />
           <path className="blink stroke" fill="currentColor" d="m99.2 3.97v29.1l-27.8 18.5s0 3.97 3.97 3.97l27.8-2e-6v-55.6s-3.97 0-3.97 3.97zm0 34.4v10.6s0 2.65-2.65 2.65h-17.2z" />
           <path className="inverse-blink" d="m184 55.6v-19.8c0-3.97-3.97-3.97-3.97-3.97h-23.8v23.8h3.97v-19.8h19.8v19.8z"/>

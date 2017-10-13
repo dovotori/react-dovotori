@@ -8,4 +8,4 @@ export const loadFile = (url, callback) => {
     }
   };
   xobj.send(null);
-}
+};

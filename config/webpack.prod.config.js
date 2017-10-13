@@ -2,8 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './app/index.jsx',
@@ -14,14 +14,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { presets: ['es2015', 'react'] },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['es2015', {'loose': true, 'modules': false}]
+              ]
+            }
+          }
+        ]
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url-loader?name=/img/[name].[ext]',
+        use: ['url-loader?name=/img/[name].[ext]'],
       },
     ],
   },
@@ -30,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Dovotori',
+      title: 'dovotori',
       filename: 'index.html',
       inject: 'body',
       template: path.resolve(__dirname, '../templates/index.ejs'),
@@ -50,11 +58,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSPlugin({ uglifyOptions: {
       beautify: false,
       mangle: {
         screw_ie8: true,
@@ -62,16 +66,9 @@ module.exports = {
       },
       compress: {
         screw_ie8: true,
-        warnings: true,
+        warnings: false,
       },
       comments: false,
-    }),
-    new CompressionPlugin({
-      test: /\.(js|html)$/,
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
+    } })
   ],
 };

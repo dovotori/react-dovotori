@@ -69,7 +69,7 @@ void main( ) {
   color += rgbShift(fragTexture, shift);
 	gl_FragColor = vec4(color.xyz, getAlpha(color));
 }
-  `
+  `,
 };
 
 export default glitch;

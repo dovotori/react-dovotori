@@ -60,8 +60,8 @@ class Texture extends Component {
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y+= 1) {
+      for (let x = 0; x < width; x+= 1) {
         pixel[cptRVBA] = Math.random() * 255;
         pixel[cptRVBA+1] = Math.random() * 255;
         pixel[cptRVBA+2] = Math.random() * 255;
@@ -90,8 +90,8 @@ class Texture extends Component {
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y+= 1) {
+      for (let x = 0; x < width; x+= 1) {
         pixel[cptRVBA] = y%255;
         pixel[cptRVBA+1] = x%255;
         pixel[cptRVBA+2] = x%255;
@@ -120,10 +120,10 @@ class Texture extends Component {
     let pixel = new Uint8Array(b);
     let cpt = 0;
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y+= 1) {
+      for (let x = 0; x < width; x+= 1) {
         pixel[cpt] = random(0, 255);
-        cpt++;
+        cpt+= 1;
       }
     }
 

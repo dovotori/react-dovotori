@@ -30,7 +30,7 @@ class Home extends Component {
 
   render() {
     return (<Styled>
-      <AnimatedBackground />
+      {<AnimatedBackground />}
       <WrapSignature>
         <Signature />
       </WrapSignature>

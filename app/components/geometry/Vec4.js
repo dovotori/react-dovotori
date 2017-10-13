@@ -8,7 +8,7 @@ class Vec4 {
   normaliser() {
     const longueur = this.longueur();
 
-    if(longueur != 0.0) {
+    if (longueur != 0.0) {
       this.x /= longueur;
       this.y /= longueur;
       this.z /= longueur;
@@ -28,11 +28,11 @@ class Vec4 {
 
 
   longueur() {
-    return Math.sqrt( (this.x * this.x) + (this.y * this.y) + (this.z * this.z) + (this.w * this.w) );
+    return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z) + (this.w * this.w));
   }
 
 
-  //////////////////// OPERATOR ///////////////////////
+  // ////////////////// OPERATOR ///////////////////////
 
   set(x, y, z, w) {
     if (x != null) { this.x = x; }
@@ -141,8 +141,8 @@ class Vec4 {
 
 
   distance(vec42) {
-    return Math.sqrt(((vec42.x - this.x)*(vec42.x - this.x)) + ((vec42.y - this.y)*(vec42.y - this.y))
-      + ((vec42.z - this.z)*(vec42.z - this.z)) + ((vec42.w - this.w)*(vec42.w - this.w)));
+    return Math.sqrt(((vec42.x - this.x) * (vec42.x - this.x)) + ((vec42.y - this.y) * (vec42.y - this.y))
+      + ((vec42.z - this.z) * (vec42.z - this.z)) + ((vec42.w - this.w) * (vec42.w - this.w)));
   }
 }
 

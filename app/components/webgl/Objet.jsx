@@ -12,7 +12,7 @@ class Objet extends Component {
 
     this.vbo = new Array(5);
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i += 1) {
       this.vbo[i] = null;
     }
 	}

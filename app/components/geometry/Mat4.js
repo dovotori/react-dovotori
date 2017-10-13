@@ -13,13 +13,13 @@ class Mat4 {
 
   init() {
     this.reset();
-    this.sauvegardePrecedente = new Array();
+    this.sauvegardePrecedente = [];
     this.empilement = 0;
   }
 
 
   reset() {
-    for(let i = 0; i < 16; i++) {
+    for(let i = 0; i < 16; i+= 1) {
       this.d[i] = 0.0;
     }
   }
@@ -72,22 +72,22 @@ class Mat4 {
 
   multiplier(matrice2) {
     const resultat = new Mat4();
-    for(let k = 0; k < 4; k++) {
-      for(let j = 0; j < 4; j++) {
-        for(let i = 0; i < 4; i++) {
+    for(let k = 0; k < 4; k+= 1) {
+      for(let j = 0; j < 4; j+= 1) {
+        for(let i = 0; i < 4; i+= 1) {
           resultat.d[4*j+k] += this.d[4*j+i] * matrice2.d[4*i+k];
         }
       }
     }
 
-    for(let i = 0; i < 16; i++) {
+    for(let i = 0; i < 16; i+= 1) {
       this.d[i] = resultat.d[i];
     }
   }
 
 
   egale(matrice2) {
-    for(let i = 0; i < 16; i++) {
+    for(let i = 0; i < 16; i+= 1) {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
@@ -97,11 +97,11 @@ class Mat4 {
   ////////////////////// IMBRICATION //////////////////////
 
   push() {
-    this.empilement++;
+    this.empilement+= 1;
     let cpt = 0;
-    for(let i = (this.empilement-1)*16; i < this.empilement*16; i++) {
+    for(let i = (this.empilement-1)*16; i < this.empilement*16; i+= 1) {
       this.sauvegardePrecedente[i] = this.d[cpt];
-      cpt++;
+      cpt+= 1;
     }
   }
 
@@ -109,10 +109,10 @@ class Mat4 {
   pop() {
     if(this.empilement > 0) {
       let cpt = 0;
-      for (let i = (this.empilement-1) * 16; i < this.empilement * 16; i++) {
+      for (let i = (this.empilement-1) * 16; i < this.empilement * 16; i+= 1) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
-        cpt++;
+        cpt+= 1;
       }
       this.empilement--;
     } else {
@@ -231,10 +231,10 @@ class Mat4 {
   transpose() {
     const ordre = new Float32Array(16);
     let cpt = 0;
-    for(let j = 0; j < 4; j++) {
-      for(let i = 0; i < 4; i++) {
+    for(let j = 0; j < 4; j+= 1) {
+      for(let i = 0; i < 4; i+= 1) {
         ordre[cpt] = this.d[(i*4)+j];
-        cpt++;
+        cpt+= 1;
       }
     }
     return ordre;

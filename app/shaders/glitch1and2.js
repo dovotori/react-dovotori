@@ -162,7 +162,7 @@ void main( ) {
 
 	gl_FragColor = vec4(color.xyz, getAlpha(color.xyz));
 }
-  `
+  `,
 };
 
 export default glitch1and2;

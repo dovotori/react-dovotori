@@ -15,12 +15,6 @@ import App from './containers/App';
 
 const store = configureStore();
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update'); // eslint-disable-line
-
-//   whyDidYouUpdate(React);
-// }
-
 const render = Component => {
   ReactDOM.render(
     <AppContainer>

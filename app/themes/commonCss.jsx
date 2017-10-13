@@ -8,9 +8,27 @@ const commonCss = `
   box-sizing: border-box;
 }
 
-html, body, #dovotori-app {
+html,
+body,
+#dovotori-app {
   width: 100%;
   height: 100%;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+  outline: 0;
+}
+
+a:focus,
+button:focus {
+  text-decoration: none;
+}
+
+button::-moz-focus-inner {
+  border: 0;
 }
 
 body {
@@ -19,15 +37,6 @@ body {
   background: ${theme.grey};
   background-attachment: fixed;
   font-family: ${theme.font1};
-}
-
-#dovotori-app {
-  // perspective: 1000px;
-  // margin: 40px;
-}
-
-.route-transition > div {
-  transition: transform 200ms ${theme.elastic};
 }
 `;
 

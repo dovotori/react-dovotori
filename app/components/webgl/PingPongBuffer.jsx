@@ -26,7 +26,7 @@ class Effect extends Component {
 
 
   swap() {
-    if(this.currentFbo < 1){ this.currentFbo++; } else { this.currentFbo = 0; }
+    if(this.currentFbo < 1){ this.currentFbo+= 1; } else { this.currentFbo = 0; }
   }
 }
 
