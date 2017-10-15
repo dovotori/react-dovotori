@@ -35,9 +35,11 @@ class AnimationAppear extends Component {
   }
 }
 
-AnimationAppear.propTypes = {
-  children: PropTypes.node,
-};
+if (process.env.NODE_ENV !== 'production') {
+  AnimationAppear.propTypes = {
+    children: PropTypes.node,
+  };
+}
 
 AnimationAppear.defaultProps = {
   children: null,

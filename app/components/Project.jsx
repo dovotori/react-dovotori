@@ -21,11 +21,13 @@ class ProjectComponent extends Component {
   }
 }
 
-ProjectComponent.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  ProjectComponent.propTypes = {
+    className: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+  };
+}
 
 ProjectComponent.defaultProps = {
   className: '',

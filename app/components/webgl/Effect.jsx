@@ -53,11 +53,13 @@ class Effect extends Component {
   }
 }
 
-Effect.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Effect.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  };
+}
 
 Effect.defaultProps = {
   children: null,

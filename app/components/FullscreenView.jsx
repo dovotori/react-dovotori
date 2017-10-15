@@ -57,10 +57,12 @@ class FullscreenView extends Component {
   }
 }
 
-FullscreenView.propTypes = {
-  children: PropTypes.node,
-  in: PropTypes.bool,
-};
+if (process.env.NODE_ENV !== 'production') {
+  FullscreenView.propTypes = {
+    children: PropTypes.node,
+    in: PropTypes.bool,
+  };
+}
 
 FullscreenView.defaultProps = {
   children: null,

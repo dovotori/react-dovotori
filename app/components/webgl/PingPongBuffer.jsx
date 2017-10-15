@@ -30,12 +30,13 @@ class Effect extends Component {
   }
 }
 
-
-PingPongBuffer.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  PingPongBuffer.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  };
+}
 
 PingPongBuffer.defaultProps = {
   children: null,

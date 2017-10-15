@@ -10,10 +10,10 @@ class Mat3 {
   }
 
   init() {
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i+= 1) {
       this.d[i] = 0.0;
     }
-    this.sauvegardePrecedente = new Array();
+    this.sauvegardePrecedente = [];
     this.empilement = 0;
   }
 
@@ -39,66 +39,69 @@ class Mat3 {
 
 
   set(valeur) {
-    for (let i = 0; i < 9; i++) {
+    for(let i = 0; i < 9; i+= 1) {
       this.d[i] = valeur[i];
     }
   }
 
 
-  // ////////////////////OPERATIONS//////////////////////
+  //////////////////////OPERATIONS//////////////////////
 
   multiplier(matrice2) {
     const resultat = new Mat3();
-    for (let k = 0; k < 3; k++) {
-      for (let j = 0; j < 3; j++) {
-        for (let i = 0; i < 3; i++) {
-          resultat.d[3 * j + k] += this.d[3 * j + i] * matrice2.d[3 * i + k];
+    for(let k = 0; k < 3; k+= 1) {
+      for(let j = 0; j < 3; j+= 1) {
+        for(let i = 0; i < 3; i+= 1) {
+          resultat.d[3*j+k] += this.d[3*j+i] * matrice2.d[3*i+k];
         }
       }
     }
 
-    for (let i = 0; i < 9; i++) {
+    for(let i = 0; i < 9; i+= 1) {
       this.d[i] = resultat.d[i];
     }
   }
 
 
   egale(matrice2) {
-    for (let i = 0; i < 9; i++) {
+    for(let i = 0; i < 9; i+= 1)
+    {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
+
   }
 
 
-  // //////////////////// IMBRICATION //////////////////////
+  ////////////////////// IMBRICATION //////////////////////
 
   push() {
-    this.empilement++;
+    this.empilement+= 1;
     let cpt = 0;
-    for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++) {
+    for(let i = (this.empilement - 1) * 9; i < this.empilement * 9; i+= 1){
       this.sauvegardePrecedente[i] = this.d[cpt];
-      cpt++;
+      cpt+= 1;
     }
   }
 
 
   pop() {
-    if (this.empilement > 0) {
+    if(this.empilement > 0) {
       let cpt = 0;
-      for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i++) {
+      for(let i = (this.empilement-1) * 9; i < this.empilement * 9; i+= 1) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
-        cpt++;
+        cpt+= 1;
       }
       this.empilement--;
     } else {
-      console.log('pop de trop');
+      console.log("pop de trop");
     }
   }
 
 
-  // //////////////////// MODIFICATIONS //////////////////////
+
+  ////////////////////// MODIFICATIONS //////////////////////
 
   identity() {
     this.init();
@@ -110,9 +113,9 @@ class Mat3 {
 
   transpose() {
     const ordre = new Float32Array(9);
-    for (let j = 0; j < 3; j++) {
-      for (let i = 0; i < 3; i++) {
-        ordre[3 * i + j] = this.d[3 * j + i];
+    for (let j = 0; j < 3; j+= 1) {
+      for (let i = 0; i < 3; i+= 1) {
+        ordre[3*i+j] = this.d[3*j+i];
       }
     }
 
@@ -124,9 +127,10 @@ class Mat3 {
     const copie = new Array(9);
     const det = this.getDeterminant();
 
-    if (Math.abs(det) < 0.0005) {
+    if(Math.abs(det) < 0.0005)
+    {
       this.identity();
-      console.log('Inversement impossible de la matrice');
+      console.log("Inversement impossible de la matrice");
       return;
     }
 
@@ -142,7 +146,7 @@ class Mat3 {
     copie[7] = -(this.d[0] * this.d[7] - this.d[6] * this.d[1]) / det;
     copie[8] = this.d[0] * this.d[4] - this.d[1] * this.d[3] / det;
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i+= 1) {
       this.d[i] = copie[i];
     }
   }

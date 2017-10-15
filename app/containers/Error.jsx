@@ -18,13 +18,15 @@ class Error extends Component {
   }
 }
 
-Error.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Error.propTypes = {
+  };
+}
 
 Error.defaultProps = {
 };
 
 export default compose(
-  connect(() => (<Error />)),
+  connect,
   withColumn,
 )(() => (<Error />));

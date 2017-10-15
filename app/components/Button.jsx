@@ -20,10 +20,12 @@ class ButtonComponent extends Component {
   }
 }
 
-ButtonComponent.propTypes = {
-  label: PropTypes.string,
-  className: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  ButtonComponent.propTypes = {
+    label: PropTypes.string,
+    className: PropTypes.string,
+  };
+}
 
 ButtonComponent.defaultProps = {
   label: '',

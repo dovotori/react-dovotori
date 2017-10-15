@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
 import withView from './withView';
+import { media } from '../themes/theme';
 
 
 const Styled = styled.div`
@@ -15,12 +16,17 @@ const WrapSignature = styled.div`
   top: 50%;
   right: 50%;
   width: 50%;
-  max-width: 200px;
+  max-width: 120px;
+  transform: translate3d(0, -50%, 0);
 
   svg {
     width: 100%;
     height: auto;
   }
+
+  ${media.mobile`
+    transform: translate3d(50%, -50%, 0);
+  `}
 `;
 
 class Home extends Component {
@@ -30,7 +36,7 @@ class Home extends Component {
 
   render() {
     return (<Styled>
-      {<AnimatedBackground />}
+      <AnimatedBackground />
       <WrapSignature>
         <Signature />
       </WrapSignature>
@@ -38,8 +44,10 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Home.propTypes = {
+  };
+}
 
 Home.defaultProps = {};
 

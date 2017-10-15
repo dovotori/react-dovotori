@@ -63,26 +63,22 @@ class TypingMessage extends Component {
             this.tempTxt += message.charAt(this.cptLetter);
           }
           this.div.innerHTML = this.tempTxt;
-          this.cptLetter+= 1;
+          this.cptLetter += 1;
           this.time = Date.now();
         }
       }
       window.requestAnimationFrame(this.anim);
     } else {
-      let nextInterval;
       if (this.isBackward) {
         this.div.innerHTML = '';
-        nextInterval = this.time;
       } else {
         this.div.innerHTML = message;
-        nextInterval = nextCallTime;
       }
-      window.setTimeout(this.restart, nextInterval);
+      window.setTimeout(this.restart, nextCallTime);
     }
   }
 
   render() {
-    const { message } = this.props;
     return (
       <p>
         <span ref={d => this.div = d} />
@@ -92,11 +88,13 @@ class TypingMessage extends Component {
   }
 }
 
-TypingMessage.propTypes = {
-  message: PropTypes.string,
-  intervalLetter: PropTypes.number,
-  nextCallTime: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  TypingMessage.propTypes = {
+    message: PropTypes.string,
+    intervalLetter: PropTypes.number,
+    nextCallTime: PropTypes.number,
+  };
+}
 
 TypingMessage.defaultProps = {
   message: '',

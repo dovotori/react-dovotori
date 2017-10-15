@@ -15,9 +15,11 @@ class Svg extends Component {
   }
 }
 
-Svg.propTypes = {
-  useid: PropTypes.string.isRequired,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Svg.propTypes = {
+    useid: PropTypes.string.isRequired,
+  };
+}
 
 Svg.defaultProps = {};
 

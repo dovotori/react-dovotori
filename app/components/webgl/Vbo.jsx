@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 class Vbo extends Component {
   constructor(props) {
-		super(props);
+    super(props);
 
-    this.modeCalcul;
-		this.vbo = new Array(5);
+    this.modeCalcul = null;
+    this.vbo = new Array(5);
 
-		for (let i = 0; i < 5; i += 1) {
-			this.vbo[i] = null;
-		}
+    for (let i = 0; i < 5; i += 1) {
+      this.vbo[i] = null;
+    }
 	}
 
 
@@ -37,12 +37,12 @@ class Vbo extends Component {
   }
 
 
-	render() {
+  render() {
     const { gl, program } = this.context;
 
-    if(program.vLoc > -1) {
-			gl.enableVertexAttribArray(program.vLoc);
-			gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
+    if (program.vLoc > -1) {
+      gl.enableVertexAttribArray(program.vLoc);
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0]);
       gl.vertexAttribPointer(program.vLoc, 3, gl.FLOAT, false, 0, 0);
 
       return this.props.children;
@@ -51,10 +51,12 @@ class Vbo extends Component {
   }
 }
 
-Vbo.propTypes = {
-  children: PropTypes.node,
-	points: PropTypes.array,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Vbo.propTypes = {
+    children: PropTypes.node,
+    points: PropTypes.array,
+  };
+}
 
 Vbo.defaultProps = {
   children: null,

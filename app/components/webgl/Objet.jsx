@@ -92,13 +92,15 @@ class Objet extends Component {
   }
 }
 
-Objet.propTypes = {
-  modeCalcul: PropTypes.number,
-	model: PropTypes.object,
-	mode: PropTypes.string,
-	indices: PropTypes.array,
-	color: PropTypes.array,
-};
+if (process.env.NODE_ENV !== 'production') {
+	Objet.propTypes = {
+		modeCalcul: PropTypes.number,
+		model: PropTypes.object,
+		mode: PropTypes.string,
+		indices: PropTypes.array,
+		color: PropTypes.array,
+	};
+}
 
 Objet.defaultProps = {
   modeCalcul: 0,

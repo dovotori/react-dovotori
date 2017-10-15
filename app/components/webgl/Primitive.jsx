@@ -5,17 +5,17 @@ import Mat4 from '../geometry/Mat4';
 
 class Primitive extends Component {
   constructor(props) {
-		super(props);
+    super(props);
 
-		this.nbPoints = 0;
-		this.modeDessin;
-		this.modeCalcul;
-		this.vbo = new Array(5);
+    this.nbPoints = 0;
+    this.modeDessin;
+    this.modeCalcul;
+    this.vbo = new Array(5);
 
-		for (let i = 0; i < 5; i += 1) {
-			this.vbo[i] = null;
-		}
-	}
+    for (let i = 0; i < 5; i += 1) {
+      this.vbo[i] = null;
+    }
+  }
 
 
 	componentWillMount() {
@@ -155,12 +155,14 @@ class Primitive extends Component {
   }
 }
 
-Primitive.propTypes = {
-	model: PropTypes.object,
-	mode: PropTypes.string,
-	type: PropTypes.string,
-	color: PropTypes.array,
-};
+if (process.env.NODE_ENV !== 'production') {
+	Primitive.propTypes = {
+		model: PropTypes.object,
+		mode: PropTypes.string,
+		type: PropTypes.string,
+		color: PropTypes.array,
+	};
+}
 
 Primitive.defaultProps = {
 	model: new Mat4().get(),

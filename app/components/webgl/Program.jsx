@@ -127,15 +127,17 @@ class Program extends Component {
   }
 }
 
-Program.propTypes = {
-  children: PropTypes.node,
-  vertex: PropTypes.string,
-  fragment: PropTypes.string,
-  projection: PropTypes.object,
-  view: PropTypes.object,
-  time: PropTypes.number,
-  amplitude: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Program.propTypes = {
+    children: PropTypes.node,
+    vertex: PropTypes.string,
+    fragment: PropTypes.string,
+    projection: PropTypes.object,
+    view: PropTypes.object,
+    time: PropTypes.number,
+    amplitude: PropTypes.number,
+  };
+}
 
 Program.defaultProps = {
   children: null,

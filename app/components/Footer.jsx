@@ -22,8 +22,10 @@ class Footer extends Component {
   }
 }
 
-Footer.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Footer.propTypes = {
+  };
+}
 
 Footer.defaultProps = {
 };

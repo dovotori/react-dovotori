@@ -12,9 +12,11 @@ class BulletComponent extends Component {
   }
 }
 
-BulletComponent.propTypes = {
-  className: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  BulletComponent.propTypes = {
+    className: PropTypes.string,
+  };
+}
 
 BulletComponent.defaultProps = {
   className: '',

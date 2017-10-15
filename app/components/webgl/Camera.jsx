@@ -47,15 +47,17 @@ class Camera extends Component {
   }
 }
 
-Camera.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  position: PropTypes.array,
-  angle: PropTypes.number,
-  far: PropTypes.number,
-  near: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Camera.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    position: PropTypes.array,
+    angle: PropTypes.number,
+    far: PropTypes.number,
+    near: PropTypes.number,
+  };
+}
 
 Camera.defaultProps = {
   children: null,

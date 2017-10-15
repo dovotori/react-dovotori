@@ -39,10 +39,12 @@ class Loop extends Component {
   }
 }
 
-Loop.propTypes = {
-  onAnimate: PropTypes.func,
-  children: PropTypes.node,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Loop.propTypes = {
+    onAnimate: PropTypes.func,
+    children: PropTypes.node,
+  };
+}
 
 Loop.defaultProps = {
   onAnimate: null,

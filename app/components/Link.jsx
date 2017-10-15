@@ -13,9 +13,11 @@ class Link extends Component {
   }
 }
 
-Link.propTypes = {
-  label: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Link.propTypes = {
+    label: PropTypes.string,
+  };
+}
 
 Link.defaultProps = {
   label: '',

@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import ListEntries from '../components/ListEntries';
-import { withColumn } from '../components/withColumn';
+// import { withColumn } from '../components/withColumn';
 
-import CenterToPage from '../components/CenterToPage';
-import InteractionFloating from '../components/InteractionFloating';
-import AnimationAppear from '../components/AnimationAppear';
-import Signature from '../components/Signature';
+// import CenterToPage from '../components/CenterToPage';
+// import InteractionFloating from '../components/InteractionFloating';
+// import AnimationAppear from '../components/AnimationAppear';
+// import Signature from '../components/Signature';
 import Home from '../components/Home';
 
 class HomeContainer extends Component {
@@ -30,10 +30,12 @@ class HomeContainer extends Component {
   }
 }
 
-HomeContainer.propTypes = {
-  // entries: PropTypes.arrayOf(PropTypes.object),
-  // categories: PropTypes.objectOf(PropTypes.string),
-};
+if (process.env.NODE_ENV !== 'production') {
+  HomeContainer.propTypes = {
+    // entries: PropTypes.arrayOf(PropTypes.object),
+    // categories: PropTypes.objectOf(PropTypes.string),
+  };
+}
 
 HomeContainer.defaultProps = {
   // entries: [],

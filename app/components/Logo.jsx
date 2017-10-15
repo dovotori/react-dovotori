@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const Styled = styled.div`
   svg {
-    width: 120px;
+    width: 80px;
     display: block;
     margin: 0 auto;
     fill: ${p => p.theme.back};
@@ -37,8 +37,10 @@ class Logo extends Component {
   }
 }
 
-Logo.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Logo.propTypes = {
+  };
+}
 
 Logo.defaultProps = {
 };

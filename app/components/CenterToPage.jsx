@@ -39,9 +39,11 @@ class CenterToPage extends Component {
   }
 }
 
-CenterToPage.propTypes = {
-  children: PropTypes.node,
-};
+if (process.env.NODE_ENV !== 'production') {
+  CenterToPage.propTypes = {
+    children: PropTypes.node,
+  };
+}
 
 CenterToPage.defaultProps = {
   children: null,

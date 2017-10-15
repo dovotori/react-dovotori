@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   entry: './app/index.jsx',
@@ -21,11 +22,11 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['es2015', {'loose': true, 'modules': false}]
-              ]
-            }
-          }
-        ]
+                ['es2015', { loose: true, modules: false }],
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -58,17 +59,18 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.resolve(__dirname, '../app/utils/serviceWorker.js'),
+    }),
     new UglifyJSPlugin({ uglifyOptions: {
       beautify: false,
       mangle: {
-        screw_ie8: true,
         keep_fnames: true,
       },
       compress: {
-        screw_ie8: true,
         warnings: false,
       },
       comments: false,
-    } })
+    } }),
   ],
 };

@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const View = styled.div`
+  position: relative;
+  overflow: hidden;
   width: 100%;
 `;
 

@@ -40,19 +40,21 @@ class TeaserItemComponent extends Component {
   }
 }
 
-TeaserItemComponent.propTypes = {
-  className: PropTypes.string,
-  entry: PropTypes.shape({
-    id: PropTypes.number,
-    slug: PropTypes.string,
-    title: PropTypes.string,
-    category: PropTypes.number,
-    tags: PropTypes.array,
-    date: PropTypes.number,
-    description: PropTypes.string,
-  }),
-  onLeft: PropTypes.bool,
-};
+if (process.env.NODE_ENV !== 'production') {
+  TeaserItemComponent.propTypes = {
+    className: PropTypes.string,
+    entry: PropTypes.shape({
+      id: PropTypes.number,
+      slug: PropTypes.string,
+      title: PropTypes.string,
+      category: PropTypes.number,
+      tags: PropTypes.array,
+      date: PropTypes.number,
+      description: PropTypes.string,
+    }),
+    onLeft: PropTypes.bool,
+  };
+}
 
 TeaserItemComponent.defaultProps = {
   className: '',

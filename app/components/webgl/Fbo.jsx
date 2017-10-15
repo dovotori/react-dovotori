@@ -35,8 +35,6 @@ class Fbo extends Component {
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.texture, 0);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this.depthTexture, 0);
 
-    this.setTexture();
-
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.bindTexture(gl.TEXTURE_2D, null);
 
@@ -60,6 +58,7 @@ class Fbo extends Component {
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    gl.bindTexture(gl.TEXTURE_2D, null);
   }
 
 
@@ -80,23 +79,28 @@ class Fbo extends Component {
 
     gl.activeTexture(tex);
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
-    gl.uniform1i(location, 0);
+    gl.uniform1i(location, id);
   }
 
 
   render() {
     this.end();
-    if (this.texture) { this.setTexture(); }
-    return this.props.children;
+    if (this.texture) {
+      this.setTexture();
+      return this.props.children;
+    }
+    return null;
   }
 }
 
-Fbo.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  id: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Fbo.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    id: PropTypes.number,
+  };
+}
 
 Fbo.defaultProps = {
   children: null,

@@ -13,9 +13,11 @@ class Card extends Component {
   }
 }
 
-Card.propTypes = {
-  label: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Card.propTypes = {
+    label: PropTypes.string,
+  };
+}
 
 Card.defaultProps = {
   label: '',

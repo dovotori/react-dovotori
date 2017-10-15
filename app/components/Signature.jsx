@@ -38,8 +38,10 @@ class Signature extends Component {
   }
 }
 
-Signature.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Signature.propTypes = {
+  };
+}
 
 Signature.defaultProps = {
 };

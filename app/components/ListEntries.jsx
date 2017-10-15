@@ -22,12 +22,14 @@ class ListEntriesComponent extends Component {
   }
 }
 
-ListEntriesComponent.propTypes = {
-  className: PropTypes.string,
-  entries: PropTypes.arrayOf(PropTypes.object),
-  // categories: PropTypes.shape(PropTypes.any),
-  onLeft: PropTypes.bool,
-};
+if (process.env.NODE_ENV !== 'production') {
+  ListEntriesComponent.propTypes = {
+    className: PropTypes.string,
+    entries: PropTypes.arrayOf(PropTypes.object),
+    // categories: PropTypes.shape(PropTypes.any),
+    onLeft: PropTypes.bool,
+  };
+}
 
 ListEntriesComponent.defaultProps = {
   className: '',

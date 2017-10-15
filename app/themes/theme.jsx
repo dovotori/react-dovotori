@@ -1,3 +1,5 @@
+import { css } from 'styled-components';
+
 const theme = {
   primary: '#66ffcc',
   secondary: '#ff6633',
@@ -16,3 +18,16 @@ const theme = {
 };
 
 export default theme;
+
+export const media = {
+  mobile: (...args) => css`
+    @media (max-width: 420px) {
+      ${ css(...args) }
+    }
+  `,
+  tablet: (...args) => css`
+    @media (max-width: 1020px) {
+      ${ css(...args) }
+    }
+  `,
+};

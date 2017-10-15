@@ -60,12 +60,12 @@ class Texture extends Component {
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
-    for (let y = 0; y < height; y+= 1) {
-      for (let x = 0; x < width; x+= 1) {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
         pixel[cptRVBA] = Math.random() * 255;
-        pixel[cptRVBA+1] = Math.random() * 255;
-        pixel[cptRVBA+2] = Math.random() * 255;
-        pixel[cptRVBA+3] = 255;
+        pixel[cptRVBA + 1] = Math.random() * 255;
+        pixel[cptRVBA + 2] = Math.random() * 255;
+        pixel[cptRVBA + 3] = 255;
         cptRVBA += 4;
       }
     }
@@ -90,12 +90,12 @@ class Texture extends Component {
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
-    for (let y = 0; y < height; y+= 1) {
-      for (let x = 0; x < width; x+= 1) {
-        pixel[cptRVBA] = y%255;
-        pixel[cptRVBA+1] = x%255;
-        pixel[cptRVBA+2] = x%255;
-        pixel[cptRVBA+3] = 255;
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        pixel[cptRVBA] = y % 255;
+        pixel[cptRVBA + 1] = x % 255;
+        pixel[cptRVBA + 2] = x % 255;
+        pixel[cptRVBA + 3] = 255;
         cptRVBA += 4;
       }
     }
@@ -161,19 +161,23 @@ class Texture extends Component {
 
 
   render() {
-    this.setTexture();
-    return this.props.children;
+    if (this.texture) {
+      this.setTexture();
+      return this.props.children;
+    }
+    return null;
   }
 }
 
-
-Texture.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  id: PropTypes.number,
-  mode: PropTypes.string,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Texture.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    id: PropTypes.number,
+    mode: PropTypes.string,
+  };
+}
 
 Texture.defaultProps = {
   children: null,

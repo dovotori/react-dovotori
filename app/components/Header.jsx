@@ -4,16 +4,21 @@ import styled from 'styled-components';
 
 import SocialLinks from './SocialLinks';
 import Logo from './Logo';
-import ButtonShy from './ButtonShy';
 import SvgAnimation from './SvgAnimation';
 import FullscreenView from './FullscreenView';
+import { media } from '../themes/theme';
 
-const Styled = styled.div`
+
+const WrapLogo = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  margin: 10px;
   width: auto;
+
+  ${media.mobile`
+    left: 50%;
+    transform: translateX(-50%);
+  `}
 `;
 
 
@@ -46,25 +51,28 @@ class Header extends Component {
         <FullscreenView in={this.state.open}>
           {this.state.open && <SocialLinks/>}
         </FullscreenView>
-        <Styled>
-          <ButtonShy
+        <WrapLogo>
+          <button
             onClick={this.click}
             onMouseEnter={this.mouseEnter}
+            name="toggle links menu"
           >
             <SvgAnimation
               toggleAnim={this.state.over}
             >
               <Logo />
             </SvgAnimation>
-          </ButtonShy>
-        </Styled>
+          </button>
+        </WrapLogo>
       </div>
     );
   }
 }
 
-Header.propTypes = {
-};
+if (process.env.NODE_ENV !== 'production') {
+  Header.propTypes = {
+  };
+}
 
 Header.defaultProps = {
 };

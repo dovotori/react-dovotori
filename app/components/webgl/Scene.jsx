@@ -1,4 +1,4 @@
-/* global windows, document */
+/* global document */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,12 +13,12 @@ class Scene extends Component {
 
     const { width, height } = this.props;
     this.canvas = document.createElement('canvas');
-    this.canvas.setAttribute("width", width);
-    this.canvas.setAttribute("height", height);
+    this.canvas.setAttribute('width', width);
+    this.canvas.setAttribute('height', height);
     this.gl;
 
     try {
-      this.gl = this.canvas.getContext("webgl") || this.canvas.getContext("experimental-webgl")
+      this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl')
     }
     catch(e) {
       console.log(e.error);
@@ -31,8 +31,8 @@ class Scene extends Component {
       // gl.enable(gl.DEPTH_TEST);
       // gl.depthFunc(gl.LEQUAL);
 
-      gl.enable( gl.BLEND );
-      gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       // gl.blendEquation( gl.FUNC_SUBTRACT );
 
       // gl.enable(gl.CULL_FACE);
@@ -44,7 +44,7 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    document.querySelector("#canvas").appendChild(this.canvas);
+    document.querySelector('#canvas').appendChild(this.canvas);
   }
 
   // shouldComponentUpdate() {
@@ -59,11 +59,13 @@ class Scene extends Component {
   }
 }
 
-Scene.propTypes = {
-  children: PropTypes.node,
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Scene.propTypes = {
+    children: PropTypes.node,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  };
+}
 
 Scene.defaultProps = {
   children: null,

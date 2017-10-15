@@ -22,9 +22,16 @@ a:focus {
   outline: 0;
 }
 
+button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
 a:focus,
 button:focus {
   text-decoration: none;
+  outline: none;
 }
 
 button::-moz-focus-inner {
@@ -32,10 +39,7 @@ button::-moz-focus-inner {
 }
 
 body {
-  overflow: hidden;
-  // background: url(${stripes}) repeat ${theme.back};
   background: ${theme.grey};
-  background-attachment: fixed;
   font-family: ${theme.font1};
 }
 `;

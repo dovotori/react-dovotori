@@ -19,17 +19,19 @@ class View extends Component {
   }
 }
 
-View.propTypes = {
-  entry: PropTypes.shape({
-    id: PropTypes.number,
-    slug: PropTypes.string,
-    title: PropTypes.string,
-    category: PropTypes.number,
-    tags: PropTypes.array,
-    date: PropTypes.number,
-    description: PropTypes.string,
-  }).isRequired,
-};
+if (process.env.NODE_ENV !== 'production') {
+  View.propTypes = {
+    entry: PropTypes.shape({
+      id: PropTypes.number,
+      slug: PropTypes.string,
+      title: PropTypes.string,
+      category: PropTypes.number,
+      tags: PropTypes.array,
+      date: PropTypes.number,
+      description: PropTypes.string,
+    }).isRequired,
+  };
+}
 
 View.defaultProps = {
 };

@@ -18,11 +18,13 @@ class Navigation extends Component {
   }
 }
 
-Navigation.propTypes = {
-  entries: PropTypes.arrayOf(PropTypes.object),
-  categories: PropTypes.objectOf(PropTypes.string),
-  onLeft: PropTypes.bool,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Navigation.propTypes = {
+    entries: PropTypes.arrayOf(PropTypes.object),
+    categories: PropTypes.objectOf(PropTypes.string),
+    onLeft: PropTypes.bool,
+  };
+}
 
 Navigation.defaultProps = {
   entries: [],

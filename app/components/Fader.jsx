@@ -27,9 +27,11 @@ class FaderComponent extends Component {
   }
 }
 
-FaderComponent.propTypes = {
-  children: PropTypes.element,
-};
+if (process.env.NODE_ENV !== 'production') {
+  FaderComponent.propTypes = {
+    children: PropTypes.element,
+  };
+}
 
 FaderComponent.defaultProps = {
   children: null,

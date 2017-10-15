@@ -74,9 +74,11 @@ class InteractionFloating extends Component {
   }
 }
 
-InteractionFloating.propTypes = {
-  children: PropTypes.node,
-};
+if (process.env.NODE_ENV !== 'production') {
+  InteractionFloating.propTypes = {
+    children: PropTypes.node,
+  };
+}
 
 InteractionFloating.defaultProps = {
   children: null,
