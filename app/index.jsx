@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './containers/App';
-import { SetupServiceWorker } from './utils/SetupServiceWorker';
+import SetupServiceWorker from './utils/SetupServiceWorker';
 
 __webpack_nonce__ = 'dovotori-assets';
 
