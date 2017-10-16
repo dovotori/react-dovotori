@@ -10,7 +10,6 @@ const Cursor = styled.span`
   width: 6px;
   height: 6px;
   background-color: #000;
-  margin-left: 4px;
   animation: .4s infinite ${blink};
 `;
 

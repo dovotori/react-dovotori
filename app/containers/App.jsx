@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { injectGlobal, withTheme } from 'styled-components';
+import { injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
+import { BrowserRouter, Route } from 'react-router-dom';
+// import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 
+import theme from '../themes/theme';
 // import Routes from './Routes';
 // import Navigation from './Navigation';
 import HomeContainer from './HomeContainer';
@@ -9,7 +13,9 @@ import HomeContainer from './HomeContainer';
 import commonCss from '../themes/commonCss';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+// import configureStore from '../store/configureStore';
 
+// const store = configureStore();
 
 class App extends Component {
   constructor(props) {
@@ -25,34 +31,43 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    const { theme } = this.props;
     console.log('%c Hello JS Coders! ', `background: ${theme.primary}; color: #000`);
   }
 
   render() {
-    return (<div>
-      {/* <SvgDisplayer /> */}
-      {/* <Routes location={this.props.location} /> */}
-      <HomeContainer />
-      <Header />
-      <Footer />
-    </div>);
+    return (
+      // <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <div>
+          <BrowserRouter>
+            <Route
+              render={({ location }) => (
+                <HomeContainer />
+              )}
+            />
+          </BrowserRouter>
+          <Header />
+          <Footer />
+        </div>
+      </ThemeProvider>
+      // </Provider>
+    );
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
   App.propTypes = {
-    location: PropTypes.shape({
-      hash: PropTypes.string,
-      key: PropTypes.string,
-      pathname: PropTypes.string,
-      search: PropTypes.string,
-      state: PropTypes.string,
-    }).isRequired,
+    // location: PropTypes.shape({
+    //   hash: PropTypes.string,
+    //   key: PropTypes.string,
+    //   pathname: PropTypes.string,
+    //   search: PropTypes.string,
+    //   state: PropTypes.string,
+    // }).isRequired,
   };
 }
 
 App.defaultProps = {
 };
 
-export default withTheme(App);
+export default App;

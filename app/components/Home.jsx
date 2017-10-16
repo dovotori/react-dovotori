@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
-import withView from './withView';
+import CenterToPage from './CenterToPage';
 import { media } from '../themes/theme';
 
 
@@ -35,12 +35,16 @@ class Home extends Component {
   }
 
   render() {
-    return (<Styled>
-      <AnimatedBackground />
-      <WrapSignature>
-        <Signature />
-      </WrapSignature>
-    </Styled>);
+    return (
+      <CenterToPage>
+        <Styled>
+          <AnimatedBackground />
+          <WrapSignature>
+            <Signature />
+          </WrapSignature>
+        </Styled>
+      </CenterToPage>
+    );
   }
 }
 
@@ -51,4 +55,4 @@ if (process.env.NODE_ENV !== 'production') {
 
 Home.defaultProps = {};
 
-export default withView(Home);
+export default Home;
