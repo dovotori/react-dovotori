@@ -2,13 +2,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
 
 import App from './containers/App';
 import SetupServiceWorker from './utils/SetupServiceWorker';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
 
 __webpack_nonce__ = 'dovotori-assets';
-
-const domElement = document.getElementById('dovotori-app');
 
 if (process.env.NODE_ENV === 'production') {
   SetupServiceWorker();
@@ -17,9 +19,11 @@ if (process.env.NODE_ENV === 'production') {
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Provider store={store}>
+        <Component />
+      </Provider>
     </AppContainer>,
-    domElement,
+    document.getElementById('dovotori-app'),
   );
 };
 
@@ -31,3 +35,4 @@ if (module.hot) {
     render(NextApp);
   });
 }
+

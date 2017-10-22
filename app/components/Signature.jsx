@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { media } from '../themes/theme';
 
 import StyledBlink from './StyledBlink';
+import Cursor from './Cursor';
 
 const Styled = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 50%;
+  max-width: 200px;
+  transform: translate3d(0, -50%, 0);
+
   svg {
     width: 100%;
+    height: auto;
   }
+
+  ${media.mobile`
+    transform: translate3d(50%, -50%, 0);
+  `}
+`;
+
+const P = styled.p`
+  text-align: right;
+  letter-spacing: 0.1em;
+  color: ${p => p.theme.secondary};
 `;
 
 class Signature extends Component {
@@ -33,6 +53,7 @@ class Signature extends Component {
           <path className="blink stroke" fill="currentColor" d="m112 31.8c-3.97 0-3.97 3.97-3.97 3.97v15.9c0 3.97 3.97 3.97 3.97 3.97l25.1-1e-6c0-3.97-3.97-3.97-3.97-3.97l-19.8 1e-6 23.8-15.9s0-3.97-3.97-3.97zm17.2 3.97-17.2 11.5v-8.81s0-2.65 2.65-2.65z" />
           <path className="inverse-blink" d="m112 55.6s-3.97 0-3.97-3.97v-15.9s0-3.97 3.97-3.97z"/>
         </svg>
+        <P>dorian ratovo <Cursor size={8} /></P>
       </StyledBlink>
     </Styled>);
   }

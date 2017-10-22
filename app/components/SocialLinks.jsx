@@ -68,7 +68,7 @@ class SocialLinks extends Component {
         </A>
       </Tooltip>),
       (<Tooltip
-        message="code is law4"
+        message="code is law"
       >
         <A href="https://github.com/dovotori">
           <svg width="20" height="20" viewBox="0 0 20 20">

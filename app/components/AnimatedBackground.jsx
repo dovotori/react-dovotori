@@ -29,17 +29,17 @@ import shader from '../shaders/glitch1and2';
 
 
 const Styled = styled.div`
-width: 100%;
-text-align: center;
-
-canvas {
-  margin: 0 auto;
-  max-width: ${p => p.width}px;
-  max-height: ${p => p.height}px;
   width: 100%;
-  height: auto;
-  min-width: 400px;
-}
+  text-align: center;
+
+  canvas {
+    margin: 0 auto;
+    max-width: ${p => p.width}px;
+    max-height: ${p => p.height}px;
+    width: 100%;
+    height: auto;
+    min-width: 400px;
+  }
 `;
 
 class AnimatedBackground extends Component {
@@ -113,7 +113,7 @@ class AnimatedBackground extends Component {
 
 
   componentWillMount() {
-    window.addEventListener("mousemove", this.mouseMove, false);
+    window.addEventListener('mousemove', this.mouseMove, false);
   }
 
 
@@ -123,7 +123,7 @@ class AnimatedBackground extends Component {
 
 
   componentWillUnmount() {
-    window.removeEventListener("mousemove", this.mouseMove, false);
+    window.removeEventListener('mousemove', this.mouseMove, false);
   }
 
 

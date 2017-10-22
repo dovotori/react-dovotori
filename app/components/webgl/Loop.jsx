@@ -1,4 +1,4 @@
-/* global windows, document */
+/* global window, document */
 import React, { Component, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,25 +6,28 @@ import PropTypes from 'prop-types';
 class Loop extends Component {
   constructor(props) {
     super(props);
-
     this.state = { toggle: true };
-
     this.animationLoop = this.animationLoop.bind(this);
+    this.req = null;
   }
 
   componentDidMount() {
-    window.requestAnimationFrame(this.animationLoop);
+    this.req = window.requestAnimationFrame(this.animationLoop);
   }
 
   shouldComponentUpdate(newProps, newState) {
     return newState.toggle !== this.state.props;
   }
 
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.req);
+  }
+
   animationLoop() {
     const { onAnimate } = this.props;
     if (onAnimate) { onAnimate(); }
     this.setState(prev => ({ toggle: !prev.toggle }));
-    window.requestAnimationFrame(this.animationLoop);
+    this.req = window.requestAnimationFrame(this.animationLoop);
   }
 
   render() {

@@ -6,13 +6,8 @@ const blink = keyframes`
   9% { opacity: 1; }
 
   20% { opacity: 1; }
-  26% { opacity: 0; }
-  29% { opacity: 1; }
-
-  70% { opacity: 1; }
-  76% { opacity: 0; }
-  86% { opacity: 0; }
-  89% { opacity: 1; }
+  30% { opacity: 0; }
+  40% { opacity: 1; }
 `;
 
 const inverseblink = keyframes`
@@ -20,12 +15,17 @@ const inverseblink = keyframes`
   56% { opacity: 0; }
   60% { opacity: 0; }
   62% { opacity: 1; }
+
+  70% { opacity: 1; }
+  76% { opacity: 0; }
+  86% { opacity: 0; }
+  89% { opacity: 1; }
 `;
 
 const StyledBlink = styled.div`
   svg {
     fill: ${p => p.theme.back};
-    color: ${p => p.theme.primary};
+    color: ${p => p.theme.secondary};
 
     .blink {
       animation: ${blink} 4s linear infinite;
@@ -36,7 +36,7 @@ const StyledBlink = styled.div`
     }
 
     .stroke {
-      stroke: ${p => p.theme.primary};
+      stroke: ${p => p.theme.secondary};
       stroke-width: 2px;
     }
   }

@@ -9,6 +9,9 @@ const host = 'localhost';
 module.exports = {
   entry: [
     'react-hot-loader/patch',
+    'webpack/hot/only-dev-server',
+    'babel-polyfill',
+    `webpack-dev-server/client?http://${host}:${port}`,
     './app/index',
   ],
   output: {
@@ -16,7 +19,7 @@ module.exports = {
     path: path.resolve(__dirname, '../build'),
     publicPath: '/',
   },
-  devtool: 'cheap-source-map',
+  devtool: 'eval',
   module: {
     rules: [
       {
@@ -24,10 +27,10 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'url-loader?name=/img/[name].[ext]?[hash]?limit=100000',
-      },
+      // {
+      //   test: /\.(jpe?g|png|gif|svg)$/i,
+      //   loader: 'url-loader?name=/img/[name].[ext]?[hash]?limit=100000',
+      // },
     ],
   },
   resolve: {

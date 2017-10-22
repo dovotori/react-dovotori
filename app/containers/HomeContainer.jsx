@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Home from '../components/Home';
 
@@ -8,16 +9,12 @@ class HomeContainer extends Component {
   }
 
   render() {
-    return (<Home />);
+    return (<Home {...this.props} />);
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  HomeContainer.propTypes = {
-  };
-}
+const mapStateToProps = state => ({
+  entries: state.entries,
+});
 
-HomeContainer.defaultProps = {
-};
-
-export default HomeContainer;
+export default connect(mapStateToProps)(HomeContainer);

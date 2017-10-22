@@ -2,15 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Styled = styled.div`
+const Border = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  // background: ${p => p.theme.gradient};
   background: ${p => p.theme.dark};
-  border-top: solid 2px ${p => p.theme.primary};
+  border-top: solid 3px ${p => p.theme.primary};
 `;
+
+const Wrap = styled.div`
+  width: 100%;
+  background: ${p => p.theme.primary};
+`;
+
+const P = styled.p`
+  text-align: right;
+`;
+
 
 class Footer extends Component {
   shouldComponentUpdate() {
@@ -18,7 +27,12 @@ class Footer extends Component {
   }
 
   render() {
-    return (<Styled />);
+    return (<div>
+      <Wrap>
+        <P>cc commons</P>
+      </Wrap>
+      <Border />
+    </div>);
   }
 }
 

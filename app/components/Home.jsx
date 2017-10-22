@@ -5,28 +5,14 @@ import styled from 'styled-components';
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
 import CenterToPage from './CenterToPage';
-import { media } from '../themes/theme';
-
+import Teaser from './Teaser';
 
 const Styled = styled.div`
+background: ${p => p.theme.grey};
 `;
 
-const WrapSignature = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  width: 50%;
-  max-width: 120px;
-  transform: translate3d(0, -50%, 0);
-
-  svg {
-    width: 100%;
-    height: auto;
-  }
-
-  ${media.mobile`
-    transform: translate3d(50%, -50%, 0);
-  `}
+const ListTeasers = styled.div`
+  text-align: center;
 `;
 
 class Home extends Component {
@@ -35,24 +21,36 @@ class Home extends Component {
   }
 
   render() {
+    const { entries } = this.props;
     return (
-      <CenterToPage>
+      <div>
         <Styled>
-          <AnimatedBackground />
-          <WrapSignature>
+          <CenterToPage>
             <Signature />
-          </WrapSignature>
+            <AnimatedBackground />
+          </CenterToPage>
         </Styled>
-      </CenterToPage>
+        <ListTeasers>
+          {
+            entries.map(teaser => (<Teaser
+              key={teaser.id}
+              entry={teaser}
+            />))
+          }
+        </ListTeasers>
+      </div>
     );
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
   Home.propTypes = {
+    entries: PropTypes.arrayOf(PropTypes.shape),
   };
 }
 
-Home.defaultProps = {};
+Home.defaultProps = {
+  entries: [],
+};
 
 export default Home;

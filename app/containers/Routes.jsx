@@ -1,21 +1,29 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import HomeContainer from '../containers/HomeContainer';
-import View from '../containers/View';
-import Error from '../containers/Error';
+import HomeContainer from './HomeContainer';
+import ViewContainer from './ViewContainer';
+import RouteAnimation from '../components/RouteAnimation';
 
-const Routes = (props) => {
-  const { location } = props;
-  return (<div>
-    <Switch key={location.pathname} location={location}>
-      <Route exact path="/" component={HomeContainer} />
-      <Route path="/view/:slug" component={View} />
-      <Route component={Error} />
-    </Switch>
-  </div>);
-};
+class Routes extends Component {
+  shouldComponentUpdate(newProps) {
+    return newProps.location.pathname !== this.props.location.pathname;
+  }
+
+  render() {
+    const locationKey = this.props.location.pathname;
+    console.log(locationKey);
+    return (
+      <RouteAnimation locationKey={locationKey}>
+        <Switch location={this.props.location}>
+          <Route exact path="/" component={HomeContainer} />
+          <Route path="/view/:slug" component={ViewContainer} />
+        </Switch>
+      </RouteAnimation>
+    );
+  }
+}
 
 if (process.env.NODE_ENV !== 'production') {
   Routes.propTypes = {
