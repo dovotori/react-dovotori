@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { media } from '../themes/theme';
+
 const pass = keyframes`
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
@@ -27,9 +29,13 @@ const Back = styled.div`
 const IMG = styled.img`
   display: inline-block;
   vertical-align: middle;
-  transition: transform .4s ${p => p.theme.elastic2}, opacity .4s ${p => p.theme.elastic2};
+  transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'scale(40)' : 'scale(1)')};
   opacity: 0.5;
+
+  ${media.mobile`
+    width: 100%;
+  `};
 `;
 
 const Infos = styled.div`
@@ -78,7 +84,7 @@ const P = styled.p`
   font-size: 14px;
   color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
   text-shadow: 1px 1px 0px #000;
-  transition: transform .5s ${p => p.theme.elastic2}, opacity .5s ${p => p.theme.elastic2};
+  transition: transform 0.5s ${p => p.theme.elastic2}, opacity 0.5s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(-100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
   padding: 10px 4px 0;
@@ -114,19 +120,10 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <Back
-          isprimary={entry.category === 1}
-        />
-        <IMG
-          src={`assets/teasers/${entry.slug}.png`}
-          alt={entry.title}
-          hover={this.state.hover}
-        />
+        <Back isprimary={entry.category === 1} />
+        <IMG src={`assets/teasers/${entry.slug}.png`} alt={entry.title} hover={this.state.hover} />
         <Infos>
-          <H5
-            hover={this.state.hover}
-            isprimary={entry.category === 0}
-          >
+          <H5 hover={this.state.hover} isprimary={entry.category === 0}>
             <Banner hover={this.state.hover} isprimary={entry.category === 0} />
             <span>{entry.title}</span>
           </H5>

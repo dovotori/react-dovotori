@@ -10,11 +10,13 @@ class Navigation extends Component {
   // }
 
   render() {
-    return (<Header
-      entries={this.props.entries}
-      categories={this.props.categories}
-      onLeft={this.props.onLeft}
-    />);
+    return (
+      <Header
+        entries={this.props.entries}
+        categories={this.props.categories}
+        onLeft={this.props.onLeft}
+      />
+    );
   }
 }
 

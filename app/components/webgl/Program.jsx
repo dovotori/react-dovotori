@@ -4,18 +4,15 @@ import PropTypes from 'prop-types';
 import Vec3 from '../geometry/Vec3.js';
 import Mat4 from '../geometry/Mat4.js';
 
-
 class Program extends Component {
   getChildContext() {
     return { program: this.program };
   }
 
-
   constructor(props) {
     super(props);
     this.program = null;
   }
-
 
   componentWillMount() {
     const { vertex, fragment } = this.props;
@@ -28,19 +25,17 @@ class Program extends Component {
     gl.linkProgram(this.program);
 
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-      console.log("Ne peux pas lier le shader au program");
+      console.log('Ne peux pas lier le shader au program');
       gl.deleteProgram(this.program);
       return;
     }
     this.creerLocations();
   }
 
-
   componentWillUpdate() {
     const { gl } = this.context;
     gl.useProgram(null);
   }
-
 
   creerShader(type, source) {
     const { gl } = this.context;
@@ -58,7 +53,6 @@ class Program extends Component {
     gl.deleteShader(s);
   }
 
-
   creerLocations() {
     const { gl } = this.context;
     const { projection, view } = this.props;
@@ -66,26 +60,25 @@ class Program extends Component {
     gl.useProgram(this.program);
 
     // ATTRIB
-    this.program.vLoc = gl.getAttribLocation(this.program, "Vertice");
+    this.program.vLoc = gl.getAttribLocation(this.program, 'Vertice');
 
     // UNIFORM
-    this.program.pMatLoc = gl.getUniformLocation(this.program, "projection");
-    this.program.mMatLoc = gl.getUniformLocation(this.program, "model");
-    this.program.vMatLoc = gl.getUniformLocation(this.program, "view");
+    this.program.pMatLoc = gl.getUniformLocation(this.program, 'projection');
+    this.program.mMatLoc = gl.getUniformLocation(this.program, 'model');
+    this.program.vMatLoc = gl.getUniformLocation(this.program, 'view');
 
-    this.program.cVecLoc = gl.getUniformLocation(this.program, "color");
+    this.program.cVecLoc = gl.getUniformLocation(this.program, 'color');
 
-    this.program.tex0Loc = gl.getUniformLocation(this.program, "tex0");
-    this.program.tex1Loc = gl.getUniformLocation(this.program, "tex1");
-    this.program.tex2Loc = gl.getUniformLocation(this.program, "tex2");
-    this.program.tex3Loc = gl.getUniformLocation(this.program, "tex3");
-    this.program.tex4Loc = gl.getUniformLocation(this.program, "tex4");
-    this.program.tex5Loc = gl.getUniformLocation(this.program, "tex5");
+    this.program.tex0Loc = gl.getUniformLocation(this.program, 'tex0');
+    this.program.tex1Loc = gl.getUniformLocation(this.program, 'tex1');
+    this.program.tex2Loc = gl.getUniformLocation(this.program, 'tex2');
+    this.program.tex3Loc = gl.getUniformLocation(this.program, 'tex3');
+    this.program.tex4Loc = gl.getUniformLocation(this.program, 'tex4');
+    this.program.tex5Loc = gl.getUniformLocation(this.program, 'tex5');
 
-    this.program.timeLoc = gl.getUniformLocation(this.program, "time");
-    this.program.amplitudeLoc = gl.getUniformLocation(this.program, "amplitude");
+    this.program.timeLoc = gl.getUniformLocation(this.program, 'time');
+    this.program.amplitudeLoc = gl.getUniformLocation(this.program, 'amplitude');
   }
-
 
   setMatrices(gl) {
     const { projection, view } = this.props;
@@ -95,7 +88,6 @@ class Program extends Component {
     }
   }
 
-
   setTime(gl) {
     const { time } = this.props;
     if (time !== null) {
@@ -103,14 +95,12 @@ class Program extends Component {
     }
   }
 
-
   setAmplitude(gl) {
     const { amplitude } = this.props;
     if (amplitude !== null) {
       gl.uniform1f(this.program.amplitudeLoc, amplitude);
     }
   }
-
 
   render() {
     const { gl } = this.context;

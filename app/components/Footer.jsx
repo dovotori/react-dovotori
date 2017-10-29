@@ -12,14 +12,15 @@ const Border = styled.div`
 `;
 
 const Wrap = styled.div`
-  width: 100%;
+  padding: 4px;
   background: ${p => p.theme.primary};
 `;
 
 const P = styled.p`
+  font-size: 0.7em;
   text-align: right;
+  color: ${p => p.theme.grey};
 `;
-
 
 class Footer extends Component {
   shouldComponentUpdate() {
@@ -27,21 +28,21 @@ class Footer extends Component {
   }
 
   render() {
-    return (<div>
-      <Wrap>
-        <P>cc commons</P>
-      </Wrap>
-      <Border />
-    </div>);
+    return (
+      <div className="footer">
+        <Wrap>
+          <P>cc commons</P>
+        </Wrap>
+        <Border />
+      </div>
+    );
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  Footer.propTypes = {
-  };
+  Footer.propTypes = {};
 }
 
-Footer.defaultProps = {
-};
+Footer.defaultProps = {};
 
 export default Footer;

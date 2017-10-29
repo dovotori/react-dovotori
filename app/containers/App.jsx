@@ -10,6 +10,9 @@ import Routes from './Routes';
 import commonCss from '../themes/commonCss';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AnimatedBackground from '../components/AnimatedBackground';
+import Signature from '../components/Signature';
+import ResizeWatcher from '../components/ResizeWatcher';
 
 class App extends Component {
   componentWillMount() {
@@ -27,13 +30,15 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <div>
+        <ResizeWatcher>
+          <Signature />
+          <AnimatedBackground />
           <BrowserRouter>
             <Route component={Routes} />
           </BrowserRouter>
           <Header />
           <Footer />
-        </div>
+        </ResizeWatcher>
       </ThemeProvider>
     );
   }
@@ -51,7 +56,6 @@ if (process.env.NODE_ENV !== 'production') {
   };
 }
 
-App.defaultProps = {
-};
+App.defaultProps = {};
 
 export default App;

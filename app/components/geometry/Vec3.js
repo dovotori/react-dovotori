@@ -15,9 +15,9 @@ class Vec3 {
   }
 
   limiter(max) {
-    const longueurCarre = (this.x * this.x) + (this.y * this.y) + (this.z * this.z);
+    const longueurCarre = this.x * this.x + this.y * this.y + this.z * this.z;
 
-    if ((longueurCarre > max * max) && (longueurCarre > 0)) {
+    if (longueurCarre > max * max && longueurCarre > 0) {
       const ratio = max / Math.sqrt(longueurCarre);
       this.x *= ratio;
       this.y *= ratio;
@@ -36,7 +36,7 @@ class Vec3 {
 
   // dot
   produitScalaire(v) {
-    return (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
+    return this.x * v.x + this.y * v.y + this.z * v.z;
   }
 
   get() {
@@ -44,23 +44,29 @@ class Vec3 {
   }
 
   longueur() {
-    return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
 
   directionVers(v) {
-    return new Vec3(
-      v.x - this.x,
-      v.y - this.y,
-      v.z - this.z,
-    );
+    return new Vec3(v.x - this.x, v.y - this.y, v.z - this.z);
   }
 
   // ////////////////// OPERATOR ///////////////////////
 
   set(x, y, z) {
-    if (x != null) { this.x = x; }
-    if (y != null) { this.y = y; } else if (x != null) { this.y = x; }
-    if (z != null) { this.z = z; } else if (x != null) { this.z = x; }
+    if (x != null) {
+      this.x = x;
+    }
+    if (y != null) {
+      this.y = y;
+    } else if (x != null) {
+      this.y = x;
+    }
+    if (z != null) {
+      this.z = z;
+    } else if (x != null) {
+      this.z = x;
+    }
   }
 
   egale(v) {
@@ -70,43 +76,23 @@ class Vec3 {
   }
 
   plus(v) {
-    return new Vec3(
-      this.x + v.x,
-      this.y + v.y,
-      this.z + v.z,
-    );
+    return new Vec3(this.x + v.x, this.y + v.y, this.z + v.z);
   }
 
   plusValeur(valeur) {
-    return new Vec3(
-      this.x + valeur,
-      this.y + valeur,
-      this.z + valeur,
-    );
+    return new Vec3(this.x + valeur, this.y + valeur, this.z + valeur);
   }
 
   moins(v) {
-    return new Vec3(
-      this.x - v.x,
-      this.y - v.y,
-      this.z - v.z,
-    );
+    return new Vec3(this.x - v.x, this.y - v.y, this.z - v.z);
   }
 
   moinsValeur(valeur) {
-    return new Vec3(
-      this.x - valeur,
-      this.y - valeur,
-      this.z - valeur,
-    );
+    return new Vec3(this.x - valeur, this.y - valeur, this.z - valeur);
   }
 
   multiplierValeur(valeur) {
-    return new Vec3(
-      this.x * valeur,
-      this.y * valeur,
-      this.z * valeur,
-    );
+    return new Vec3(this.x * valeur, this.y * valeur, this.z * valeur);
   }
 
   multiplierMatrice(matrice) {
@@ -118,40 +104,32 @@ class Vec3 {
   }
 
   multiplier(v) {
-    return new Vec3(
-      this.x * v.x,
-      this.y * v.y,
-      this.z * v.z,
-    );
+    return new Vec3(this.x * v.x, this.y * v.y, this.z * v.z);
   }
 
   diviserValeur(valeur) {
-    return new Vec3(
-      this.x / valeur,
-      this.y / valeur,
-      this.z / valeur,
-    );
+    return new Vec3(this.x / valeur, this.y / valeur, this.z / valeur);
   }
 
   diviser(v) {
-    return new Vec3(
-      this.x / v.x,
-      this.y / v.y,
-      this.z / v.z,
-    );
+    return new Vec3(this.x / v.x, this.y / v.y, this.z / v.z);
   }
 
   distance(vec32) {
-    return Math.sqrt(((vec32.x - this.x) * (vec32.x - this.x)) + ((vec32.y - this.y) * (vec32.y - this.y)) + ((vec32.z - this.z) * (vec32.z - this.z)));
+    return Math.sqrt(
+      (vec32.x - this.x) * (vec32.x - this.x) +
+        (vec32.y - this.y) * (vec32.y - this.y) +
+        (vec32.z - this.z) * (vec32.z - this.z),
+    );
   }
 
   angleDegree(v) {
     const dot = this.produitScalaire(v);
     const cosAngle = dot / (this.longueur() * v.longueur());
     const angleRadian = Math.acos(cosAngle);
-    const angle = (angleRadian * 180) / Math.PI;
-    const sens = signe((this.x * v.y) + (this.y * v.x)); // sens de l'angle
-    return angle * (-sens);
+    const angle = angleRadian * 180 / Math.PI;
+    const sens = signe(this.x * v.y + this.y * v.x); // sens de l'angle
+    return angle * -sens;
   }
 
   calculerNormale(v2, v3, sens) {
@@ -160,7 +138,8 @@ class Vec3 {
     const V = new Vec3();
     U.egale(v2.moins(this));
     V.egale(v3.moins(this));
-    if (sens) { // inverser le produit vectoriel pour inverser la normale
+    if (sens) {
+      // inverser le produit vectoriel pour inverser la normale
       resultat.egale(V.produitVectoriel(U));
     } else {
       resultat.egale(U.produitVectoriel(V));

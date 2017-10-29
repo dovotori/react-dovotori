@@ -8,25 +8,27 @@ class Effect extends Component {
     this.currentFbo = 0;
   }
 
-
   setup(width, height) {
-    this.fbos[0] = new Framebuffer(); this.fbos[0].setup(width, height);
-    this.fbos[1] = new Framebuffer(); this.fbos[1].setup(width, height);
+    this.fbos[0] = new Framebuffer();
+    this.fbos[0].setup(width, height);
+    this.fbos[1] = new Framebuffer();
+    this.fbos[1].setup(width, height);
   }
-
 
   begin() {
     this.fbos[this.currentFbo].beginDraw();
   }
 
-
   end() {
     this.fbos[this.currentFbo].endDraw();
   }
 
-
   swap() {
-    if(this.currentFbo < 1){ this.currentFbo+= 1; } else { this.currentFbo = 0; }
+    if (this.currentFbo < 1) {
+      this.currentFbo += 1;
+    } else {
+      this.currentFbo = 0;
+    }
   }
 }
 

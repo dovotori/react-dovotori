@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import AnimatedBackground from './AnimatedBackground';
-import Signature from './Signature';
-import CenterToPage from './CenterToPage';
+import { AnimComponent } from './RouteAnimation';
 import Teaser from './Teaser';
 
-const Styled = styled.div`
-background: ${p => p.theme.grey};
-`;
+const StyledHome = styled(AnimComponent).attrs({
+  className: 'home',
+})``;
 
-const ListTeasers = styled.div`
+const ListTeasers = styled.div.attrs({
+  className: 'list-teasers',
+})`
+  margin: 4%;
   text-align: center;
 `;
 
@@ -23,22 +24,11 @@ class Home extends Component {
   render() {
     const { entries } = this.props;
     return (
-      <div>
-        <Styled>
-          <CenterToPage>
-            <Signature />
-            <AnimatedBackground />
-          </CenterToPage>
-        </Styled>
+      <StyledHome>
         <ListTeasers>
-          {
-            entries.map(teaser => (<Teaser
-              key={teaser.id}
-              entry={teaser}
-            />))
-          }
+          {entries.map(teaser => <Teaser key={teaser.id} entry={teaser} />)}
         </ListTeasers>
-      </div>
+      </StyledHome>
     );
   }
 }

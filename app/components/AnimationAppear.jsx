@@ -7,8 +7,8 @@ const Wrap = styled.div`
 `;
 
 const Styled = styled.div`
-  transform: translateZ(${p => p.isScale ? 0 : '1000px'});
-  opacity: ${p => p.isScale ? 1 : 0};
+  transform: translateZ(${p => (p.isScale ? 0 : '1000px')});
+  opacity: ${p => (p.isScale ? 1 : 0)};
   transition: transform 2s, opacity 2s;
 `;
 
@@ -27,11 +27,11 @@ class AnimationAppear extends Component {
   }
 
   render() {
-    return (<Wrap>
-      <Styled isScale={this.state.scale}>
-        {this.props.children}
-      </Styled>
-    </Wrap>);
+    return (
+      <Wrap>
+        <Styled isScale={this.state.scale}>{this.props.children}</Styled>
+      </Wrap>
+    );
   }
 }
 

@@ -18,8 +18,7 @@ class TypingMessage extends Component {
     this.isBackward = false;
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     this.start();
@@ -70,8 +69,8 @@ class TypingMessage extends Component {
 
   render() {
     return (
-      <p>
-        <span ref={d => this.div = d} />
+      <p className="tooltip">
+        <span ref={d => (this.div = d)} />
         <Cursor size={6} />
       </p>
     );

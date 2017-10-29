@@ -10,18 +10,16 @@ class Mat3 {
   }
 
   init() {
-    for (let i = 0; i < 9; i+= 1) {
+    for (let i = 0; i < 9; i += 1) {
       this.d[i] = 0.0;
     }
     this.sauvegardePrecedente = [];
     this.empilement = 0;
   }
 
-
   get() {
     return this.d;
   }
-
 
   set(a1, a2, a3, b1, b2, b3, c1, c2, c3) {
     this.d[0] = a1;
@@ -37,69 +35,60 @@ class Mat3 {
     this.d[8] = c3;
   }
 
-
   set(valeur) {
-    for(let i = 0; i < 9; i+= 1) {
+    for (let i = 0; i < 9; i += 1) {
       this.d[i] = valeur[i];
     }
   }
-
 
   //////////////////////OPERATIONS//////////////////////
 
   multiplier(matrice2) {
     const resultat = new Mat3();
-    for(let k = 0; k < 3; k+= 1) {
-      for(let j = 0; j < 3; j+= 1) {
-        for(let i = 0; i < 3; i+= 1) {
-          resultat.d[3*j+k] += this.d[3*j+i] * matrice2.d[3*i+k];
+    for (let k = 0; k < 3; k += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        for (let i = 0; i < 3; i += 1) {
+          resultat.d[3 * j + k] += this.d[3 * j + i] * matrice2.d[3 * i + k];
         }
       }
     }
 
-    for(let i = 0; i < 9; i+= 1) {
+    for (let i = 0; i < 9; i += 1) {
       this.d[i] = resultat.d[i];
     }
   }
 
-
   egale(matrice2) {
-    for(let i = 0; i < 9; i+= 1)
-    {
+    for (let i = 0; i < 9; i += 1) {
       this.d[i] = matrice2.d[i];
       this.sauvegardePrecedente[i] = matrice2.sauvegardePrecedente[i];
     }
-
   }
-
 
   ////////////////////// IMBRICATION //////////////////////
 
   push() {
-    this.empilement+= 1;
+    this.empilement += 1;
     let cpt = 0;
-    for(let i = (this.empilement - 1) * 9; i < this.empilement * 9; i+= 1){
+    for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i += 1) {
       this.sauvegardePrecedente[i] = this.d[cpt];
-      cpt+= 1;
+      cpt += 1;
     }
   }
 
-
   pop() {
-    if(this.empilement > 0) {
+    if (this.empilement > 0) {
       let cpt = 0;
-      for(let i = (this.empilement-1) * 9; i < this.empilement * 9; i+= 1) {
+      for (let i = (this.empilement - 1) * 9; i < this.empilement * 9; i += 1) {
         this.d[cpt] = this.sauvegardePrecedente[i];
         this.sauvegardePrecedente[i] = null;
-        cpt+= 1;
+        cpt += 1;
       }
       this.empilement--;
     } else {
-      console.log("pop de trop");
+      console.log('pop de trop');
     }
   }
-
-
 
   ////////////////////// MODIFICATIONS //////////////////////
 
@@ -110,27 +99,24 @@ class Mat3 {
     this.d[8] = 1.0;
   }
 
-
   transpose() {
     const ordre = new Float32Array(9);
-    for (let j = 0; j < 3; j+= 1) {
-      for (let i = 0; i < 3; i+= 1) {
-        ordre[3*i+j] = this.d[3*j+i];
+    for (let j = 0; j < 3; j += 1) {
+      for (let i = 0; i < 3; i += 1) {
+        ordre[3 * i + j] = this.d[3 * j + i];
       }
     }
 
     return ordre;
   }
 
-
   inverser() {
     const copie = new Array(9);
     const det = this.getDeterminant();
 
-    if(Math.abs(det) < 0.0005)
-    {
+    if (Math.abs(det) < 0.0005) {
       this.identity();
-      console.log("Inversement impossible de la matrice");
+      console.log('Inversement impossible de la matrice');
       return;
     }
 
@@ -146,22 +132,22 @@ class Mat3 {
     copie[7] = -(this.d[0] * this.d[7] - this.d[6] * this.d[1]) / det;
     copie[8] = this.d[0] * this.d[4] - this.d[1] * this.d[3] / det;
 
-    for (let i = 0; i < 9; i+= 1) {
+    for (let i = 0; i < 9; i += 1) {
       this.d[i] = copie[i];
     }
   }
 
-
   getDeterminant() {
-    return this.d[0] * (this.d[4] * this.d[8] - this.d[7] * this.d[5])
-      + this.d[1] * (this.d[5] * this.d[6] - this.d[3] * this.d[8])
-      + this.d[2] * (this.d[3] * this.d[7] - this.d[6] * this.d[4]);
+    return (
+      this.d[0] * (this.d[4] * this.d[8] - this.d[7] * this.d[5]) +
+      this.d[1] * (this.d[5] * this.d[6] - this.d[3] * this.d[8]) +
+      this.d[2] * (this.d[3] * this.d[7] - this.d[6] * this.d[4])
+    );
   }
-
 
   rotate(angle, x, y, z) {
     const rotation = new Mat3();
-    angle *= (Math.PI / 180);
+    angle *= Math.PI / 180;
 
     const axe = new Vec3(x, y, z);
     axe.normaliser();

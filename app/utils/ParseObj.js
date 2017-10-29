@@ -5,14 +5,13 @@ class ParseObj {
     this.objets = [];
   }
 
-
   setup(source) {
     const lines = source.split(/\n/g);
 
     let cptObj = -1;
     let idVertice = 1;
 
-    lines.forEach((line) => {
+    lines.forEach(line => {
       const firstLetter = line.charAt(0);
       switch (firstLetter) {
         case 'o':
@@ -30,7 +29,8 @@ class ParseObj {
         case 'f':
           this.setFace(line, cptObj);
           break;
-        default: break;
+        default:
+          break;
       }
     });
   }
@@ -55,8 +55,12 @@ class ParseObj {
     }
   }
 
-  getVerticesList() { return this.verticesList; }
-  getObjets() { return this.objets; }
+  getVerticesList() {
+    return this.verticesList;
+  }
+  getObjets() {
+    return this.objets;
+  }
 }
 
 export default ParseObj;

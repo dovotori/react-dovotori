@@ -13,7 +13,6 @@ class Routes extends Component {
 
   render() {
     const locationKey = this.props.location.pathname;
-    console.log(locationKey);
     return (
       <RouteAnimation locationKey={locationKey}>
         <Switch location={this.props.location}>
@@ -37,7 +36,6 @@ if (process.env.NODE_ENV !== 'production') {
   };
 }
 
-Routes.defaultProps = {
-};
+Routes.defaultProps = {};
 
 export default Routes;

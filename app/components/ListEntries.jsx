@@ -10,15 +10,13 @@ class ListEntriesComponent extends Component {
   }
 
   render() {
-    return (<div className={this.props.className}>
-      {this.props.entries.map(entry => (
-        <TeaserItem
-          key={`teaser-entry-${entry.id}`}
-          entry={entry}
-          onLeft={this.props.onLeft}
-        />
-      ))}
-    </div>);
+    return (
+      <div className={this.props.className}>
+        {this.props.entries.map(entry => (
+          <TeaserItem key={`teaser-entry-${entry.id}`} entry={entry} onLeft={this.props.onLeft} />
+        ))}
+      </div>
+    );
   }
 }
 

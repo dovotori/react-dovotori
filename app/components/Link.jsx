@@ -7,9 +7,7 @@ class Link extends Component {
   }
 
   render() {
-    return (<a>
-      {this.props.label}
-    </a>);
+    return <a>{this.props.label}</a>;
   }
 }
 

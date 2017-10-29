@@ -19,34 +19,40 @@ class Effect extends Component {
     this.saveFbo = new Framebuffer();
   }
 
-
   setup(path) {
-    var canvas = document.getElementById("canvas3d");
-    var w = canvas.getAttribute("width"); var h = canvas.getAttribute("height");
+    var canvas = document.getElementById('canvas3d');
+    var w = canvas.getAttribute('width');
+    var h = canvas.getAttribute('height');
 
     this.ppb.setup(w, h);
     this.saveFbo.setup(w, h);
-    this.programTex.setup(path+"shader/basiqueFlat");
-    this.fxaa.setup(path+"shader/basiqueFlat", path+"shader/fxaa");
-    this.blurH.setup(path+"shader/basiqueFlat", path+"shader/blurHorizontal");
-    this.blurV.setup(path+"shader/basiqueFlat", path+"shader/blurVertical");
-    this.dof.setup(path+"shader/basiqueFlat", path+"shader/dof");
-    this.debug.setup(path+"shader/debugFlat", path+"shader/depth");
+    this.programTex.setup(path + 'shader/basiqueFlat');
+    this.fxaa.setup(path + 'shader/basiqueFlat', path + 'shader/fxaa');
+    this.blurH.setup(path + 'shader/basiqueFlat', path + 'shader/blurHorizontal');
+    this.blurV.setup(path + 'shader/basiqueFlat', path + 'shader/blurVertical');
+    this.dof.setup(path + 'shader/basiqueFlat', path + 'shader/dof');
+    this.debug.setup(path + 'shader/debugFlat', path + 'shader/depth');
     this.screen.setupFlat();
 
     this.occlusion.setup(path);
   }
 
+  begin(camera, model) {
+    this.ppb.begin();
+  }
+  end() {
+    this.ppb.end();
+  }
 
-  begin(camera, model) { this.ppb.begin(); }
-  end(){ this.ppb.end(); }
-
-  beginSave(camera, model) { this.saveFbo.beginDraw(); }
-  endSave(){ this.saveFbo.endDraw(); }
-
+  beginSave(camera, model) {
+    this.saveFbo.beginDraw();
+  }
+  endSave() {
+    this.saveFbo.endDraw();
+  }
 
   render() {
-    if(this.programTex.isReady() && this.screen.isReady()) {
+    if (this.programTex.isReady() && this.screen.isReady()) {
       this.programTex.setTexture(this.ppb.getTexture());
       this.screen.draw(this.programTex.get());
     }
@@ -72,4 +78,3 @@ Effect.contextTypes = {
 };
 
 export default Effect;
-

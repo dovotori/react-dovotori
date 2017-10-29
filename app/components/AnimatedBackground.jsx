@@ -1,4 +1,4 @@
-/* global window */
+/* global window, document */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -14,11 +14,7 @@ import Fbo from './webgl/Fbo';
 import Texture from './webgl/Texture';
 import Mat4 from './geometry/Mat4';
 import Vec3 from './geometry/Vec3';
-import {
-  easeInOutElastic,
-  degToRad,
-  map,
-} from '../utils/numbers';
+import { easeInOutElastic, degToRad, map } from '../utils/numbers';
 import { walkman, ribbon } from '../constants/objets';
 
 import ParseObj from '../utils/ParseObj';
@@ -27,18 +23,23 @@ import shadow from '../shaders/fakeshadow';
 import shader from '../shaders/glitch1and2';
 // import fxaa from '../shaders/fxaa';
 
+const Wrap = styled.div`
+  width: 100%;
+  height: ${p => p.height}px;
+`;
 
 const Styled = styled.div`
-  width: 100%;
+  position: fixed;
   text-align: center;
+  width: 100%;
+  height: auto;
+  background: ${p => p.theme.grey};
+  z-index: -1;
 
   canvas {
     margin: 0 auto;
-    max-width: ${p => p.width}px;
-    max-height: ${p => p.height}px;
-    width: 100%;
-    height: auto;
-    min-width: 400px;
+    width: ${p => p.width}px;
+    height: ${p => p.height}px;
   }
 `;
 
@@ -50,12 +51,11 @@ class AnimatedBackground extends Component {
     this.restartRotation = this.restartRotation.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
     this.onAnimate = this.onAnimate.bind(this);
+    this.onResize = this.onResize.bind(this);
+
     this.state = { cpt: 0 };
 
     this.coor = { x: 0, y: 0 };
-
-    this.width = 1024;
-    this.height = 1024;
 
     const p = new ParseObj();
     p.setup(walkman);
@@ -106,26 +106,29 @@ class AnimatedBackground extends Component {
     this.targetOffsetX = 0;
   }
 
-
   // shouldComponentUpdate() {
   //   return false;
   // }
 
-
   componentWillMount() {
+    this.onResize();
     window.addEventListener('mousemove', this.mouseMove, false);
   }
 
-
   componentDidMount() {
     this.toggleGlitching();
+    window.addEventListener('resize', this.onResize, false);
   }
-
 
   componentWillUnmount() {
     window.removeEventListener('mousemove', this.mouseMove, false);
+    window.removeEventListener('resize', this.onResize, false);
   }
 
+  onResize() {
+    this.width = document.body.clientWidth;
+    this.height = window.innerHeight;
+  }
 
   mouseMove(e) {
     this.coor = {
@@ -137,14 +140,14 @@ class AnimatedBackground extends Component {
     this.targetOffsetX = Math.cos(relX);
   }
 
-
   toggleGlitching() {
-    this.amplitude = this.amplitude === 0 ? this.toggleAmpli ? 0.05 : -0.05 : 0;
+    this.amplitude = this.amplitude === 0 ? (this.toggleAmpli ? 0.05 : -0.05) : 0;
     const delay = this.amplitude === 0 ? 10000 : 1000;
     window.setTimeout(this.toggleGlitching, Math.random() * delay);
-    if (this.amplitude === 0) { this.toggleAmpli = !this.toggleAmpli; }
+    if (this.amplitude === 0) {
+      this.toggleAmpli = !this.toggleAmpli;
+    }
   }
-
 
   restartRotation() {
     this.refDate = Date.now();
@@ -152,12 +155,11 @@ class AnimatedBackground extends Component {
     this.finish = false;
   }
 
-
   onAnimate() {
     this.offsetX += (this.targetOffsetX - this.offsetX) * 0.04;
 
     for (let i = 0; i < this.models.length; i += 1) {
-      const variantX = this.offsetX * (i - (this.models.length / 2));
+      const variantX = this.offsetX * (i - this.models.length / 2);
       this.models[i].identity();
       this.models[i].translate(variantX, 0, 0);
     }
@@ -172,11 +174,7 @@ class AnimatedBackground extends Component {
 
     const diffTime = Date.now() - this.refDate;
     if (diffTime < this.timeDelay) {
-      const tmpAngle = degToRad(
-        easeInOutElastic(
-          diffTime, this.camAngle, 90, this.timeDelay,
-        )
-      );
+      const tmpAngle = degToRad(easeInOutElastic(diffTime, this.camAngle, 90, this.timeDelay));
       this.camPos.set(
         Math.sin(tmpAngle) * this.camDistance,
         this.camHeight,
@@ -198,111 +196,89 @@ class AnimatedBackground extends Component {
     }));
   }
 
-
   render() {
-    return (<Styled
-      width={this.width}
-      height={this.height}
-    >
-      <Scene
-        width={this.width}
-        height={this.height}
-      >
-        <Loop onAnimate={this.onAnimate}>
-          <Camera
-            width={this.width}
-            height={this.height}
-            position={this.camPos.get()}
-            angle={40}
-          >
-            <Program
-              vertex={basique.vertex}
-              fragment={basique.fragment}
-            >
-              <Vbo points={this.points}>
-                {this.objets.map((obj, idx) => (
-                  <Objet
-                    key={obj.key}
-                    indices={obj.vID}
-                    mode="LINE_LOOP"
-                    model={this.models[idx].get()}
-                    // model={this.model.get()}
-                    color={[102 / 255, 1, 204 / 255, 1]}
-                  />
-                ))}
-              </Vbo>
-            </Program>
-            <Program
-              vertex={basique.vertex}
-              fragment={basique.fragment}
-            >
-              <Vbo points={this.points2}>
-                {this.objets2.map(obj => (
-                  <span key={obj.key}>
-                    <Objet
-                      indices={obj.vID}
-                      mode="LINE_LOOP"
-                      model={this.model2.get()}
-                      color={[102 / 255, 1, 204 / 255, 1]}
-                    />
-                    <Objet
-                      indices={obj.vID}
-                      mode="LINE_LOOP"
-                      model={this.model3.get()}
-                      color={[102 / 255, 1, 204 / 255, 1]}
-                    />
-                  </span>
-                ))}
-              </Vbo>
-            </Program>
-
-            <Program
-              vertex={shadow.vertex}
-              fragment={shadow.fragment}
-            >
-              <Vbo points={this.points}>
-                {this.objets.map((obj, idx) => (
-                  <Objet
-                    key={obj.key}
-                    indices={obj.vID}
-                    mode="TRIANGLE_LOOP"
-                    model={this.models[idx].translate(0, -2, 0).get()}
-                    color={[102 / 255, 1, 204 / 255, 1]}
-                  />
-                ))}
-              </Vbo>
-            </Program>
-          </Camera>
-
-          <Program
-            vertex={shader.vertex}
-            fragment={shader.fragment}
-            time={this.state.cpt}
-            amplitude={this.amplitude}
-          >
-            <Fbo
-              width={this.width}
-              height={this.height}
-            >
-              <Texture
-                id={1}
+    return (
+      <Wrap height={this.height}>
+        <Styled width={this.width} height={this.height}>
+          <Scene width={1024} height={1024}>
+            <Loop onAnimate={this.onAnimate}>
+              <Camera
                 width={this.width}
                 height={this.height}
+                position={this.camPos.get()}
+                angle={40}
               >
-                <Primitive />
-              </Texture>
-            </Fbo>
-          </Program>
+                <Program vertex={basique.vertex} fragment={basique.fragment}>
+                  <Vbo points={this.points}>
+                    {this.objets.map((obj, idx) => (
+                      <Objet
+                        key={obj.key}
+                        indices={obj.vID}
+                        mode="LINE_LOOP"
+                        model={this.models[idx].get()}
+                        color={[102 / 255, 1, 204 / 255, 1]}
+                      />
+                    ))}
+                  </Vbo>
+                </Program>
+                <Program vertex={basique.vertex} fragment={basique.fragment}>
+                  <Vbo points={this.points2}>
+                    {this.objets2.map(obj => (
+                      <span key={obj.key}>
+                        <Objet
+                          indices={obj.vID}
+                          mode="LINE_LOOP"
+                          model={this.model2.get()}
+                          color={[102 / 255, 1, 204 / 255, 1]}
+                        />
+                        <Objet
+                          indices={obj.vID}
+                          mode="LINE_LOOP"
+                          model={this.model3.get()}
+                          color={[102 / 255, 1, 204 / 255, 1]}
+                        />
+                      </span>
+                    ))}
+                  </Vbo>
+                </Program>
 
-        </Loop>
-      </Scene>
-    </Styled>);
+                <Program vertex={shadow.vertex} fragment={shadow.fragment}>
+                  <Vbo points={this.points}>
+                    {this.objets.map((obj, idx) => (
+                      <Objet
+                        key={obj.key}
+                        indices={obj.vID}
+                        mode="TRIANGLE_LOOP"
+                        model={this.models[idx].translate(0, -2, 0).get()}
+                        color={[102 / 255, 1, 204 / 255, 1]}
+                      />
+                    ))}
+                  </Vbo>
+                </Program>
+              </Camera>
+
+              <Program
+                vertex={shader.vertex}
+                fragment={shader.fragment}
+                time={this.state.cpt}
+                amplitude={this.amplitude}
+              >
+                <Fbo width={1024} height={1024}>
+                  <Texture id={1} width={1024} height={1024}>
+                    <Primitive />
+                  </Texture>
+                </Fbo>
+              </Program>
+            </Loop>
+          </Scene>
+        </Styled>
+      </Wrap>
+    );
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  AnimatedBackground.propTypes = {
-  };
+  AnimatedBackground.propTypes = {};
 }
 
 AnimatedBackground.defaultProps = {};

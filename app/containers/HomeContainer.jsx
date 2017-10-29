@@ -9,7 +9,7 @@ class HomeContainer extends Component {
   }
 
   render() {
-    return (<Home {...this.props} />);
+    return <Home {...this.props} />;
   }
 }
 

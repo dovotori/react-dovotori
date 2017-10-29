@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
 class Scene extends Component {
   getChildContext() {
     return { gl: this.gl };
@@ -10,17 +9,23 @@ class Scene extends Component {
 
   constructor(props) {
     super(props);
-
-    const { width, height } = this.props;
     this.canvas = document.createElement('canvas');
+    const { width, height } = this.props;
     this.canvas.setAttribute('width', width);
     this.canvas.setAttribute('height', height);
-    this.gl;
+    this.setupGL();
+  }
+
+  componentDidMount() {
+    document.querySelector('.containerGL').appendChild(this.canvas);
+  }
+
+  setupGL() {
+    this.gl = null;
 
     try {
-      this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl')
-    }
-    catch(e) {
+      this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+    } catch (e) {
       console.log(e.error);
     }
 
@@ -43,19 +48,12 @@ class Scene extends Component {
     }
   }
 
-  componentDidMount() {
-    document.querySelector('#canvas').appendChild(this.canvas);
-  }
-
   // shouldComponentUpdate() {
   //   return false;
   // }
 
   render() {
-    return (<div>
-      {this.props.children}
-      <div id="canvas" />
-    </div>);
+    return <div className="containerGL">{this.props.children}</div>;
   }
 }
 
@@ -69,8 +67,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 Scene.defaultProps = {
   children: null,
-  width: 100,
-  height: 100,
+  width: 1024,
+  height: 1024,
 };
 
 Scene.childContextTypes = {

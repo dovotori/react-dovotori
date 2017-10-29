@@ -29,8 +29,7 @@ class SvgAnimation extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.toggleAnim !== this.props.toggleAnim
-      && !this.isAnimated) {
+    if (newProps.toggleAnim !== this.props.toggleAnim && !this.isAnimated) {
       this.start();
     }
   }
@@ -60,7 +59,9 @@ class SvgAnimation extends Component {
       // } else {
       // path.style.stroke = theme.primary;
       // }
-      if (idx === 0) { path.addEventListener('animationend', this.animEnd, false); }
+      if (idx === 0) {
+        path.addEventListener('animationend', this.animEnd, false);
+      }
     });
   }
 
@@ -68,17 +69,15 @@ class SvgAnimation extends Component {
     Array.prototype.forEach.call(this.paths, (path, idx) => {
       path.style.stroke = 'none';
       path.style.animation = 'none';
-      if (idx === 0) { path.removeEventListener('animationend', this.animEnd, false); }
+      if (idx === 0) {
+        path.removeEventListener('animationend', this.animEnd, false);
+      }
     });
     this.isAnimated = false;
   }
 
   render() {
-    return <Styled
-      innerRef={d => this.div = d}
-    >
-      {this.props.children}
-    </Styled>;
+    return <Styled innerRef={d => (this.div = d)}>{this.props.children}</Styled>;
   }
 }
 

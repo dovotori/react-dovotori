@@ -2,7 +2,6 @@
 import React, { Component, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 
-
 class Loop extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +24,9 @@ class Loop extends Component {
 
   animationLoop() {
     const { onAnimate } = this.props;
-    if (onAnimate) { onAnimate(); }
+    if (onAnimate) {
+      onAnimate();
+    }
     this.setState(prev => ({ toggle: !prev.toggle }));
     this.req = window.requestAnimationFrame(this.animationLoop);
   }
@@ -34,10 +35,10 @@ class Loop extends Component {
     const { gl } = this.context;
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    return Children.map(this.props.children,
-      (child) => cloneElement(child, {
-        toggle: this.state.toggle
-      })
+    return Children.map(this.props.children, child =>
+      cloneElement(child, {
+        toggle: this.state.toggle,
+      }),
     );
   }
 }

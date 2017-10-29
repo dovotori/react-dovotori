@@ -12,12 +12,14 @@ class ProjectComponent extends Component {
   }
 
   render() {
-    return (<div className={this.props.className}>
-      <Title>{this.props.title}</Title>
-      <Bullet />
-      <Description>{this.props.description}</Description>
-      <Bullet />
-    </div>);
+    return (
+      <div className={this.props.className}>
+        <Title>{this.props.title}</Title>
+        <Bullet />
+        <Description>{this.props.description}</Description>
+        <Bullet />
+      </div>
+    );
   }
 }
 
@@ -36,7 +38,7 @@ ProjectComponent.defaultProps = {
 };
 
 const Project = styled(ProjectComponent)`
-  border: solid 30px rgba(255,255,255,0.4);
+  border: solid 30px rgba(255, 255, 255, 0.4);
   background: ${props => props.theme.lightgrey};
   padding: 30px;
   box-shadow: 10px 10px 20px 10px #aaa;

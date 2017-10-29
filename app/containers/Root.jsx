@@ -15,11 +15,7 @@ class Root extends Component {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Route
-              render={({ location }) => (
-                <App location={location} />
-              )}
-            />
+            <Route render={({ location }) => <App location={location} />} />
           </BrowserRouter>
         </ThemeProvider>
       </Provider>

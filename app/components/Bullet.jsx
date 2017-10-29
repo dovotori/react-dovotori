@@ -8,7 +8,7 @@ class BulletComponent extends Component {
   }
 
   render() {
-    return (<div className={this.props.className}></div>);
+    return <div className={this.props.className} />;
   }
 }
 
