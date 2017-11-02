@@ -20,6 +20,33 @@ const WrapLogo = styled.div`
   `};
 `;
 
+const StyledLogo = styled(Logo)`
+  display: block;
+  width: 80px;
+  height: auto;
+  margin: 0 auto;
+  fill: ${p => p.theme.back};
+  color: ${p => p.theme.primary};
+`;
+
+const BackgroundLogo = styled(Logo)`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate3d(50%, -50%, 0);
+  display: block;
+  fill: ${p => p.theme.primary};
+  color: ${p => p.theme.primary};
+  opacity: 0.2;
+  pointer-events: none;
+`;
+
+const FillHeight = styled.div`
+  height: 100%;
+`;
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -45,11 +72,16 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <FullscreenView in={this.state.open}>{this.state.open && <SocialLinks />}</FullscreenView>
+        <FullscreenView in={this.state.open}>
+          {this.state.open && <FillHeight>
+            <BackgroundLogo />
+            <SocialLinks />
+          </FillHeight>}
+        </FullscreenView>
         <WrapLogo>
           <button onClick={this.click} onMouseEnter={this.mouseEnter} name="toggle links menu">
             <SvgAnimation toggleAnim={this.state.over}>
-              <Logo />
+              <StyledLogo />
             </SvgAnimation>
           </button>
         </WrapLogo>

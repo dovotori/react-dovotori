@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { AnimComponent } from './RouteAnimation';
 import Teaser from './Teaser';
 
-const StyledHome = styled(AnimComponent).attrs({
+const StyledHome = styled.div.attrs({
   className: 'home',
-})``;
+})`
+`;
 
 const ListTeasers = styled.div.attrs({
   className: 'list-teasers',
@@ -23,6 +23,7 @@ class Home extends Component {
 
   render() {
     const { entries } = this.props;
+    // console.log(this.props);
     return (
       <StyledHome>
         <ListTeasers>

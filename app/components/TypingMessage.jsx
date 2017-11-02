@@ -36,8 +36,10 @@ class TypingMessage extends Component {
   }
 
   restart() {
-    this.isBackward = !this.isBackward;
-    this.start();
+    if (this.props.nextCallTime !== null) {
+      this.isBackward = !this.isBackward;
+      this.start();
+    }
   }
 
   anim() {
@@ -69,9 +71,9 @@ class TypingMessage extends Component {
 
   render() {
     return (
-      <p className="tooltip">
+      <p className={`${this.props.className} message`}>
         <span ref={d => (this.div = d)} />
-        <Cursor size={6} />
+        <Cursor size={this.props.cursorSize} />
       </p>
     );
   }
@@ -79,16 +81,20 @@ class TypingMessage extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   TypingMessage.propTypes = {
+    className: PropTypes.string,
     message: PropTypes.string,
     intervalLetter: PropTypes.number,
     nextCallTime: PropTypes.number,
+    cursorSize: PropTypes.number,
   };
 }
 
 TypingMessage.defaultProps = {
+  className: '',
   message: '',
   intervalLetter: 10,
-  nextCallTime: 2000,
+  nextCallTime: null,
+  cursorSize: 6,
 };
 
 export default TypingMessage;

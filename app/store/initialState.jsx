@@ -24,6 +24,7 @@ const initialState = {
         'Datavisualisation désignant les différentes institutions "ennemies d\'Internet" à travers le monde. Projet réalisé au sein de l\'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher.',
       sources: '',
       context: '',
+      images: 1,
     },
     {
       id: 1,
@@ -48,6 +49,7 @@ const initialState = {
         "Transformation d'un comptoir de bar en séquenceur musicale, dont les sons sont déclenchés par les verres posés sur sa surface.",
       sources: '',
       context: '',
+      images: 2,
     },
     {
       id: 3,
@@ -60,6 +62,7 @@ const initialState = {
         "Proposition pour l'identité d'une exposition fictive sur les arts de rue et le graffiti.",
       sources: '',
       context: '',
+      images: 4,
     },
     {
       id: 4,
@@ -94,6 +97,7 @@ const initialState = {
         "Recherche pour l'identité d'une exposition au sein de la Soap Factory, musée d'art contemporain à Mineapolis.",
       sources: '',
       context: '',
+      images: 3,
     },
     {
       id: 7,
@@ -106,6 +110,7 @@ const initialState = {
         "Animation promotionnelle installée dans les gares parisiennes de l'album de Reporters sans frontières, 100 photos de Ai Weiwei pour la liberté de la presse.",
       sources: '',
       context: '',
+      images: 3,
     },
     {
       id: 8,
@@ -118,6 +123,7 @@ const initialState = {
         "Datavisualisation désignant les pays qui utilisent la religion comme moyen de censure. Projet réalisé au sein de l'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher. Source : - Pew Research, Religion and Public Life Project, 21 novembre 2012 - Zeev Maoz and Errol A. Henderson. “The World Religion Dataset, 1945-2010: Logic, Estimates, and trends.” International Interactions, 39(3).",
       sources: '',
       context: '',
+      images: 6,
     },
     {
       id: 9,
@@ -130,6 +136,7 @@ const initialState = {
         "Dispositif de jeu qui a pour ambition d'intégrer n'importe quel objet du quotidien pour influencer un espace virtuel.",
       sources: '',
       context: '',
+      images: 9,
     },
     {
       id: 10,
@@ -142,6 +149,7 @@ const initialState = {
         "Élaboration d'une identité visuelle pour la biennale d'art contemporain de la ville du Havre.",
       sources: '',
       context: '',
+      images: 11,
     },
     {
       id: 11,
@@ -154,6 +162,7 @@ const initialState = {
         'Recherche graphique pour un coffret de reportages de Raymond Depardon, la série sur le monde paysan, destin fragile des travailleurs de la terre.',
       sources: '',
       context: '',
+      images: 5,
     },
     {
       id: 12,

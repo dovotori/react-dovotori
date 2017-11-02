@@ -23,7 +23,9 @@ import shadow from '../shaders/fakeshadow';
 import shader from '../shaders/glitch1and2';
 // import fxaa from '../shaders/fxaa';
 
-const Wrap = styled.div`
+const Wrap = styled.div.attrs({
+  className: 'animated-background',
+})`
   width: 100%;
   height: ${p => p.height}px;
 `;

@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import View from '../components/View';
 
 class ViewContainer extends Component {
-  componentDidMount() {
-    console.log('mount');
-  }
-
   shouldComponentUpdate() {
     return false;
   }

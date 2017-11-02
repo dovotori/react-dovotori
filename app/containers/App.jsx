@@ -13,10 +13,11 @@ import Footer from '../components/Footer';
 import AnimatedBackground from '../components/AnimatedBackground';
 import Signature from '../components/Signature';
 import ResizeWatcher from '../components/ResizeWatcher';
+import { styleRouteAnimation } from '../components/RouteAnimation';
 
 class App extends Component {
   componentWillMount() {
-    injectGlobal`${commonCss}`;
+    injectGlobal`${commonCss} ${styleRouteAnimation}`;
   }
 
   // shouldComponentUpdate() {
@@ -46,13 +47,6 @@ class App extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   App.propTypes = {
-    // location: PropTypes.shape({
-    //   hash: PropTypes.string,
-    //   key: PropTypes.string,
-    //   pathname: PropTypes.string,
-    //   search: PropTypes.string,
-    //   state: PropTypes.string,
-    // }).isRequired,
   };
 }
 

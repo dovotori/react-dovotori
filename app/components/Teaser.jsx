@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { media } from '../themes/theme';
-
-const pass = keyframes`
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-`;
+import Line from './Line';
 
 const LINK = styled(Link)`
   position: relative;
@@ -42,53 +38,56 @@ const Infos = styled.div`
   position: absolute;
   top: 50%;
   right: 0;
-  text-align: center;
+  text-align: right;
   width: 100%;
   pointer-events: none;
   transform: translateY(-50%);
 `;
 
-const Banner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-  animation: ${p => (p.hover ? `${pass} 2s ${p.theme.elastic2} infinite` : 'none')};
-  transform: translateX(-100%);
-  z-index: 0;
-`;
-
 const H5 = styled.h5`
-  font-size: 1em;
-  line-height: 0.8;
+  font-size: 22px;
   font-weight: 100;
   color: ${p => p.theme.grey};
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: transform .4s ${p => p.theme.elastic2}, opacity .4s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(-100%)')};
+  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 
   span {
     position: relative;
     z-index: 1;
-    background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-    padding: 0 2px;
-    // box-shadow: -1px 1px 0 ${p => p.theme.grey};
+    color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
+    padding: 2px;
   }
 `;
 
-const P = styled.p`
-  font-size: 14px;
-  color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-  text-shadow: 1px 1px 0px #000;
+const LineBottom = Line.extend`
+  position: absolute;
+  bottom: 0;
+  animation-delay: 1s;
+`;
+
+const LineTop = Line.extend`
+  position: absolute;
+  top: 0;
+`;
+
+const Date = styled.p`
   transition: transform 0.5s ${p => p.theme.elastic2}, opacity 0.5s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(-100%)')};
+  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
-  padding: 10px 4px 0;
-  letter-spacing: 0.5em;
+  margin: 0;
+  padding: 0;
+
+  span {
+    background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
+    color: ${p => p.theme.grey};
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 0 2px;
+  }
 `;
 
 class Teaser extends Component {
@@ -113,6 +112,7 @@ class Teaser extends Component {
 
   render() {
     const { entry, className } = this.props;
+    const isprimary = entry.category === 0;
     return (
       <LINK
         className={className}
@@ -120,17 +120,18 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <Back isprimary={entry.category === 1} />
+        <Back isprimary={!isprimary} />
         <IMG src={`assets/teasers/${entry.slug}.png`} alt={entry.title} hover={this.state.hover} />
         <Infos>
-          <H5 hover={this.state.hover} isprimary={entry.category === 0}>
-            <Banner hover={this.state.hover} isprimary={entry.category === 0} />
+          <H5 hover={this.state.hover} isprimary={isprimary}>
             <span>{entry.title}</span>
           </H5>
-          <P hover={this.state.hover} isprimary={entry.category === 0}>
-            {entry.date}
-          </P>
+          <Date hover={this.state.hover} isprimary={isprimary}>
+            <span>{entry.date}</span>
+          </Date>
         </Infos>
+        <LineBottom hover={this.state.hover} isprimary={isprimary} time="2000" />
+        <LineTop hover={this.state.hover} isprimary={isprimary} time="2000" />
       </LINK>
     );
   }

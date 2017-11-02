@@ -13,8 +13,16 @@ const theme = {
   mobileBreakPoint: 480,
   elastic: 'cubic-bezier(0.64, 0.57, 0.67, 1.53)',
   elastic2: 'cubic-bezier(0.860, 0.000, 0.070, 1.000)',
-  font1: '"Droid Sans Mono", "Roboto", "Trebuchet MS", "Verdana", "Geneva", sans-serif',
+  font1: '"Geneva", sans-serif',
   font2: '',
+  scrollbar: css`
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #66ffcc;
+  }
+  `,
 };
 
 export default theme;

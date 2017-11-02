@@ -21,6 +21,27 @@ const Wrap = styled.div`
     opacity: 0.01;
     transition: opacity 500ms ${p => p.theme.elastic};
   }
+
+
+
+
+  .slide-enter {
+    transform: translateY(-100%);
+  }
+
+  .slide-enter.slide-enter-active {
+    transform: none;
+    transition: transform 300ms ease-out;
+  }
+
+  .slide-exit {
+    transform: none;
+  }
+
+  .slide-exit.slide-exit-active {
+    transform: translateY(-100%);
+    transition: transform 300ms ease-out;
+  }
 `;
 
 const Styled = styled.div`

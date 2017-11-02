@@ -38,7 +38,7 @@ const FlexItem = styled.div`
     transition: transform 300ms ${p => p.theme.elastic2};
   }
 
-  .tooltip {
+  .message {
     position: absolute;
     top: 150%;
     left: 0;

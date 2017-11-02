@@ -14,7 +14,10 @@ class Routes extends Component {
   render() {
     const locationKey = this.props.location.pathname;
     return (
-      <RouteAnimation locationKey={locationKey}>
+      <RouteAnimation
+        locationKey={locationKey}
+        callback={this.callbackEnter}
+      >
         <Switch location={this.props.location}>
           <Route exact path="/" component={HomeContainer} />
           <Route path="/view/:slug" component={ViewContainer} />

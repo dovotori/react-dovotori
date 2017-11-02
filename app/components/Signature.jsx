@@ -13,6 +13,7 @@ const Styled = styled.div`
   width: 50%;
   max-width: 200px;
   transform: translate3d(0, -50%, 0);
+  text-align: right;
 
   svg {
     width: 100%;
@@ -24,10 +25,14 @@ const Styled = styled.div`
   `};
 `;
 
-const P = styled.p`
+const Name = styled.p`
+  display: inline-block;
   text-align: right;
+  font-size: 0.9em;
   letter-spacing: 0.1em;
-  color: ${p => p.theme.secondary};
+  background-color: ${p => p.theme.primary};
+  color: ${p => p.theme.grey};
+  padding: 0 2px;
 `;
 
 class Signature extends Component {
@@ -87,9 +92,9 @@ class Signature extends Component {
               d="m112 55.6s-3.97 0-3.97-3.97v-15.9s0-3.97 3.97-3.97z"
             />
           </svg>
-          <P>
+          <Name>
             dorian ratovo <Cursor size={8} />
-          </P>
+          </Name>
         </StyledBlink>
       </Styled>
     );
