@@ -23,6 +23,19 @@ import shadow from '../shaders/fakeshadow';
 import shader from '../shaders/glitch1and2';
 // import fxaa from '../shaders/fxaa';
 
+const BackBanner = styled.div.attrs({
+  className: 'back-banner',
+})`
+  position: absolute;
+  bottom: 0;
+  height: 40%;
+  width: 100%;
+  left: 0;
+  background-color: #000;
+  opacity: 0.2;
+  z-index: 1;
+`;
+
 const Wrap = styled.div.attrs({
   className: 'animated-background',
 })`
@@ -37,6 +50,11 @@ const Styled = styled.div`
   height: auto;
   background: ${p => p.theme.grey};
   z-index: -1;
+
+  .containerGL {
+    position: relative;
+    z-index: 2;
+  }
 
   canvas {
     margin: 0 auto;
@@ -202,6 +220,7 @@ class AnimatedBackground extends Component {
     return (
       <Wrap height={this.height}>
         <Styled width={this.width} height={this.height}>
+          <BackBanner />
           <Scene width={1024} height={1024}>
             <Loop onAnimate={this.onAnimate}>
               <Camera

@@ -9,7 +9,7 @@ const Line = styled.div`
   width: 100%;
   height: 2px;
   background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-  animation: ${p => (p.hover ? `${pass} ${p.time}ms ${p.theme.elastic2} infinite` : 'none')};
+  animation: ${p => (p.hover ? `${pass} ${p.time}ms linear infinite` : 'none')};
   z-index: 0;
   opacity: 0.6;
   transform: translateX(-100%);

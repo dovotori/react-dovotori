@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import HomeContainer from './HomeContainer';
 import ViewContainer from './ViewContainer';
-import RouteAnimation from '../components/RouteAnimation';
+import AnimatedRoute from '../components/AnimatedRoute';
 
 class Routes extends Component {
   shouldComponentUpdate(newProps) {
@@ -14,7 +14,7 @@ class Routes extends Component {
   render() {
     const locationKey = this.props.location.pathname;
     return (
-      <RouteAnimation
+      <AnimatedRoute
         locationKey={locationKey}
         callback={this.callbackEnter}
       >
@@ -22,7 +22,7 @@ class Routes extends Component {
           <Route exact path="/" component={HomeContainer} />
           <Route path="/view/:slug" component={ViewContainer} />
         </Switch>
-      </RouteAnimation>
+      </AnimatedRoute>
     );
   }
 }

@@ -13,10 +13,10 @@ const StyledTransitionGroup = styled(TransitionGroup)`
   overflow: hidden;
 `;
 
-const TIME = 1000;
-const EASE_OUT = 'cubic-bezier(.56, .56, .15, 1)';
-const EASE_IN = 'cubic-bezier(1,-0.7,.29,.28)';
-const EASE = 'cubic-bezier(.75,-0.5,0,1.75)';
+const TIME = 500;
+const EASE = 'linear';
+// const EASE = 'cubic-bezier(.75,-0.5,0,1.75)';
+// const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
 
 export const styleRouteAnimation = `
   .home-enter,
@@ -55,6 +55,8 @@ export const styleRouteAnimation = `
 
 
 
+
+
   .view-view-enter.view-view-enter-active .slide-bottom,
   .view-view-exit.view-view-exit-active .slide-bottom {
     transition: transform ${TIME}ms ${EASE};
@@ -75,6 +77,92 @@ export const styleRouteAnimation = `
   .view-view-exit.view-view-exit-active .slide-bottom {
     transform: translateY(-100%);
   }
+
+
+
+
+
+.view-view-enter.view-view-enter-active .message,
+.view-view-exit.view-view-exit-active .message {
+  transition: transform ${TIME}ms ${EASE};
+}
+
+.view-view-enter .message {
+  transform: translateX(200%);
+}
+
+.view-view-enter.view-view-enter-active .message,
+.view-view-exit .message {
+  transform: none;
+}
+
+.view-view-exit.view-view-exit-active .message {
+  transform: translateX(200%);
+}
+
+
+
+
+
+
+.view-view-enter.view-view-enter-active .date span,
+.view-view-exit.view-view-exit-active .date span {
+  transition: transform ${TIME}ms ${EASE}, opacity ${TIME}ms ${EASE};
+}
+
+.view-view-enter .date span {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.view-view-enter.view-view-enter-active .date span,
+.view-view-exit .date span {
+  transform: none;
+  opacity: 1;
+}
+
+.view-view-exit.view-view-exit-active .date span {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+
+
+
+
+
+
+
+.view-view-enter.view-view-enter-active .images,
+.view-view-exit.view-view-exit-active .images {
+  transition: transform ${TIME}ms ${EASE};
+}
+
+.view-view-enter .images {
+  transform: translateX(100%);
+}
+
+.view-view-enter.view-view-enter-active .images,
+.view-view-exit .images {
+  transform: none;
+}
+
+.view-view-exit.view-view-exit-active .images {
+  transform: translateX(100%);
+}
+
+
+
+
+
+
+.view-view-enter .view-navigation {
+}
+
+.view-view-exit .view-navigation {
+  visibility: hidden;
+  pointer-events: none;
+}
 `;
 
 const Animation = props => (
@@ -84,7 +172,7 @@ const Animation = props => (
   />
 );
 
-class RouteAnimation extends Component {
+class AnimatedRoute extends Component {
   constructor(props) {
     super(props);
     this.classNames = 'withHome';
@@ -127,15 +215,15 @@ class RouteAnimation extends Component {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  RouteAnimation.propTypes = {
+  AnimatedRoute.propTypes = {
     children: PropTypes.node,
     locationKey: PropTypes.string,
   };
 }
 
-RouteAnimation.defaultProps = {
+AnimatedRoute.defaultProps = {
   children: null,
   locationKey: '',
 };
 
-export default RouteAnimation;
+export default AnimatedRoute;

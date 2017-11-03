@@ -9,6 +9,7 @@ const theme = {
   dark: '#222',
   lightgrey: '#bbb',
   gradient: 'linear-gradient(#009966, #66ffcc)',
+  gradient2: 'linear-gradient(to right, #009966, #66ffcc)',
   tabletBreakPoint: 700,
   mobileBreakPoint: 480,
   elastic: 'cubic-bezier(0.64, 0.57, 0.67, 1.53)',

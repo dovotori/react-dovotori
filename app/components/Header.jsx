@@ -8,6 +8,13 @@ import SvgAnimation from './SvgAnimation';
 import FullscreenView from './FullscreenView';
 import { media } from '../themes/theme';
 
+const StyledHeader = styled.div.attrs({
+  className: 'header',
+})`
+  position: relative;
+  z-index: 10;
+`;
+
 const WrapLogo = styled.div`
   position: fixed;
   top: 0;
@@ -71,7 +78,7 @@ class Header extends Component {
 
   render() {
     return (
-      <div className="header">
+      <StyledHeader>
         <FullscreenView in={this.state.open}>
           {this.state.open && <FillHeight>
             <BackgroundLogo />
@@ -85,7 +92,7 @@ class Header extends Component {
             </SvgAnimation>
           </button>
         </WrapLogo>
-      </div>
+      </StyledHeader>
     );
   }
 }

@@ -27,7 +27,7 @@ class Home extends Component {
     return (
       <StyledHome>
         <ListTeasers>
-          {entries.map(teaser => <Teaser key={teaser.id} entry={teaser} />)}
+          {entries.map((teaser, idx) => <Teaser key={teaser.id} entry={teaser} idx={idx} />)}
         </ListTeasers>
       </StyledHome>
     );

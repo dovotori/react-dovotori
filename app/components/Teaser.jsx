@@ -6,11 +6,22 @@ import { Link } from 'react-router-dom';
 import { media } from '../themes/theme';
 import Line from './Line';
 
-const LINK = styled(Link)`
+const LINK = styled(Link).attrs({
+  className: 'teaser',
+})`
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  margin: 6px;
+  text-decoration: none;
+`;
+
+const Banner = styled.div`
+  position: relative;
   overflow: hidden;
+  height: 80px;
+  width: 400px;
+  box-shadow: ${p => (p.hover ? '-4px 4px' : '-1px 1px')} 0 #aaa;
+  transition: box-shadow 300ms ease-out;
 `;
 
 const Back = styled.div`
@@ -28,6 +39,7 @@ const IMG = styled.img`
   transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'scale(40)' : 'scale(1)')};
   opacity: 0.5;
+  width: auto;
 
   ${media.mobile`
     width: 100%;
@@ -90,6 +102,12 @@ const Date = styled.p`
   }
 `;
 
+const Number = styled.p`
+  text-align: right;
+  color: ${p => p.theme.grey};
+  font-size: 0.6em;
+`;
+
 class Teaser extends Component {
   constructor(props) {
     super(props);
@@ -111,7 +129,7 @@ class Teaser extends Component {
   }
 
   render() {
-    const { entry, className } = this.props;
+    const { entry, className, idx } = this.props;
     const isprimary = entry.category === 0;
     return (
       <LINK
@@ -120,18 +138,25 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <Back isprimary={!isprimary} />
-        <IMG src={`assets/teasers/${entry.slug}.png`} alt={entry.title} hover={this.state.hover} />
-        <Infos>
-          <H5 hover={this.state.hover} isprimary={isprimary}>
-            <span>{entry.title}</span>
-          </H5>
-          <Date hover={this.state.hover} isprimary={isprimary}>
-            <span>{entry.date}</span>
-          </Date>
-        </Infos>
-        <LineBottom hover={this.state.hover} isprimary={isprimary} time="2000" />
-        <LineTop hover={this.state.hover} isprimary={isprimary} time="2000" />
+        <Number>{idx}</Number>
+        <Banner hover={this.state.hover}>
+          <Back isprimary={!isprimary} />
+          <IMG
+            src={`assets/teasers/${entry.slug}.png`}
+            alt={entry.title}
+            hover={this.state.hover}
+          />
+          <Infos>
+            <H5 hover={this.state.hover} isprimary={isprimary}>
+              <span>{entry.title}</span>
+            </H5>
+            <Date hover={this.state.hover} isprimary={isprimary}>
+              <span>{entry.date}</span>
+            </Date>
+          </Infos>
+          {/* <LineBottom hover={this.state.hover} isprimary={isprimary} time="2000" /> */}
+          <LineTop hover={this.state.hover} isprimary={isprimary} time="2000" />
+        </Banner>
       </LINK>
     );
   }
@@ -149,12 +174,14 @@ if (process.env.NODE_ENV !== 'production') {
       date: PropTypes.number,
       description: PropTypes.string,
     }),
+    idx: PropTypes.number,
   };
 }
 
 Teaser.defaultProps = {
   className: '',
   entry: {},
+  idx: 0,
 };
 
 export default Teaser;

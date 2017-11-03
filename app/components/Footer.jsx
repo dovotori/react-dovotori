@@ -7,13 +7,13 @@ const Border = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  background: ${p => p.theme.dark};
-  border-top: solid 3px ${p => p.theme.primary};
+  height: 3px;
+  background: ${p => p.theme.gradient2};
 `;
 
 const Wrap = styled.div`
   padding: 4px;
-  background: ${p => p.theme.primary};
+  background: ${p => p.theme.gradient2};
 `;
 
 const P = styled.p`

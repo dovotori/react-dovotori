@@ -30,7 +30,7 @@ const Styled = styled.div.attrs({
       }
 
       svg {
-        transform: translate3d(-50%, -50%, 0) scale(1);
+        transform: translate3d(-50%, -50%, 0) scale(1.4);
       }
     }
 
@@ -59,6 +59,12 @@ const Styled = styled.div.attrs({
   }
 `;
 
+const Blank = styled.span`
+  width: 50px;
+  height: 50px;
+  margin: 0 10px 0 0;
+`;
+
 
 class ViewNavigation extends Component {
   shouldComponentUpdate() {
@@ -76,12 +82,12 @@ class ViewNavigation extends Component {
             <path d="M 20 0 L 10 5 L 20 10" />
           </svg>
         </Link>
-        {previousSlug && <Link to={`/view/${previousSlug}`}>
+        {previousSlug ? <Link to={`/view/${previousSlug}`}>
           <span>Previous</span>
           <svg width="10" height="10" viewport="0 0 10 10">
             <path d="M 10 0 L 0 5 L 10 10" />
           </svg>
-        </Link>}
+        </Link> : <Blank />}
         {nextSlug && <Link to={`/view/${nextSlug}`}>
           <span>Next</span>
           <svg width="10" height="10" viewport="0 0 10 10">

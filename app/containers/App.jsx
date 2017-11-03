@@ -13,7 +13,7 @@ import Footer from '../components/Footer';
 import AnimatedBackground from '../components/AnimatedBackground';
 import Signature from '../components/Signature';
 import ResizeWatcher from '../components/ResizeWatcher';
-import { styleRouteAnimation } from '../components/RouteAnimation';
+import { styleRouteAnimation } from '../components/AnimatedRoute';
 
 class App extends Component {
   componentWillMount() {

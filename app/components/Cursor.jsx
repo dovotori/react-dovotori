@@ -8,6 +8,7 @@ const Cursor = styled.span`
   height: ${p => p.size}px;
   background-color: ${p => p.theme.secondary};
   animation: 0.4s infinite ${blink};
+  margin-left: 4px;
 `;
 
 export default Cursor;
