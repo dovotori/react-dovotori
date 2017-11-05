@@ -9,12 +9,26 @@ const StyledTransitionGroup = styled(TransitionGroup)`
   height: calc(100% - 101px);
   bottom: 0;
   background: url('../assets/img/stripes.png') #fff repeat;
-  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+
+  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+    height: auto;
+  }
 `;
 
-const TIME = 500;
-const EASE = 'linear';
+export const Bloc = styled.div.attrs({
+  className: 'bloc',
+})`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  text-align: center;
+`;
+
+const TIME = 1000;
+const EASE = 'ease-in-out';
 // const EASE = 'cubic-bezier(.75,-0.5,0,1.75)';
 // const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
 
@@ -88,7 +102,7 @@ export const styleRouteAnimation = `
 }
 
 .view-view-enter .message {
-  transform: translateX(200%);
+  transform: translateX(100%);
 }
 
 .view-view-enter.view-view-enter-active .message,
@@ -97,7 +111,7 @@ export const styleRouteAnimation = `
 }
 
 .view-view-exit.view-view-exit-active .message {
-  transform: translateX(200%);
+  transform: translateX(100%);
 }
 
 
@@ -178,6 +192,7 @@ class AnimatedRoute extends Component {
     this.classNames = 'withHome';
     this.withHome = false;
     this.replaceClassName = this.replaceClassName.bind(this);
+    this.removeEnterClassName = this.removeEnterClassName.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -194,6 +209,16 @@ class AnimatedRoute extends Component {
     }
   }
 
+  removeEnterClassName(div) {
+    if (div.className.indexOf('home ') !== -1) {
+      div.setAttribute('class', div.className.replace(' home-enter home-enter-active', ''));
+    } else if (this.withHome) {
+      div.setAttribute('class', div.className.replace(' view-home-enter view-home-enter-active', ''));
+    } else {
+      div.setAttribute('class', div.className.replace(' view-view-enter view-view-enter-active', ''));
+    }
+  }
+
   render() {
     return (
       <StyledTransitionGroup>
@@ -204,8 +229,7 @@ class AnimatedRoute extends Component {
           onExit={this.replaceClassName}
           onEntering={this.replaceClassName}
           onExiting={this.replaceClassName}
-          onEntered={this.replaceClassName}
-          onExited={this.replaceClassName}
+          onEntered={this.removeEnterClassName}
         >
           {this.props.children}
         </Animation>

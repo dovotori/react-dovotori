@@ -8,7 +8,6 @@ const Styled = styled.div.attrs({
 })`
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 60px;
 
   a {
     position: relative;

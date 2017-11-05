@@ -10,9 +10,9 @@ const LINK = styled(Link).attrs({
   className: 'teaser',
 })`
   position: relative;
-  display: inline-block;
-  margin: 6px;
+  display: block;
   text-decoration: none;
+  border-top: solid 1px #fff;
 `;
 
 const Banner = styled.div`
@@ -38,7 +38,7 @@ const IMG = styled.img`
   vertical-align: middle;
   transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'scale(40)' : 'scale(1)')};
-  opacity: 0.5;
+  opacity: 0.7;
   width: auto;
 
   ${media.mobile`
@@ -91,21 +91,23 @@ const Date = styled.p`
   transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
   margin: 0;
-  padding: 0;
 
   span {
+    font-family: ${p => p.theme.font2};
     background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
     color: ${p => p.theme.grey};
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 0 2px;
+    padding: 2px;
   }
 `;
 
 const Number = styled.p`
+  font-family: ${p => p.theme.font2};
   text-align: right;
   color: ${p => p.theme.grey};
-  font-size: 0.6em;
+  font-size: 0.8em;
+  padding: 10px 0;
 `;
 
 class Teaser extends Component {
@@ -138,7 +140,6 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <Number>{idx}</Number>
         <Banner hover={this.state.hover}>
           <Back isprimary={!isprimary} />
           <IMG
@@ -157,6 +158,7 @@ class Teaser extends Component {
           {/* <LineBottom hover={this.state.hover} isprimary={isprimary} time="2000" /> */}
           <LineTop hover={this.state.hover} isprimary={isprimary} time="2000" />
         </Banner>
+        <Number>{idx < 10 ? `_0${idx}` : `_${idx}`}</Number>
       </LINK>
     );
   }

@@ -1,4 +1,9 @@
+import { isTouchDevice } from '../utils/utils';
+
 const initialState = {
+  device: {
+    isTouch: isTouchDevice(),
+  },
   categories: {
     0: 'design',
     1: 'code',
@@ -66,14 +71,15 @@ const initialState = {
     },
     {
       id: 4,
-      slug: 'economie',
-      title: 'Economie',
+      slug: 'identite',
+      title: 'Identité',
       category: 0,
       tags: [],
       date: 2014,
-      description: '',
+      description: 'Identités visuelles pour différentes marques.',
       sources: '',
       context: '',
+      images: 14,
     },
     {
       id: 5,

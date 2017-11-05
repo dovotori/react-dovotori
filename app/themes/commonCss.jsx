@@ -39,6 +39,16 @@ button::-moz-focus-inner {
 
 body {
   font-family: ${theme.font1};
+  ${theme.scrollbar}
+}
+
+@font-face {
+  font-family: 'White Rabbit';
+  src: url('../../assets/fonts/whitrabt.eot');
+  src: url('../../assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
+       url('../../assets/fonts/whitrabt.woff') format('woff'),
+       url('../../assets/fonts/whitrabt.ttf')  format('truetype'),
+       url('../../assets/fonts/whitrabt.svg#svgFontName') format('svg');
 }
 `;
 

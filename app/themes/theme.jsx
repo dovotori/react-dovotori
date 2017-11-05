@@ -15,15 +15,17 @@ const theme = {
   elastic: 'cubic-bezier(0.64, 0.57, 0.67, 1.53)',
   elastic2: 'cubic-bezier(0.860, 0.000, 0.070, 1.000)',
   font1: '"Geneva", sans-serif',
-  font2: '',
+  font2: 'White Rabbit',
   scrollbar: css`
   ::-webkit-scrollbar {
     width: 6px;
+    background-color: #222226;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: #66ffcc;
+    background-color: #ccc;
   }
   `,
+  breakPoint: 900,
 };
 
 export default theme;

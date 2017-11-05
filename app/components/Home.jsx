@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Teaser from './Teaser';
+import { Bloc } from './AnimatedRoute';
 
-const StyledHome = styled.div.attrs({
+const StyledHome = styled(Bloc).attrs({
   className: 'home',
 })`
 `;
@@ -12,8 +13,6 @@ const StyledHome = styled.div.attrs({
 const ListTeasers = styled.div.attrs({
   className: 'list-teasers',
 })`
-  margin: 4%;
-  text-align: center;
 `;
 
 class Home extends Component {

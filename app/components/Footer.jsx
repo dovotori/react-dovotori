@@ -9,6 +9,7 @@ const Border = styled.div`
   width: 100%;
   height: 3px;
   background: ${p => p.theme.gradient2};
+  z-index: 11;
 `;
 
 const Wrap = styled.div`

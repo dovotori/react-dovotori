@@ -58,8 +58,13 @@ const Styled = styled.div`
 
   canvas {
     margin: 0 auto;
-    width: ${p => p.width}px;
+    // width: ${p => p.width}px;
+    width: 100%;
     height: ${p => p.height}px;
+  }
+
+  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+    position: relative;
   }
 `;
 
