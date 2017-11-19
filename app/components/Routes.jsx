@@ -10,6 +10,7 @@ import Header from './Header';
 import Footer from './Footer';
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
+import Test from './Test';
 
 class Routes extends Component {
   shouldComponentUpdate(newProps) {
@@ -29,6 +30,7 @@ class Routes extends Component {
           <Switch location={this.props.location}>
             <Route exact path="/" component={HomeContainer} />
             <Route path="/view/:slug" component={ViewContainer} />
+            <Route path="/test" component={Test} />
           </Switch>
         </AnimatedRoute>
         <Footer />

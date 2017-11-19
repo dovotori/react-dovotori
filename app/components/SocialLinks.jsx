@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { StaggeredMotion, spring } from 'react-motion';
+// import { StaggeredMotion, spring } from 'react-motion';
 
-import WrapperTooltip from '../components/WrapperTooltip';
+import WrapperTooltip from './WrapperTooltip';
+import StaggerScale from './StaggerScale';
 import { media } from '../themes/theme';
 
 const Bloc = styled.div`
@@ -59,11 +60,13 @@ const A = styled.a`
 `;
 
 class SocialLinks extends Component {
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate(newProps) {
+  //   return this.props.in !== newProps.in;
+  // }
 
   render() {
+    console.log(this.props.test, this.props.in);
+    const keys = ['réseautage', 'code is law', 'pretty much amazing', 'konnichi wa'];
     const links = [
       <WrapperTooltip message="réseautage">
         <A href="http://fr.linkedin.com/pub/dorian-ratovo/95/a9a/636">
@@ -96,42 +99,26 @@ class SocialLinks extends Component {
       </WrapperTooltip>,
     ];
 
-    const motion = { stiffness: 300, damping: 20 };
-
-    return (
-      <StaggeredMotion
-        defaultStyles={[{ h: 0 }, { h: 0 }, { h: 0 }, { h: 0 }]}
-        styles={prevInterpolatedStyles =>
-          prevInterpolatedStyles.map((_, i) => (
-              i === 0
-              ? { h: spring(1, motion) }
-              : { h: spring(prevInterpolatedStyles[i - 1].h, motion) }
-          ))}
-      >
-        {interpolatingStyles => (
-          <Bloc>
-            {interpolatingStyles.map((style, i) => (
-              <FlexItem
-                key={i}
-                style={{
-                  transform: `translateZ(${-(1 - style.h) * 1000}px)`,
-                  opacity: style.h,
-                }}
-              >
-                {links[i]}
-              </FlexItem>
-            ))}
-          </Bloc>
-        )}
-      </StaggeredMotion>
-    );
+    return (<StaggerScale
+      items={links}
+      keys={keys}
+      in
+      WrapStyled={Bloc}
+      ItemStyled={FlexItem}
+    />);
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  SocialLinks.propTypes = {};
+  SocialLinks.propTypes = {
+    in: PropTypes.bool,
+    test: PropTypes.bool,
+  };
 }
 
-SocialLinks.defaultProps = {};
+SocialLinks.defaultProps = {
+  in: false,
+  test: false,
+};
 
 export default SocialLinks;

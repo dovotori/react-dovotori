@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import SocialLinks from './SocialLinks';
 import Logo from './Logo';
 import SvgAnimation from './SvgAnimation';
-import FullscreenView from './FullscreenView';
+import TransitionFader from './TransitionFader';
 import ViewNavigationContainer from '../containers/ViewNavigationContainer';
 import { media } from '../themes/theme';
 
@@ -56,7 +56,12 @@ const BackgroundLogo = styled(Logo)`
   pointer-events: none;
 `;
 
-const FillHeight = styled.div`
+const Fullscreen = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: ${p => p.theme.gradient};
+  width: 100%;
   height: 100%;
 `;
 
@@ -87,14 +92,18 @@ class Header extends Component {
   render() {
     return (
       <StyledHeader>
-        <FullscreenView in={this.state.open}>
-          {this.state.open && <FillHeight>
+        <TransitionFader in={this.state.open}>
+          <Fullscreen>
             <BackgroundLogo />
-            <SocialLinks />
-          </FillHeight>}
-        </FullscreenView>
+            <SocialLinks test={this.state.open} />
+          </Fullscreen>
+        </TransitionFader>
         <WrapLogo>
-          <button onClick={this.click} onMouseEnter={this.mouseEnter} name="toggle links menu">
+          <button
+            onClick={this.click}
+            onMouseEnter={this.mouseEnter}
+            name="toggle links menu"
+          >
             <SvgAnimation toggleAnim={this.state.over}>
               <StyledLogo />
             </SvgAnimation>

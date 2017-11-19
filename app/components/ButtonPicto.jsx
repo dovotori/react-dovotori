@@ -1,0 +1,100 @@
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import Svg from './Svg';
+
+
+const Styled = styled.div.attrs({
+  className: 'button-picto',
+})`
+a {
+  position: relative;
+  display: block;
+  margin: 5px 10px 5px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: box-shadow 300ms ease-out, transform 300ms ease-out;
+  text-decoration: none;
+  box-shadow: 2px 0 0px ${p => p.theme.primary};
+  transform: translateX(0);
+}
+
+svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  // transition: transform 300ms ease-out;
+  fill: #000;
+  height: 10px;
+  max-width: 100%;
+}
+
+span {
+  position: absolute;
+  top: 120%;
+  left: 40%;
+  font-size: 0.7em;
+  color: ${p => p.theme.grey};
+  background-color: ${p => p.theme.primary};
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+  transform-origin: 0 0;
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  letter-spacing: 0.1em;
+  padding: 0 2px;
+  box-shadow: 1px 1px 0 ${p => p.theme.grey};
+}
+
+&:hover {
+  a {
+    box-shadow: 0px 0px 0px ${p => p.theme.primary};
+    transform: translateX(2px);
+  }
+
+  span {
+    transform: none;
+    opacity: 1;
+  }
+
+  svg {
+    // transform: translate3d(-50%, -50%, 0) scale(1.4);
+  }
+}
+`;
+
+class ButtonPicto extends Component {
+  shouldComponentUpdate(newProps) {
+    return this.props.link !== newProps.link;
+  }
+
+  render() {
+    return (
+      <Styled>
+        <Link to={this.props.link}>
+          <span>{this.props.text}</span>
+          <Svg useid={this.props.useid} />
+        </Link>
+      </Styled>
+    );
+  }
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  ButtonPicto.propTypes = {
+    text: PropTypes.string,
+    link: PropTypes.string,
+    useid: PropTypes.string.isRequired,
+  };
+}
+
+ButtonPicto.defaultProps = {
+  text: '',
+  link: '',
+};
+
+export default ButtonPicto;

@@ -38,7 +38,8 @@ button::-moz-focus-inner {
 }
 
 body {
-  font-family: ${theme.font1};
+  // font-family: ${theme.font1};
+  font-family: 'Space Mono', monospace;
   ${theme.scrollbar}
 }
 

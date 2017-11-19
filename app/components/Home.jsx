@@ -8,6 +8,7 @@ import { Bloc } from './AnimatedRoute';
 const StyledHome = styled(Bloc).attrs({
   className: 'home',
 })`
+  ${p => p.theme.scrollbar}
 `;
 
 const ListTeasers = styled.div.attrs({

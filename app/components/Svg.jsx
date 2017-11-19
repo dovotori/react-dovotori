@@ -8,7 +8,7 @@ class Svg extends Component {
 
   render() {
     return (
-      <svg>
+      <svg className={this.props.className}>
         <use xlinkHref={`#${this.props.useid}`} />
       </svg>
     );
@@ -17,10 +17,13 @@ class Svg extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   Svg.propTypes = {
+    className: PropTypes.string,
     useid: PropTypes.string.isRequired,
   };
 }
 
-Svg.defaultProps = {};
+Svg.defaultProps = {
+  className: '',
+};
 
 export default Svg;

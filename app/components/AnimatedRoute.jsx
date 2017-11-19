@@ -28,9 +28,10 @@ export const Bloc = styled.div.attrs({
 `;
 
 const TIME = 1000;
-const EASE = 'ease-in-out';
+// const EASE = 'ease-in-out';
+// const EASE = 'ease-in';
 // const EASE = 'cubic-bezier(.75,-0.5,0,1.75)';
-// const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
+const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
 
 export const styleRouteAnimation = `
   .home-enter,
@@ -96,21 +97,21 @@ export const styleRouteAnimation = `
 
 
 
-.view-view-enter.view-view-enter-active .message,
-.view-view-exit.view-view-exit-active .message {
+.view-view-enter.view-view-enter-active .description,
+.view-view-exit.view-view-exit-active .description {
   transition: transform ${TIME}ms ${EASE};
 }
 
-.view-view-enter .message {
+.view-view-enter .description {
   transform: translateX(100%);
 }
 
-.view-view-enter.view-view-enter-active .message,
-.view-view-exit .message {
+.view-view-enter.view-view-enter-active .description,
+.view-view-exit .description {
   transform: none;
 }
 
-.view-view-exit.view-view-exit-active .message {
+.view-view-exit.view-view-exit-active .description {
   transform: translateX(100%);
 }
 

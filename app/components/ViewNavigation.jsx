@@ -1,99 +1,80 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
+import StaggerScale from './StaggerScale';
+import ButtonPicto from './ButtonPicto';
 
 const Styled = styled.div.attrs({
   className: 'view-navigation',
 })`
   display: flex;
   justify-content: flex-start;
-
-  a {
-    position: relative;
-    display: block;
-    margin: 0 10px 0 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #fff;
-    transition: box-shadow 1000ms ease-out;
-    text-decoration: none;
-
-    &:hover {
-      box-shadow: 2px 2px 14px rgba(0,0,0,0.3);
-
-      span {
-        transform: none;
-        opacity: 1;
-      }
-
-      svg {
-        transform: translate3d(-50%, -50%, 0) scale(1.4);
-      }
-    }
-
-    span {
-      position: absolute;
-      top: 120%;
-      left: 40%;
-      font-size: 0.7em;
-      color: ${p => p.theme.grey};
-      transition: transform 300ms ease-out, opacity 300ms ease-out;
-      transform-origin: 0 0;
-      transform: translate3d(-100%, 0, 0);
-      opacity: 0;
-      letter-spacing: 0.1em;
-    }
-
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate3d(-50%, -50%, 0) scale(0.8);
-      transition: transform 300ms ease-out;
-      stroke: #000;
-      fill: none;
-    }
-  }
 `;
 
 const Blank = styled.span`
   width: 50px;
   height: 50px;
   margin: 0 10px 0 0;
+  opacity: 0;
 `;
 
 
 class ViewNavigation extends Component {
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    return this.props.nextSlug !== newProps.nextSlug
+      || this.props.previousSlug !== newProps.previousSlug;
   }
 
   render() {
     const { nextSlug, previousSlug } = this.props;
+
+    const keys = ['/'];
+    const items = [
+      <ButtonPicto
+        key="/"
+        link="/"
+        useid="arrow-back"
+        text="Back"
+      />,
+    ];
+
+    if (previousSlug) {
+      keys.push(`/view/${previousSlug}`);
+      items.push(
+        <ButtonPicto
+          key={`/view/${previousSlug}`}
+          link={`/view/${previousSlug}`}
+          useid="arrow-previous"
+          text="Previous"
+        />,
+      );
+    }
+    // else {
+    //   keys.push('blank');
+    //   items.push(<Blank />);
+    // }
+
+    if (nextSlug) {
+      keys.push(`/view/${nextSlug}`);
+      items.push(
+        <ButtonPicto
+          key={`/view/${nextSlug}`}
+          link={`/view/${nextSlug}`}
+          useid="arrow-next"
+          text="Next"
+        />,
+      );
+    }
+
     return (
-      <Styled>
-        <Link to="/">
-          <span>Back</span>
-          <svg width="20" height="10" viewport="0 0 10 10">
-            <path d="M 10 0 L 0 5 L 10 10" />
-            <path d="M 20 0 L 10 5 L 20 10" />
-          </svg>
-        </Link>
-        {previousSlug ? <Link to={`/view/${previousSlug}`}>
-          <span>Previous</span>
-          <svg width="10" height="10" viewport="0 0 10 10">
-            <path d="M 10 0 L 0 5 L 10 10" />
-          </svg>
-        </Link> : <Blank />}
-        {nextSlug && <Link to={`/view/${nextSlug}`}>
-          <span>Next</span>
-          <svg width="10" height="10" viewport="0 0 10 10">
-            <path d="M 0 0 L 10 5 L 0 10" />
-          </svg>
-        </Link>}
-      </Styled>
+      <StaggerScale
+        items={items}
+        keys={keys}
+        in
+        WrapStyled={Styled}
+        ItemStyled={Blank}
+      />
     );
   }
 }

@@ -13,8 +13,8 @@ const Styled = styled(Bloc).attrs({
 const Hidden = styled.div`
   position: relative;
   overflow: hidden;
-  border-bottom: solid 1px #aaa;
-  border-top: solid 1px #aaa;
+  // border-bottom: solid 1px #aaa;
+  // border-top: solid 1px #aaa;
   z-index: 0;
 `;
 
@@ -26,22 +26,29 @@ const H1 = styled.h1.attrs({
   font-size: 3em;
   font-weight: 100;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: ${p => p.theme.grey};
   text-shadow: 2px -1px 0 ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
   // border-bottom: solid 1px ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
   text-align: left;
   margin: 0;
+  padding: 0 4%;
 `;
 
-const Description = styled(TypingMessage)`
+const Description = styled.div.attrs({
+  className: 'description',
+})`
   text-align: left;
   font-size: 1em;
   color: ${p => p.theme.grey};
-  padding: 4%;
-  width: 50%;
+  width: 100%;
   background-color: #fff;
   line-height: 1.6;
-  border-bottom: solid 1px #aaa;
+  // border-bottom: solid 1px #aaa;
+`;
+
+const StyledTyping = styled(TypingMessage)`
+  width: 50%;
+  padding: 4%;
 
   @media screen and (max-width: ${p => p.theme.breakPoint}px) {
     width: 100%;
@@ -83,13 +90,12 @@ const Date = styled.p.attrs({
   font-family: ${p => p.theme.font2};
   position: absolute;
   color: #aaa;
-  top: 107px;
+  top: 24px;
   left: 50%;
-  transform: rotate(-90deg) translateY(-100%);
+  transform: rotate(-90deg) translateY(-100%) translateX(-100%);
   transform-origin: 0 0;
   font-size: 1em;
   letter-spacing: 0.1em;
-  font-weight: 800;
 
   span {
     display: block;
@@ -125,7 +131,9 @@ class View extends Component {
             {title}
           </H1>
         </Hidden>
-        <Description message={description} cursorSize={8} />
+        <Description>
+          <StyledTyping message={description} cursorSize={8} />
+        </Description>
         <ImagesList>
           {images && <Images>
             {Array(images).fill().map((x, idx) => (

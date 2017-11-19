@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-// import SvgDisplayer from './SvgDisplayer';
+import SvgDisplayer from './SvgDisplayer';
 import theme from '../themes/theme';
 import Routes from './Routes';
 import commonCss from '../themes/commonCss';
@@ -24,6 +24,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <EventsWatcher>
+          <SvgDisplayer />
           <BrowserRouter>
             <Route component={Routes} />
           </BrowserRouter>

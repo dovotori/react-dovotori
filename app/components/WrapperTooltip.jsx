@@ -16,6 +16,7 @@ class WrapperTooltip extends Component {
   render() {
     return (
       <div
+        className={this.props.className}
         onMouseEnter={() => this.setState({ over: true })}
         onMouseLeave={() => this.setState({ over: false })}
       >
@@ -32,12 +33,14 @@ if (process.env.NODE_ENV !== 'production') {
   WrapperTooltip.propTypes = {
     children: PropTypes.node,
     message: PropTypes.string,
+    className: PropTypes.string,
   };
 }
 
 WrapperTooltip.defaultProps = {
   children: null,
   message: '',
+  className: '',
 };
 
 export default WrapperTooltip;

@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ViewNavigation from '../components/ViewNavigation';
 
 class ViewsContainer extends Component {
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    console.log(newProps.location.pathname, this.props.location.pathname);
+    return newProps.location.pathname !== this.props.location.pathname;
   }
 
   render() {
-    return <ViewNavigation {...this.props} />;
+    const { nextSlug, previousSlug } = this.props;
+    return <ViewNavigation nextSlug={nextSlug} previousSlug={previousSlug} />;
   }
 }
+
+if (process.env.NODE_ENV !== 'production') {
+  ViewsContainer.propTypes = {
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }).isRequired,
+    nextSlug: PropTypes.string,
+    previousSlug: PropTypes.string,
+  };
+}
+
+ViewsContainer.defaultProps = {
+  nextSlug: null,
+  previousSlug: null,
+};
 
 const getNextSlug = (entries, idx) => (
   idx < entries.length - 1 ? entries[idx + 1].slug : null

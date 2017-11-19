@@ -12,16 +12,15 @@ const LINK = styled(Link).attrs({
   position: relative;
   display: block;
   text-decoration: none;
-  border-top: solid 1px #fff;
 `;
 
 const Banner = styled.div`
   position: relative;
   overflow: hidden;
-  height: 80px;
+  height: 150px;
   width: 400px;
-  box-shadow: ${p => (p.hover ? '-4px 4px' : '-1px 1px')} 0 #aaa;
-  transition: box-shadow 300ms ease-out;
+  // box-shadow: ${p => (p.hover ? '-4px 4px' : '-1px 1px')} 0 #aaa;
+  // transition: box-shadow 300ms ease-out;
 `;
 
 const Back = styled.div`
@@ -37,8 +36,8 @@ const IMG = styled.img`
   display: inline-block;
   vertical-align: middle;
   transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'scale(40)' : 'scale(1)')};
-  opacity: 0.7;
+  transform: ${p => (p.hover ? 'scale(1)' : 'scale(40)')};
+  opacity: 0.8;
   width: auto;
 
   ${media.mobile`
@@ -48,66 +47,58 @@ const IMG = styled.img`
 
 const Infos = styled.div`
   position: absolute;
-  top: 50%;
-  right: 0;
-  text-align: right;
-  width: 100%;
-  pointer-events: none;
-  transform: translateY(-50%);
+  top: 0;
+  left: 400px;
+  text-align: left;
+  // width: 100%;
+  // pointer-events: none;
+  // transform: translateY(-50%);
 `;
 
 const H5 = styled.h5`
   font-size: 22px;
   font-weight: 100;
-  color: ${p => p.theme.grey};
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   transition: transform .4s ${p => p.theme.elastic2}, opacity .4s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
-  text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
-
-  span {
-    position: relative;
-    z-index: 1;
-    color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-    padding: 2px;
-  }
-`;
-
-const LineBottom = Line.extend`
-  position: absolute;
-  bottom: 0;
-  animation-delay: 1s;
-`;
-
-const LineTop = Line.extend`
-  position: absolute;
-  top: 0;
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+  // color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
+  color: ${p => p.theme.grey};
+  // text-shadow: 1px 1px 0px #fff;
+  padding: 2px;
 `;
 
 const Date = styled.p`
   transition: transform 0.5s ${p => p.theme.elastic2}, opacity 0.5s ${p => p.theme.elastic2};
   transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
   opacity: ${p => (p.hover ? 1 : 0)};
-  margin: 0;
+  font-family: ${p => p.theme.font2};
+  background-color: ${p => (!p.isprimary ? p.theme.primary : p.theme.secondary)};
+  color: ${p => p.theme.grey};
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 2px;
+`;
 
-  span {
-    font-family: ${p => p.theme.font2};
-    background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-    color: ${p => p.theme.grey};
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 2px;
-  }
+const Line2 = Line.extend`
+  position: absolute;
+  bottom: -2px;
+  z-index: 10;
 `;
 
 const Number = styled.p`
+  position: absolute;
+  bottom: 0;
+  right: 0;
   font-family: ${p => p.theme.font2};
   text-align: right;
   color: ${p => p.theme.grey};
-  font-size: 0.8em;
-  padding: 10px 0;
+  font-size: 0.7em;
+  padding: 2px 0;
 `;
 
 class Teaser extends Component {
@@ -140,6 +131,7 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
+        {/* <Line2 hover={this.state.hover} isprimary={!isprimary} time="2000" /> */}
         <Banner hover={this.state.hover}>
           <Back isprimary={!isprimary} />
           <IMG
@@ -147,17 +139,15 @@ class Teaser extends Component {
             alt={entry.title}
             hover={this.state.hover}
           />
-          <Infos>
-            <H5 hover={this.state.hover} isprimary={isprimary}>
-              <span>{entry.title}</span>
-            </H5>
-            <Date hover={this.state.hover} isprimary={isprimary}>
-              <span>{entry.date}</span>
-            </Date>
-          </Infos>
-          {/* <LineBottom hover={this.state.hover} isprimary={isprimary} time="2000" /> */}
-          <LineTop hover={this.state.hover} isprimary={isprimary} time="2000" />
         </Banner>
+        <Infos>
+          <H5 hover={this.state.hover} isprimary={isprimary}>
+            {entry.title}
+          </H5>
+          <Date hover={this.state.hover} isprimary={isprimary}>
+            {entry.date}
+          </Date>
+        </Infos>
         <Number>{idx < 10 ? `_0${idx}` : `_${idx}`}</Number>
       </LINK>
     );

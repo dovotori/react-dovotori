@@ -33,6 +33,16 @@ class SvgDisplayer extends Component {
             d="m27 8h4.8l7.5 7.5v1.6l-7.2 7.2h-1.9v-5.9l-1.3-1.3v-7.2z"
           />
         </symbol>
+        <symbol width="7" height="10" viewBox="0 0 7 10" id="arrow-previous">
+          <path d="M0 5 L5 0 L7 2 L4 5 L7 8 L5 10Z" />
+        </symbol>
+        <symbol width="7" height="10" viewBox="0 0 7 10" id="arrow-next">
+          <path d="M7 5 L2 0 L0 2 L3 5 L0 8 L2 10Z" />
+        </symbol>
+        <symbol width="15" height="10" viewBox="0 0 14 10" id="arrow-back">
+          <path d="M0 5 L5 0 L7 2 L4 5 L7 8 L5 10Z" />
+          <path d="M7 5 L12 0 L14 2 L11 5 L14 8 L12 10Z" />
+        </symbol>
       </svg>
     );
     /* eslint-enable max-len */

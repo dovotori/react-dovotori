@@ -73,7 +73,7 @@ class TypingMessage extends Component {
     return (
       <p className={`${this.props.className} message`}>
         <span ref={d => (this.div = d)} />
-        <Cursor size={this.props.cursorSize} />
+        <Cursor color={this.props.color} size={this.props.cursorSize} />
       </p>
     );
   }
@@ -86,6 +86,7 @@ if (process.env.NODE_ENV !== 'production') {
     intervalLetter: PropTypes.number,
     nextCallTime: PropTypes.number,
     cursorSize: PropTypes.number,
+    color: PropTypes.string,
   };
 }
 
@@ -95,6 +96,7 @@ TypingMessage.defaultProps = {
   intervalLetter: 10,
   nextCallTime: null,
   cursorSize: 6,
+  color: '#000',
 };
 
 export default TypingMessage;

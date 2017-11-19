@@ -93,7 +93,7 @@ class Signature extends Component {
             />
           </svg>
           <Name>
-            dorian ratovo <Cursor size={8} />
+            dorian ratovo<Cursor size={8} color={'#000'} />
           </Name>
         </StyledBlink>
       </Styled>
