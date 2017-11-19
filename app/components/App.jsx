@@ -7,7 +7,7 @@ import SvgDisplayer from './SvgDisplayer';
 import theme from '../themes/theme';
 import Routes from './Routes';
 import commonCss from '../themes/commonCss';
-import EventsWatcher from './EventsWatcher';
+import Interaction from './Interaction';
 import { styleRouteAnimation } from './AnimatedRoute';
 
 class App extends Component {
@@ -23,12 +23,12 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <EventsWatcher>
+        <Interaction>
           <SvgDisplayer />
           <BrowserRouter>
             <Route component={Routes} />
           </BrowserRouter>
-        </EventsWatcher>
+        </Interaction>
       </ThemeProvider>
     );
   }

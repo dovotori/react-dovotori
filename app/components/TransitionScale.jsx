@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import { TransitionMotion, spring } from 'react-motion';
 
 const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+${p => p.wrapstyle}
 `;
 
 class TransitionScale extends Component {
@@ -41,7 +39,7 @@ class TransitionScale extends Component {
         styles={this.setStyle()}
       >
         {interpolatedStyles => (
-          <Wrap>
+          <Wrap wrapstyle={this.props.wrapperStyle}>
             {interpolatedStyles.map(config => (
               <div
                 key={config.key}
@@ -63,12 +61,14 @@ if (process.env.NODE_ENV !== 'production') {
   TransitionScale.propTypes = {
     className: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape),
+    wrapperStyle: PropTypes.arrayOf(PropTypes.any),
   };
 }
 
 TransitionScale.defaultProps = {
   className: '',
   items: [],
+  wrapperStyle: [],
 };
 
 export default TransitionScale;

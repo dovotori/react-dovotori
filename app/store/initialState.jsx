@@ -168,7 +168,7 @@ const initialState = {
         'Recherche graphique pour un coffret de reportages de Raymond Depardon, la série sur le monde paysan, destin fragile des travailleurs de la terre.',
       sources: '',
       context: '',
-      images: 5,
+      images: 4,
     },
     {
       id: 12,

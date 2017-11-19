@@ -36,16 +36,8 @@ const StyledTG = styled(TransitionGroup)`
 `;
 
 const Fade = ({ ins, children }) => {
-  console.log('fade', ins);
   return (
     <CSSTransition in={ins} timeout={500} classNames="fade" className={ins ? 'in' : 'out'}>
-      {/* <div>
-        {Children.map(props.children, child =>
-          cloneElement(child, {
-            in: props.in,
-          }),
-        )}
-      </div> */}
       {children}
     </CSSTransition>
   );
@@ -69,14 +61,8 @@ class TransitionFader extends Component {
   // }
 
   render() {
-    console.log('tg', this.props.in);
     return (
       <StyledTG className={this.props.className}>
-        {/*this.props.in && (
-          <Fade>
-            {this.props.children}
-          </Fade>
-        )} */}
         <Fade ins={this.props.in}>
           {this.props.children}
         </Fade>

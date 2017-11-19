@@ -16,10 +16,11 @@ a {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: transparent;
   transition: box-shadow 300ms ease-out, transform 300ms ease-out;
   text-decoration: none;
-  box-shadow: 2px 0 0px ${p => p.theme.primary};
+  box-shadow: 2px 0 0 ${p => p.theme.primary};
+  border: solid 1px ${p => p.theme.primary};
   transform: translateX(0);
 }
 
@@ -29,7 +30,7 @@ svg {
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
   // transition: transform 300ms ease-out;
-  fill: #000;
+  fill: ${p => p.theme.primary};
   height: 10px;
   max-width: 100%;
 }

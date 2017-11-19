@@ -12,19 +12,19 @@ class SmoothScroller extends Component {
     this.animation = this.animation.bind(this);
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    return newProps.targetY !== this.props.targetY;
   }
 
   start() {
-    this.date = new Date().now();
+    this.date = Date.now();
     this.oldY = window.pageYOffset;
     window.requestAnimationFrame(this.animation);
   }
 
   animation() {
     const { duration, targetY, easing } = this.props;
-    const time = new Date().now() - this.date;
+    const time = Date.now() - this.date;
     if (time < duration) {
       const y = easing(time, this.oldY, targetY - this.oldY, duration);
       window.scrollTo(0, y);

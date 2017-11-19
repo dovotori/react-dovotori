@@ -23,6 +23,7 @@ export const Bloc = styled.div.attrs({
   width: 100%;
   height: 100%;
   margin: 0 auto;
+  overflow-x: hidden;
   overflow-y: auto;
   text-align: center;
 `;
@@ -31,7 +32,8 @@ const TIME = 1000;
 // const EASE = 'ease-in-out';
 // const EASE = 'ease-in';
 // const EASE = 'cubic-bezier(.75,-0.5,0,1.75)';
-const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
+// const EASE = 'cubic-bezier(.30,-0.3,0,1.30)';
+const EASE = 'cubic-bezier(.34,1.72,.43,.99)';
 
 export const styleRouteAnimation = `
   .home-enter,
@@ -41,6 +43,8 @@ export const styleRouteAnimation = `
   .view-view-enter,
   .view-view-exit {
     position: absolute;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   .home-enter.home-enter-active,

@@ -4,16 +4,13 @@ import styled from 'styled-components';
 import { StaggeredMotion, spring } from 'react-motion';
 
 const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+${p => p.wrapstyle}
 `;
-
 class StaggeredScale extends Component {
   constructor(props) {
     super(props);
-    this.motion = { stiffness: 120, damping: 9 };
     this.setInterpolatedStyle = this.setInterpolatedStyle.bind(this);
+    this.applyMode = this.applyMode.bind(this);
   }
 
   setInterpolatedStyle(prevInterpolatedStyles) {
@@ -21,17 +18,28 @@ class StaggeredScale extends Component {
     return prevInterpolatedStyles.map((_, i) => {
       const target = isIn ? 1 : 0;
       return i === 0
-        ? { scale: spring(target, this.motion) }
-        : { scale: spring(prevInterpolatedStyles[i - 1].scale, this.motion) };
+        ? { x: spring(target, this.props.motion) }
+        : { x: spring(prevInterpolatedStyles[i - 1].x, this.props.motion) };
     });
+  }
+
+  applyMode(x) {
+    switch (this.props.mode) {
+      case 'SCALE': default:
+        return `scale(${x})`;
+      case 'TRANSLATE-RIGHT':
+        return `translateX(${100 - (x * 100)}%)`;
+      case 'TRANSLATE-LEFT':
+        return `translateX(${-100 + (x * 100)}%)`;
+    }
   }
 
   render() {
     const { items } = this.props;
 
     const defaultStyles = this.props.in
-      ? items.map(() => ({ scale: 0 }))
-      : items.map(() => ({ scale: 1 }));
+      ? items.map(() => ({ x: 0 }))
+      : items.map(() => ({ x: 1 }));
 
     return (
       <StaggeredMotion
@@ -39,12 +47,12 @@ class StaggeredScale extends Component {
         styles={this.setInterpolatedStyle}
       >
         {interpolatingStyles => (
-          <Wrap>
+          <Wrap wrapstyle={this.props.wrapperStyle}>
             {interpolatingStyles.map((style, i) => (
               <div
                 key={items[i].key}
                 style={{
-                  transform: `scale(${style.scale})`,
+                  transform: this.applyMode(style.x),
                 }}
               >
                 {items[i].data}
@@ -61,12 +69,18 @@ if (process.env.NODE_ENV !== 'production') {
   StaggeredScale.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape),
     in: PropTypes.bool,
+    wrapperStyle: PropTypes.arrayOf(PropTypes.any),
+    motion: PropTypes.objectOf(PropTypes.number),
+    mode: PropTypes.string,
   };
 }
 
 StaggeredScale.defaultProps = {
   items: [],
   in: false,
+  wrapperStyle: [],
+  motion: { stiffness: 120, damping: 9 },
+  mode: 'SCALE',
 };
 
 export default StaggeredScale;

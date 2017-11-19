@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Teaser from './Teaser';
 import { Bloc } from './AnimatedRoute';
+import StaggeredScale from './StaggeredScale';
 
 const StyledHome = styled(Bloc).attrs({
   className: 'home',
@@ -23,11 +24,19 @@ class Home extends Component {
 
   render() {
     const { entries } = this.props;
-    // console.log(this.props);
+    const items = entries.map((teaser, idx) => ({
+      data: <Teaser key={teaser.id} entry={teaser} idx={idx} />,
+      key: `teaser-${teaser.id}`,
+    }));
     return (
       <StyledHome>
         <ListTeasers>
-          {entries.map((teaser, idx) => <Teaser key={teaser.id} entry={teaser} idx={idx} />)}
+          <StaggeredScale
+            items={items}
+            in
+            mode="TRANSLATE-LEFT"
+            motion={{ stiffness: 500, damping: 40 }}
+          />
         </ListTeasers>
       </StyledHome>
     );

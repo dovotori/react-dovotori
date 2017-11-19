@@ -6,13 +6,16 @@ import ViewNavigation from '../components/ViewNavigation';
 
 class ViewsContainer extends Component {
   shouldComponentUpdate(newProps) {
-    console.log(newProps.location.pathname, this.props.location.pathname);
     return newProps.location.pathname !== this.props.location.pathname;
   }
 
   render() {
-    const { nextSlug, previousSlug } = this.props;
-    return <ViewNavigation nextSlug={nextSlug} previousSlug={previousSlug} />;
+    const { nextSlug, previousSlug, location } = this.props;
+    return <ViewNavigation
+      nextSlug={nextSlug}
+      previousSlug={previousSlug}
+      pathname={location.pathname}
+    />;
   }
 }
 

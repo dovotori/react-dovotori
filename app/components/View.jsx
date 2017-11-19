@@ -61,11 +61,10 @@ const ImagesList = styled.div`
   right: 0;
   width: 50%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
   z-index: 1;
   border-left: solid 1px #aaa;
   border-right: solid 1px #aaa;
+  overflow: auto;
   ${p => p.theme.scrollbar}
 
   img {
@@ -96,6 +95,8 @@ const Date = styled.p.attrs({
   transform-origin: 0 0;
   font-size: 1em;
   letter-spacing: 0.1em;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   span {
     display: block;

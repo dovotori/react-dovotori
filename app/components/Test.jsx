@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Motion, spring } from 'react-motion';
 
 import TransitionScale from './TransitionScale';
@@ -11,6 +11,12 @@ margin: 20px;
 background-color: #000;
 width: 100px;
 height: 100px;
+`;
+
+const wrapperStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 class Test extends Component {
@@ -90,23 +96,13 @@ class Test extends Component {
       <div>
         <TransitionScale
           items={this.state.items}
+          wrapperStyle={wrapperStyle}
         />
         <HandlerScale
           items={this.state.items2}
           in={!this.isToggle}
+          wrapperStyle={wrapperStyle}
         />
-        <Motion
-          defaultStyle={{ scale: this.isToggle ? 0 : 1 }}
-          style={{ scale: this.isToggle ? spring(1) : spring(0) }}
-        >
-          {interpolatingStyle => (
-            <Box
-              style={{
-                transform: `scale(${interpolatingStyle.scale})`,
-              }}
-            />
-          )}
-        </Motion>
         <button onClick={this.toggle}>Toggle</button>
         <button onClick={this.toggle2}>Toggle2</button>
       </div>

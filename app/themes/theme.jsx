@@ -19,7 +19,7 @@ const theme = {
   scrollbar: css`
   ::-webkit-scrollbar {
     width: 6px;
-    background-color: #222226;
+    background-color: #fff;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #ccc;

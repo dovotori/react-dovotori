@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { media } from '../themes/theme';
 import Line from './Line';
 
+const OFFSET_X = 50;
+
 const LINK = styled(Link).attrs({
   className: 'teaser',
 })`
@@ -17,10 +19,15 @@ const LINK = styled(Link).attrs({
 const Banner = styled.div`
   position: relative;
   overflow: hidden;
-  height: 150px;
+  height: 100px;
   width: 400px;
   // box-shadow: ${p => (p.hover ? '-4px 4px' : '-1px 1px')} 0 #aaa;
   // transition: box-shadow 300ms ease-out;
+  max-width: 430px;
+  margin: 0 auto;
+  transition: transform 0.4s ease-out;
+  transform: ${p => (p.hover ? `translateX(-${OFFSET_X}px)` : 'none')};
+  // z-index: ${p => (p.hover ? 2 : 'auto')};
 `;
 
 const Back = styled.div`
@@ -48,11 +55,12 @@ const IMG = styled.img`
 const Infos = styled.div`
   position: absolute;
   top: 0;
-  left: 400px;
+  left: 50%;
   text-align: left;
   // width: 100%;
   // pointer-events: none;
   // transform: translateY(-50%);
+  transform: translateX(${180 - OFFSET_X}px);
 `;
 
 const H5 = styled.h5`
@@ -93,12 +101,13 @@ const Line2 = Line.extend`
 const Number = styled.p`
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 50%;
   font-family: ${p => p.theme.font2};
   text-align: right;
   color: ${p => p.theme.grey};
   font-size: 0.7em;
   padding: 2px 0;
+  transform: translateX(230px);
 `;
 
 class Teaser extends Component {

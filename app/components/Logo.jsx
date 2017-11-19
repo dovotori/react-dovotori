@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 class Logo extends Component {
   componentWillMount() {}
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
   render() {
     return (

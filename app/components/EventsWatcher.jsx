@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class EventsWatcher extends Component {
+class WatcherEvents extends Component {
   constructor(props) {
     super(props);
     this.resize = this.resize.bind(this);
     this.scroll = this.scroll.bind(this);
+    this.keyup = this.keyup.bind(this);
     this.oldScroll = window.pageYOffset;
     this.scrollDirection = '';
   }
@@ -15,11 +16,12 @@ class EventsWatcher extends Component {
     this.resize();
     window.addEventListener('resize', this.resize, false);
     window.addEventListener('scroll', this.scroll, false);
+    window.addEventListener('keyup', this.keyup, false);
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resize, false);
@@ -39,19 +41,27 @@ class EventsWatcher extends Component {
     this.oldScroll = window.pageYOffset;
   }
 
+  keyup(e) {
+    if (this.props.handleKeyup) {
+      this.props.handleKeyup(e);
+    }
+  }
+
   render() {
     return this.props.children;
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  EventsWatcher.propTypes = {
+  WatcherEvents.propTypes = {
     children: PropTypes.node,
+    handleKeyup: PropTypes.func,
   };
 }
 
-EventsWatcher.defaultProps = {
+WatcherEvents.defaultProps = {
   children: null,
+  handleKeyup: null,
 };
 
-export default EventsWatcher;
+export default WatcherEvents;

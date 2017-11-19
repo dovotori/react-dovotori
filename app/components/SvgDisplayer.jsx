@@ -43,6 +43,9 @@ class SvgDisplayer extends Component {
           <path d="M0 5 L5 0 L7 2 L4 5 L7 8 L5 10Z" />
           <path d="M7 5 L12 0 L14 2 L11 5 L14 8 L12 10Z" />
         </symbol>
+        <symbol width="10" height="10" viewBox="0 0 10 10" id="cross">
+          <path d="M0 2 L2 0 L5 3 L8 0 L10 2 L7 5 L10 8 L8 10 L5 7 L2 10 L0 8 L3 5Z" />
+        </symbol>
       </svg>
     );
     /* eslint-enable max-len */

@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes, withTheme } from 'styled-components';
+import { keyframes, withTheme } from 'styled-components';
 
 const dash = keyframes`
   to {
     stroke-dashoffset: 0;
     fill: rgba(0,0,0,0);
   }
-`;
-
-const Styled = styled.div`
-  svg path {
-    stroke-width: 0.6;
-  }
-}
 `;
 
 class SvgAnimation extends Component {
@@ -28,21 +21,21 @@ class SvgAnimation extends Component {
     this.isAnimated = false;
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.toggleAnim !== this.props.toggleAnim && !this.isAnimated) {
-      this.start();
-    }
-  }
-
   componentDidMount() {
     this.paths = this.div.getElementsByTagName('path');
     this.lengths = [];
     this.start();
   }
 
-  shouldComponentUpdate(newProps) {
-    return false;
+  componentWillReceiveProps(newProps) {
+    if (newProps.toggleAnim !== this.props.toggleAnim && !this.isAnimated) {
+      this.start();
+    }
   }
+
+  // shouldComponentUpdate(newProps) {
+  //   return this.props.toggleAnim !== newProps.toggleAnim;
+  // }
 
   start() {
     const { theme } = this.props;
@@ -77,7 +70,7 @@ class SvgAnimation extends Component {
   }
 
   render() {
-    return <Styled innerRef={d => (this.div = d)}>{this.props.children}</Styled>;
+    return <div ref={d => (this.div = d)}>{this.props.children}</div>;
   }
 }
 
