@@ -13,7 +13,6 @@ const wrapperStyle = css`
   justify-content: center;
   flex-wrap: wrap;
   height: 100%;
-  perspective: 1000px;
 
   & > div {
     width: 25%;
@@ -27,7 +26,7 @@ const wrapperStyle = css`
   `};
 `;
 
-const FlexItem = styled(WrapperTooltip)`
+const FlexItem = styled(WrapperTooltip) `
   &:hover svg {
     transform: scale(2);
   }
@@ -113,7 +112,7 @@ class SocialLinks extends Component {
       in={this.props.in}
       wrapperStyle={wrapperStyle}
       mode="TRANSLATE-LEFT"
-      motion={{ stiffness: 100, damping: 10 }}
+      motion={{ stiffness: 160, damping: 20 }}
     />);
   }
 }

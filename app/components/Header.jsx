@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
-import { Motion, spring} from 'react-motion';
+// import { Route, Switch } from 'react-router-dom';
+import { Motion, spring } from 'react-motion';
 
 import SocialLinks from './SocialLinks';
-import Svg from './Svg';
+// import Svg from './Svg';
 import Logo from './Logo';
 import SvgAnimation from './SvgAnimation';
 // import TransitionFader from './TransitionFader';
@@ -14,7 +14,7 @@ import { media } from '../themes/theme';
 
 const StyledHeader = styled.div.attrs({
   className: 'header',
-})`
+}) `
   position: relative;
   z-index: 10;
 `;
@@ -30,8 +30,8 @@ const FixedLogo = styled.button`
   z-index: 2;
 
   ${media.mobile`
-    left: 50%;
-    transform: translateX(-50%);
+    // left: 50%;
+    // transform: translateX(-50%);
   `}
 `;
 
@@ -44,7 +44,7 @@ const FixedNav = styled.div`
   left: 80px;
   width: auto;
   height: 80px;
-  z-index: 0;
+  z-index: 2;
 
   ${media.mobile`
     left: 50%;
@@ -91,14 +91,14 @@ const BackgroundLogo = styled.div`
   z-index: 2;
 `;
 
-const StyledLogoBack = styled(Logo)`
+const StyledLogoBack = styled(Logo) `
   width: 100%;
   height: 100%;
 `;
 
 const Fullscreen = styled.div.attrs({
   className: 'fullscreen',
-})`
+}) `
   position: fixed;
   top: 0;
   left: -400%;
@@ -116,17 +116,15 @@ const Banner = styled.div`
   width: 100%;
   height: 50%;
   z-index: 1;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  box-shadow: -20px 0 20px rgba(0,0,0,0.8);
   transform: translateX(100%);
 `;
 
 class Header extends Component {
   constructor(props) {
     super(props);
-
     this.click = this.click.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
-
     this.state = { open: false, over: false };
   }
 
@@ -159,7 +157,7 @@ class Header extends Component {
     return (
       <Motion defaultStyle={defaultStyle} style={style}>
         {interpolatingStyle => (
-          <StyledHeader key={this.state.open ? 'in' : 'out'}>
+          <StyledHeader/* key={this.state.open ? 'in' : 'out'} */>
             <FixedLogo
               onClick={this.click}
               onMouseEnter={this.mouseEnter}
@@ -167,7 +165,6 @@ class Header extends Component {
               style={{ transform: `rotateZ(${interpolatingStyle.x * 90}deg)` }}
             >
               <SvgAnimation toggleAnim={this.state.over}>
-                {/* <StyledLogo style={{ opacity: 1 - interpolatingStyle.x }} /> */}
                 <StyledLogo
                   width="40"
                   height="40"
@@ -192,7 +189,6 @@ class Header extends Component {
                     d="m27 8h4.8l7.5 7.5v1.6l-7.2 7.2h-1.9v-5.9l-1.3-1.3v-7.2z"
                   />
                 </StyledLogo>
-                {/* <Svg useid="cross" /> */}
                 <Cross
                   width="10"
                   height="10"
@@ -204,10 +200,9 @@ class Header extends Component {
               </SvgAnimation>
             </FixedLogo>
             <FixedNav>
-              <Switch location={this.props.location}>
-                <Route path="/view/:slug" component={ViewNavigationContainer} />
-                <Route path="/" component={ViewNavigationContainer} />
-              </Switch>
+              <ViewNavigationContainer
+                menuOpened={this.state.open}
+              />
             </FixedNav>
             <Fullscreen style={{ transform: `translateX(${interpolatingStyle.x2 * 400}%)` }} />
             <Banner style={{ transform: `translateX(${interpolatingStyle.x2 * 100}%)` }}>

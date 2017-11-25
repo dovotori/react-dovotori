@@ -21,6 +21,11 @@ class HandlerScale extends Component {
     this.isAnimeAll = newProps.in !== this.props.in;
   }
 
+  // shouldComponentUpdate(newProps) {
+  //   return this.props.items.length !== newProps.items.length
+  //     || this.props.in !== newProps.in;
+  // }
+
   getInterpolatedStyle(prevInterpolatedStyles) {
     const isIn = this.props.in;
     return prevInterpolatedStyles.map((_, i) => {
@@ -68,7 +73,6 @@ class HandlerScale extends Component {
 
   render() {
     const { items, wrapperStyle } = this.props;
-
     const defaultStyles = this.props.in
       ? items.map(() => ({ x: 0 }))
       : items.map(() => ({ x: 1 }));

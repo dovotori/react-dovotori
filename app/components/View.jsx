@@ -7,7 +7,7 @@ import { Bloc } from './AnimatedRoute';
 
 const Styled = styled(Bloc).attrs({
   className: 'view',
-})`
+}) `
 `;
 
 const Hidden = styled.div`
@@ -20,7 +20,7 @@ const Hidden = styled.div`
 
 const H1 = styled.h1.attrs({
   className: 'slide-bottom',
-})`
+}) `
   width: 50%;
   text-align: center;
   font-size: 3em;
@@ -36,7 +36,7 @@ const H1 = styled.h1.attrs({
 
 const Description = styled.div.attrs({
   className: 'description',
-})`
+}) `
   text-align: left;
   font-size: 1em;
   color: ${p => p.theme.grey};
@@ -46,7 +46,7 @@ const Description = styled.div.attrs({
   // border-bottom: solid 1px #aaa;
 `;
 
-const StyledTyping = styled(TypingMessage)`
+const StyledTyping = styled(TypingMessage) `
   width: 50%;
   padding: 4%;
 
@@ -80,12 +80,12 @@ const ImagesList = styled.div`
 
 const Images = styled.div.attrs({
   className: 'images',
-})`
+}) `
 `;
 
 const Date = styled.p.attrs({
   className: 'date',
-})`
+}) `
   font-family: ${p => p.theme.font2};
   position: absolute;
   color: #aaa;
@@ -110,8 +110,8 @@ const Date = styled.p.attrs({
 `;
 
 class View extends Component {
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    return newProps.entry.slug !== this.props.entry.slug;
   }
 
   render() {

@@ -8,7 +8,7 @@ import Svg from './Svg';
 
 const Styled = styled.div.attrs({
   className: 'button-picto',
-})`
+}) `
 a {
   position: relative;
   display: block;

@@ -11,21 +11,25 @@ class TypingMessage extends Component {
     this.anim = this.anim.bind(this);
     this.restart = this.restart.bind(this);
 
-    this.tempTx;
-    this.cptLetter;
-    this.div;
-    this.time;
+    this.tempTx = null;
+    this.cptLetter = 0;
+    this.div = null;
+    this.time = 0;
     this.isBackward = false;
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     this.start();
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(newProps) {
+    return this.props.message !== newProps.message;
+  }
+
+  componentDidUpdate() {
+    this.start();
   }
 
   start() {

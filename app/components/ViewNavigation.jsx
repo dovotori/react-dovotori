@@ -12,12 +12,14 @@ const wrapperStyle = css`
 
 class ViewNavigation extends Component {
   shouldComponentUpdate(newProps) {
-    return this.props.pathname !== newProps.pathname;
+    return this.props.pathname !== newProps.pathname
+      || this.props.menuOpened !== newProps.menuOpened
+      || this.props.nextSlug !== newProps.nextSlug
+      || this.props.previousSlug !== newProps.previousSlug;
   }
 
   render() {
-    const { nextSlug, previousSlug, pathname } = this.props;
-    const isHome = pathname === '/';
+    const { nextSlug, previousSlug, menuOpened, pathname } = this.props;
     const items = [
       {
         key: 'back',
@@ -32,28 +34,28 @@ class ViewNavigation extends Component {
       {
         key: 'previous',
         data: <ButtonPicto
-          key={`/view/${previousSlug}`}
+          key={previousSlug}
           link={`/view/${previousSlug}`}
           useid="arrow-previous"
           text="Previous"
         />,
-        in: previousSlug,
+        in: previousSlug !== null,
       }, {
         key: 'next',
         data: <ButtonPicto
-          key={`/view/${nextSlug}`}
+          key={nextSlug}
           link={`/view/${nextSlug}`}
           useid="arrow-next"
           text="Next"
         />,
-        in: nextSlug,
+        in: nextSlug !== null,
       },
     ];
 
     return (
       <HandlerScale
         items={items}
-        in={!isHome}
+        in={!menuOpened && pathname !== '/'}
         wrapperStyle={wrapperStyle}
         motion={{ stiffness: 300, damping: 40 }}
       />
@@ -66,6 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
     nextSlug: PropTypes.string,
     previousSlug: PropTypes.string,
     pathname: PropTypes.string,
+    menuOpened: PropTypes.bool,
   };
 }
 
@@ -73,6 +76,7 @@ ViewNavigation.defaultProps = {
   previousSlug: null,
   nextSlug: null,
   pathname: null,
+  menuOpened: false,
 };
 
 export default ViewNavigation;
