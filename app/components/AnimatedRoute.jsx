@@ -3,29 +3,18 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledTransitionGroup = styled(TransitionGroup)`
+const StyledTransitionGroup = styled(TransitionGroup) `
   position: relative;
   width: 100%;
-  height: calc(100% - 101px);
+  height: calc(100% - 105px);
   bottom: 0;
   background: url('../assets/img/stripes.png') #fff repeat;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+  ${p => p.theme.media.tablet`
     height: auto;
-  }
-`;
-
-export const Bloc = styled.div.attrs({
-  className: 'bloc',
-})`
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
+  `};
 `;
 
 const TIME = 1000;

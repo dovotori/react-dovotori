@@ -5,12 +5,9 @@ import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
 
 import SocialLinks from './SocialLinks';
-// import Svg from './Svg';
 import Logo from './Logo';
 import SvgAnimation from './SvgAnimation';
-// import TransitionFader from './TransitionFader';
 import ViewNavigationContainer from '../containers/ViewNavigationContainer';
-import { media } from '../themes/theme';
 
 const StyledHeader = styled.div.attrs({
   className: 'header',
@@ -29,7 +26,7 @@ const FixedLogo = styled.button`
   width: auto;
   z-index: 2;
 
-  ${media.mobile`
+  ${p => p.theme.media.mobile`
     // left: 50%;
     // transform: translateX(-50%);
   `}
@@ -46,7 +43,7 @@ const FixedNav = styled.div`
   height: 80px;
   z-index: 2;
 
-  ${media.mobile`
+  ${p => p.theme.media.mobile`
     left: 50%;
     transform: translateX(-50%);
   `}
@@ -68,14 +65,16 @@ const Cross = styled.svg`
   top: 0;
   left: 0;
   display: block;
-  width: 50px;
-  height: 50px;
-  margin: 15px;
+  width: 40px;
+  height: 40px;
+  margin: 20px;
   fill: #fff;
   stroke: ${p => p.theme.grey};
 `;
 
-const BackgroundLogo = styled.div`
+const BackgroundLogo = styled.div.attrs({
+  className: 'background-logo',
+}) `
   position: fixed;
   display: block;
   left: 100%;
@@ -86,9 +85,11 @@ const BackgroundLogo = styled.div`
   color: ${p => p.theme.primary};
   opacity: 0.2;
   pointer-events: none;
-  // transition: transform 300ms ease-out;
-  // transform: ${p => (p.isIn ? 'translate3d(50%, -50%, 0)' : 'translate3d(100%, -50%, 0)')};
   z-index: 2;
+
+  ${p => p.theme.media.tablet`
+    width: 200%;
+  `}
 `;
 
 const StyledLogoBack = styled(Logo) `
@@ -112,12 +113,17 @@ const Banner = styled.div`
   position: fixed;
   top: 25%;
   left: -100%;
-  background: ${p => p.theme.gradient};
   width: 100%;
   height: 50%;
+  background: ${p => p.theme.gradient};
   z-index: 1;
   box-shadow: -20px 0 20px rgba(0,0,0,0.8);
   transform: translateX(100%);
+
+  ${p => p.theme.media.mobile`
+    top: 15%;
+    height: 70%;
+  `}
 `;
 
 class Header extends Component {
@@ -157,7 +163,7 @@ class Header extends Component {
     return (
       <Motion defaultStyle={defaultStyle} style={style}>
         {interpolatingStyle => (
-          <StyledHeader/* key={this.state.open ? 'in' : 'out'} */>
+          <StyledHeader>
             <FixedLogo
               onClick={this.click}
               onMouseEnter={this.mouseEnter}

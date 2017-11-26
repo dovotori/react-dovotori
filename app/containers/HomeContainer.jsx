@@ -16,6 +16,7 @@ class HomeContainer extends Component {
 
 const mapStateToProps = state => ({
   entries: state.entries,
+  isTouchDevice: state.device.isTouch,
 });
 
 export default connect(mapStateToProps)(HomeContainer);

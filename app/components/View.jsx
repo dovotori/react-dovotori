@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import TypingMessage from './TypingMessage';
-import { Bloc } from './AnimatedRoute';
+import Bloc from './Bloc';
 
 const Styled = styled(Bloc).attrs({
   className: 'view',
 }) `
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Hidden = styled.div`
@@ -32,6 +35,10 @@ const H1 = styled.h1.attrs({
   text-align: left;
   margin: 0;
   padding: 0 4%;
+
+  ${p => p.theme.media.tablet`
+    width: 100%;
+  `};
 `;
 
 const Description = styled.div.attrs({
@@ -50,12 +57,14 @@ const StyledTyping = styled(TypingMessage) `
   width: 50%;
   padding: 4%;
 
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+  ${p => p.theme.media.tablet`
     width: 100%;
-  }
+  `};
 `;
 
-const ImagesList = styled.div`
+const ImagesList = styled.div.attrs({
+  className: 'images-list',
+}) `
   position: absolute;
   top: 0;
   right: 0;
@@ -64,7 +73,8 @@ const ImagesList = styled.div`
   z-index: 1;
   border-left: solid 1px #aaa;
   border-right: solid 1px #aaa;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   ${p => p.theme.scrollbar}
 
   img {
@@ -72,10 +82,13 @@ const ImagesList = styled.div`
     width: 100%;
   }
 
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+  ${p => p.theme.media.tablet`
     position: relative;
     width: 100%;
-  }
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: auto;
+  `}
 `;
 
 const Images = styled.div.attrs({
@@ -89,7 +102,7 @@ const Date = styled.p.attrs({
   font-family: ${p => p.theme.font2};
   position: absolute;
   color: #aaa;
-  top: 24px;
+  top: 0px;
   left: 50%;
   transform: rotate(-90deg) translateY(-100%) translateX(-100%);
   transform-origin: 0 0;
@@ -102,16 +115,31 @@ const Date = styled.p.attrs({
     display: block;
   }
 
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
+  ${p => p.theme.media.tablet`
+    position: relative;
+    transform: none!important;
+    // display: block;
+    top: auto;
     left: auto;
-    right: 0;
-    transform: translateX(100%) rotate(-90deg) translateY(-100%);
-  }
+    overflow: visible;
+    z-index: 1;
+    text-align: right;
+    height: 0;
+
+    span {
+      display: inline-block;
+      background-color: ${p.isprimary ? p.theme.primary : p.theme.secondary};
+      color: ${p.theme.grey};
+      padding: 2px 2px 0;
+      transform: translateY(-50%);
+    }
+  `};
 `;
 
 class View extends Component {
   shouldComponentUpdate(newProps) {
-    return newProps.entry.slug !== this.props.entry.slug;
+    return newProps.entry.slug !== this.props.entry.slug
+      || newProps.x !== this.props.x;
   }
 
   render() {
@@ -123,22 +151,44 @@ class View extends Component {
       category,
       date,
     } = this.props.entry;
+    const { x, key, isTouchDevice } = this.props;
     const isprimary = category === 0;
+
     return (
-      <Styled>
-        <Date><span>{date}</span></Date>
+      <Styled key={key}>
         <Hidden isprimary={isprimary}>
-          <H1 isprimary={isprimary}>
+          <H1
+            isprimary={isprimary}
+            style={{ transform: `translateY(${x * 100}%)` }}
+          >
             {title}
           </H1>
         </Hidden>
-        <Description>
-          <StyledTyping message={description} cursorSize={8} />
+        <Date
+          style={{
+            transform: `rotate(-90deg) translateY(-100%) translateX(-${100 + (x * 100)}%)`,
+            opacity: 1 - x,
+          }}
+          isprimary={isprimary}
+        >
+          <span>{date}</span>
+        </Date>
+        <Description
+          style={{ transform: `translateX(${x * 100}%)` }}
+        >
+          <StyledTyping
+            message={description}
+            cursorSize={8}
+            disabled={isTouchDevice}
+          />
         </Description>
         <ImagesList>
-          {images && <Images>
-            {Array(images).fill().map((x, idx) => (
+          {images && <Images
+            style={{ transform: `translateX(${x * 100}%)` }}
+          >
+            {Array(images).fill().map((_, idx) => (
               <img
+                alt="."
                 key={`image-${slug}-${idx}`}
                 src={`../assets/img/${slug}/${slug}-${idx}.jpg`}
               />
@@ -160,11 +210,17 @@ if (process.env.NODE_ENV !== 'production') {
       category: PropTypes.number,
       date: PropTypes.number,
     }),
+    key: PropTypes.string,
+    x: PropTypes.number,
+    isTouchDevice: PropTypes.bool,
   };
 }
 
 View.defaultProps = {
   entry: {},
+  key: '',
+  x: 0,
+  isTouchDevice: false,
 };
 
 export default View;

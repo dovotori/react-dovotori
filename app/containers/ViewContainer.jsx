@@ -1,36 +1,81 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { TransitionMotion, spring } from 'react-motion';
 
 import View from '../components/View';
 
 class ViewContainer extends Component {
   shouldComponentUpdate(newProps) {
-    return newProps.location.pathname !== this.props.location.pathname;
+    return newProps.slug !== this.props.slug;
   }
 
   render() {
-    return <View {...this.props} />;
+    const motion = { stiffness: 80, damping: 12 };
+    // const motion = { stiffness: 60, damping: 40 };
+    const items = [];
+
+    items.push({
+      key: `view-${this.props.entry.slug}`,
+      component: <View
+        entry={this.props.entry}
+        isTouchDevice={this.props.isTouchDevice}
+      />,
+    });
+
+
+    return (
+      <TransitionMotion
+        willEnter={() => ({ x: 1 })}
+        willLeave={() => ({ x: spring(1, motion) })}
+        styles={items.map(item => ({
+          key: item.key,
+          style: { x: spring(0, motion) },
+          data: item.component,
+        }))}
+      >
+        {interpolatedStyles => (
+          <div>
+            {interpolatedStyles.map(config => (
+              cloneElement(config.data, {
+                x: config.style.x,
+                key: config.key,
+              })
+            ))}
+          </div>
+        )}
+      </TransitionMotion>
+    );
+    // return <View entry={this.props.entry} />;
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
   ViewContainer.propTypes = {
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
+    slug: PropTypes.string.isRequired,
+    entry: PropTypes.shape({
+      slug: PropTypes.string,
+      title: PropTypes.string,
+      description: PropTypes.string,
+      images: PropTypes.number,
+      category: PropTypes.number,
+      date: PropTypes.number,
     }).isRequired,
+    isTouchDevice: PropTypes.bool,
   };
 }
+
+ViewContainer.defaultProps = {
+  isTouchDevice: false,
+};
 
 const getEntry = (entries, slug) => (
   entries.filter(entry => (entry.slug === slug))
 );
 
-const mapStateToProps = (state, props) => {
-  const slug = props.match.params.slug;
-  return {
-    entry: getEntry(state.entries, slug)[0],
-  };
-};
+const mapStateToProps = (state, props) => ({
+  entry: getEntry(state.entries, props.slug)[0],
+  isTouchDevice: state.device.isTouch,
+});
 
 export default connect(mapStateToProps)(ViewContainer);

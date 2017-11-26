@@ -29,22 +29,21 @@ class Scene extends Component {
       console.log(e.error);
     }
 
-    const { gl } = this;
-    if (gl) {
-      gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    if (this.gl) {
+      this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
 
-      // gl.enable(gl.DEPTH_TEST);
-      // gl.depthFunc(gl.LEQUAL);
+      // this.gl.enable(this.gl.DEPTH_TEST);
+      // this.gl.depthFunc(this.gl.LEQUAL);
 
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      // gl.blendEquation( gl.FUNC_SUBTRACT );
+      this.gl.enable(this.gl.BLEND);
+      this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+      // this.gl.blendEquation( this.gl.FUNC_SUBTRACT );
 
-      // gl.enable(gl.CULL_FACE);
-      // gl.cullFace(gl.FRONT_AND_BACK);
-      // gl.cullFace(gl.FRONT);
+      // this.gl.enable(this.gl.CULL_FACE);
+      // this.gl.cullFace(this.gl.FRONT_AND_BACK);
+      // this.gl.cullFace(this.gl.FRONT);
 
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
     }
   }
 
@@ -53,6 +52,8 @@ class Scene extends Component {
   // }
 
   render() {
+    const { width, height } = this.props;
+    this.gl.viewport(0, 0, width, height);
     return <div className="containerGL">{this.props.children}</div>;
   }
 }

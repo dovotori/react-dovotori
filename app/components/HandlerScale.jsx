@@ -47,9 +47,9 @@ class HandlerScale extends Component {
   getItemTargetStyle(idx) {
     const { items } = this.props;
     if (this.isAnimeAll) {
-      return { x: items[idx].in ? 1 : 0 };
+      return { x: items[idx].in && this.props.in ? 1 : 0 };
     }
-    return { x: items[idx].in ? spring(1, this.props.motion) : spring(0, this.props.motion) };
+    return { x: items[idx].in && this.props.in ? spring(1, this.props.motion) : spring(0, this.props.motion) };
   }
 
   getFinaleItemStyle(idx, staggerStyle, interpolatingStyle) {

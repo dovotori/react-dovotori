@@ -20,7 +20,7 @@ const Styled = styled.div`
     height: auto;
   }
 
-  ${media.mobile`
+  ${p => p.theme.media.mobile`
     transform: translate3d(50%, -50%, 0);
   `};
 `;
@@ -36,7 +36,7 @@ const Name = styled.p`
 `;
 
 class Signature extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
   shouldComponentUpdate() {
     return false;

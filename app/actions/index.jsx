@@ -1,9 +1,9 @@
-export const INIT = 'INIT';
+export const DETECT_TOUCH = 'DETECT_TOUCH';
 
 export const entities = {
-  INIT: 'INIT',
+  DETECT_TOUCH: 'DETECT_TOUCH',
 };
 
-export function init(text) {
-  return { type: INIT, text };
+export function detectTouch(flag) {
+  return { type: DETECT_TOUCH, flag };
 }

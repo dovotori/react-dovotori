@@ -47,6 +47,28 @@ class Objet extends Component {
     this.applyIndex();
   }
 
+  setModelMatrice(gl, program, model) {
+    gl.uniformMatrix4fv(program.mMatLoc, false, model);
+  }
+
+  drawFaceByFace(gl) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
+    for (let i = 0; i < this.nbPoints; i += 4) {
+      gl.drawElements(this.modeDessin, 4, gl.UNSIGNED_SHORT, i * 2);
+    }
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+  }
+
+  drawIndex(gl) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
+    gl.drawElements(this.modeDessin, this.nbPoints, gl.UNSIGNED_SHORT, 0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+  }
+
+  setColor(gl, program, color) {
+    gl.uniform4f(program.cVecLoc, color[0], color[1], color[2], color[3]);
+  }
+
   applyIndex() {
     const { indices } = this.props;
     const { gl } = this.context;
@@ -57,28 +79,6 @@ class Objet extends Component {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.modeCalcul);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-  }
-
-  setModelMatrice(gl, program, model) {
-    gl.uniformMatrix4fv(program.mMatLoc, false, model);
-  }
-
-  drawFaceByFace(gl, program) {
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
-    for (let i = 0; i < this.nbPoints; i += 4) {
-      gl.drawElements(this.modeDessin, 4, gl.UNSIGNED_SHORT, i * 2);
-    }
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-  }
-
-  drawIndex(gl, program) {
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
-    gl.drawElements(this.modeDessin, this.nbPoints, gl.UNSIGNED_SHORT, 0);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-  }
-
-  setColor(gl, program, color) {
-    gl.uniform4f(program.cVecLoc, color[0], color[1], color[2], color[3]);
   }
 
   render() {

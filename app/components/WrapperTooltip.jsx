@@ -20,10 +20,14 @@ class WrapperTooltip extends Component {
         onMouseEnter={() => this.setState({ over: true })}
         onMouseLeave={() => this.setState({ over: false })}
       >
-        {this.state.over && (
-          <TypingMessage message={this.props.message} intervalLetter={100} />
-        )}
         {this.props.children}
+        {(this.state.over || this.props.disabled) && (
+          <TypingMessage
+            message={this.props.message}
+            intervalLetter={100}
+            disabled={this.props.disabled}
+          />
+        )}
       </div>
     );
   }
@@ -34,6 +38,7 @@ if (process.env.NODE_ENV !== 'production') {
     children: PropTypes.node,
     message: PropTypes.string,
     className: PropTypes.string,
+    disabled: PropTypes.bool,
   };
 }
 
@@ -41,6 +46,7 @@ WrapperTooltip.defaultProps = {
   children: null,
   message: '',
   className: '',
+  disabled: true,
 };
 
 export default WrapperTooltip;

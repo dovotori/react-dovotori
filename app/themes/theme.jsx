@@ -10,8 +10,6 @@ const theme = {
   lightgrey: '#bbb',
   gradient: 'linear-gradient(#009966, #66ffcc)',
   gradient2: 'linear-gradient(to right, #009966, #66ffcc)',
-  tabletBreakPoint: 700,
-  mobileBreakPoint: 480,
   elastic: 'cubic-bezier(0.64, 0.57, 0.67, 1.53)',
   elastic2: 'cubic-bezier(0.860, 0.000, 0.070, 1.000)',
   font1: '"Geneva", sans-serif',
@@ -25,20 +23,10 @@ const theme = {
     background-color: #ccc;
   }
   `,
-  breakPoint: 900,
+  media: {
+    mobile: (...args) => css`@media (max-width: 420px) { ${css(...args)}; }`,
+    tablet: (...args) => css`@media (max-width: 1020px) { ${css(...args)}; }`,
+  },
 };
 
 export default theme;
-
-export const media = {
-  mobile: (...args) => css`
-    @media (max-width: 420px) {
-      ${css(...args)};
-    }
-  `,
-  tablet: (...args) => css`
-    @media (max-width: 1020px) {
-      ${css(...args)};
-    }
-  `,
-};

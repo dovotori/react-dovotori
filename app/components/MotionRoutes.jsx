@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TransitionMotion, spring } from 'react-motion';
 import styled from 'styled-components';
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import HomeContainer from '../containers/HomeContainer';
 import ViewContainer from '../containers/ViewContainer';
@@ -13,20 +13,16 @@ const Wrap = styled.div.attrs({
 }) `
   position: relative;
   width: 100%;
-  height: calc(100% - 101px);
+  height: calc(100% - 105px);
   bottom: 0;
   background: url('../assets/img/stripes.png') #fff repeat;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
-    height: auto;
-  }
 `;
 
 
-const Bloc = styled.div.attrs({
-  className: 'bloc',
+const AnimatedBloc = styled.div.attrs({
+  className: 'animated-bloc',
 }) `
   position: absolute;
   top: 0;
@@ -61,9 +57,10 @@ class MotionRoute extends Component {
         component: <HomeContainer />,
       });
     } else {
+      const slug = pathname.replace('/view/', '');
       items.push({
         key: 'view',
-        component: <Route path="/view/:slug" component={ViewContainer} />,
+        component: <ViewContainer slug={slug} />,
       });
     }
 
@@ -82,12 +79,12 @@ class MotionRoute extends Component {
         {interpolatedStyles => (
           <Wrap>
             {interpolatedStyles.map(config => (
-              <Bloc
+              <AnimatedBloc
                 key={config.key}
                 style={MotionRoute.applyStyle(config.style)}
               >
                 {config.data}
-              </Bloc>
+              </AnimatedBloc>
             ))}
           </Wrap>
         )}

@@ -21,7 +21,11 @@ class TypingMessage extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    this.start();
+    if (!this.props.disabled) {
+      this.start();
+    } else {
+      this.div.innerHTML = this.props.message;
+    }
   }
 
   shouldComponentUpdate(newProps) {
@@ -29,7 +33,9 @@ class TypingMessage extends Component {
   }
 
   componentDidUpdate() {
-    this.start();
+    if (!this.props.disabled) {
+      this.start();
+    }
   }
 
   start() {
@@ -76,8 +82,8 @@ class TypingMessage extends Component {
   render() {
     return (
       <p className={`${this.props.className} message`}>
-        <span ref={d => (this.div = d)} />
-        <Cursor color={this.props.color} size={this.props.cursorSize} />
+        <span ref={d => this.div = d} />
+        {!this.props.disabled && <Cursor color={this.props.color} size={this.props.cursorSize} />}
       </p>
     );
   }
@@ -91,6 +97,7 @@ if (process.env.NODE_ENV !== 'production') {
     nextCallTime: PropTypes.number,
     cursorSize: PropTypes.number,
     color: PropTypes.string,
+    disabled: PropTypes.bool,
   };
 }
 
@@ -101,6 +108,7 @@ TypingMessage.defaultProps = {
   nextCallTime: null,
   cursorSize: 6,
   color: '#000',
+  disabled: false,
 };
 
 export default TypingMessage;

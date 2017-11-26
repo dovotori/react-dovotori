@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { media } from '../themes/theme';
-import Line from './Line';
-
 const OFFSET_X = 50;
 
 const LINK = styled(Link).attrs({
   className: 'teaser',
-})`
+}) `
   position: relative;
   display: block;
   text-decoration: none;
+
+  ${p => p.theme.media.tablet`
+    border-bottom: solid 1px #fff;
+  `};
 `;
 
 const Banner = styled.div`
@@ -28,6 +29,11 @@ const Banner = styled.div`
   transition: transform 0.4s ease-out;
   transform: ${p => (p.hover ? `translateX(-${OFFSET_X}px)` : 'none')};
   // z-index: ${p => (p.hover ? 2 : 'auto')};
+
+  ${p => p.theme.media.mobile`
+    width: 100%;
+    transform: none;
+  `};
 `;
 
 const Back = styled.div`
@@ -43,59 +49,66 @@ const IMG = styled.img`
   display: inline-block;
   vertical-align: middle;
   transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'scale(1)' : 'scale(40)')};
+  transform: ${p => (p.hover || p.noHover ? 'scale(1)' : 'scale(40)')};
   opacity: 0.8;
   width: auto;
 
-  ${media.mobile`
-    width: 100%;
+  ${p => p.theme.media.mobile`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
   `};
 `;
 
-const Infos = styled.div`
+const Infos = styled.div.attrs({
+  className: 'infos',
+}) `
   position: absolute;
   top: 0;
-  left: 50%;
+  left: ${p => (p.noHover ? 'auto' : '50%')};
+  right: ${p => (p.noHover ? '0' : 'auto')};
+  transform: ${p => (p.noHover ? 'none' : `translateX(${180 - OFFSET_X}px)`)};
   text-align: left;
-  // width: 100%;
-  // pointer-events: none;
-  // transform: translateY(-50%);
-  transform: translateX(${180 - OFFSET_X}px);
+
+  ${p => p.theme.media.tablet`
+    transform: none;
+    left: auto;
+    right: 0;
+    text-align: right;
+  `};
 `;
 
 const H5 = styled.h5`
   font-size: 22px;
   font-weight: 100;
   letter-spacing: 0.1em;
-  // text-transform: uppercase;
   transition: transform .4s ${p => p.theme.elastic2}, opacity .4s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
-  opacity: ${p => (p.hover ? 1 : 0)};
-  background-color: #fff;
+  transform: ${p => (p.hover || p.noHover ? 'none' : 'translateX(100%)')};
+  opacity: ${p => (p.hover || p.noHover ? 1 : 0)};
+  background-color: ${p => (p.noHover ? 'rgba(255,255,255,0.5)' : '#fff')};
   position: relative;
   z-index: 1;
   // color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
   color: ${p => p.theme.grey};
-  // text-shadow: 1px 1px 0px #fff;
   padding: 2px;
 `;
 
 const Date = styled.p`
   transition: transform 0.5s ${p => p.theme.elastic2}, opacity 0.5s ${p => p.theme.elastic2};
-  transform: ${p => (p.hover ? 'translateX(0)' : 'translateX(100%)')};
-  opacity: ${p => (p.hover ? 1 : 0)};
+  transform: ${p => (p.hover || p.noHover ? 'none' : 'translateX(100%)')};
+  opacity: ${p => (p.hover || p.noHover ? 1 : 0)};
   font-family: ${p => p.theme.font2};
   background-color: ${p => (!p.isprimary ? p.theme.primary : p.theme.secondary)};
   color: ${p => p.theme.grey};
   font-size: 12px;
   letter-spacing: 2px;
   padding: 2px;
-`;
-
-const Line2 = Line.extend`
-  position: absolute;
-  bottom: -2px;
-  z-index: 10;
 `;
 
 const Number = styled.p`
@@ -131,7 +144,7 @@ class Teaser extends Component {
   }
 
   render() {
-    const { entry, className, idx } = this.props;
+    const { entry, className, idx, noHover } = this.props;
     const isprimary = entry.category === 0;
     return (
       <LINK
@@ -147,13 +160,24 @@ class Teaser extends Component {
             src={`assets/teasers/${entry.slug}.png`}
             alt={entry.title}
             hover={this.state.hover}
+            noHover={noHover}
           />
         </Banner>
-        <Infos>
-          <H5 hover={this.state.hover} isprimary={isprimary}>
+        <Infos
+          noHover={noHover}
+        >
+          <H5
+            hover={this.state.hover}
+            isprimary={isprimary}
+            noHover={noHover}
+          >
             {entry.title}
           </H5>
-          <Date hover={this.state.hover} isprimary={isprimary}>
+          <Date
+            hover={this.state.hover}
+            isprimary={isprimary}
+            noHover={noHover}
+          >
             {entry.date}
           </Date>
         </Infos>
@@ -176,6 +200,7 @@ if (process.env.NODE_ENV !== 'production') {
       description: PropTypes.string,
     }),
     idx: PropTypes.number,
+    noHover: PropTypes.bool,
   };
 }
 
@@ -183,6 +208,7 @@ Teaser.defaultProps = {
   className: '',
   entry: {},
   idx: 0,
+  noHover: false,
 };
 
 export default Teaser;

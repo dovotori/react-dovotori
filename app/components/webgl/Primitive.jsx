@@ -8,8 +8,8 @@ class Primitive extends Component {
     super(props);
 
     this.nbPoints = 0;
-    this.modeDessin;
-    this.modeCalcul;
+    this.modeDessin = null;
+    this.modeCalcul = null;
     this.vbo = new Array(5);
 
     for (let i = 0; i < 5; i += 1) {

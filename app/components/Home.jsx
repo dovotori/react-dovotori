@@ -3,18 +3,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Teaser from './Teaser';
-import { Bloc } from './AnimatedRoute';
+import Bloc from './Bloc';
 import StaggeredScale from './StaggeredScale';
 
 const StyledHome = styled(Bloc).attrs({
   className: 'home',
-})`
-  ${p => p.theme.scrollbar}
+}) `
 `;
 
 const ListTeasers = styled.div.attrs({
   className: 'list-teasers',
-})`
+}) `
 `;
 
 class Home extends Component {
@@ -23,9 +22,9 @@ class Home extends Component {
   }
 
   render() {
-    const { entries } = this.props;
+    const { entries, isTouchDevice } = this.props;
     const items = entries.map((teaser, idx) => ({
-      data: <Teaser key={teaser.id} entry={teaser} idx={idx} />,
+      data: <Teaser key={teaser.id} entry={teaser} idx={idx} noHover={isTouchDevice} />,
       key: `teaser-${teaser.id}`,
     }));
     return (
@@ -46,11 +45,13 @@ class Home extends Component {
 if (process.env.NODE_ENV !== 'production') {
   Home.propTypes = {
     entries: PropTypes.arrayOf(PropTypes.shape),
+    isTouchDevice: PropTypes.bool,
   };
 }
 
 Home.defaultProps = {
   entries: [],
+  isTouchDevice: false,
 };
 
 export default Home;

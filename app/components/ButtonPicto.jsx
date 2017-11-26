@@ -15,24 +15,40 @@ a {
   margin: 5px 10px 5px;
   width: 35px;
   height: 35px;
-  border-radius: 50%;
+  // border-radius: 50%;
   background-color: transparent;
   transition: box-shadow 300ms ease-out, transform 300ms ease-out;
   text-decoration: none;
-  box-shadow: 2px 0 0 ${p => p.theme.primary};
-  border: solid 1px ${p => p.theme.primary};
-  transform: translateX(0);
+  // box-shadow: 2px 0 0 ${p => p.theme.primary};
+  // border: solid 1px ${p => p.theme.primary};
+  // transform: translateX(0);
 }
 
-svg {
+svg.icone,
+svg.circle {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
   // transition: transform 300ms ease-out;
-  fill: ${p => p.theme.primary};
-  height: 10px;
+}
+
+svg.circle {
+  display: none;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: ${p => p.theme.primary};
+  stroke-width: 0.4;
+}
+
+svg.icone {
+  fill: rgba(0,0,0,0);
+  stroke: ${p => p.theme.primary};
+  stroke-width: 1;
+  height: 20px;
   max-width: 100%;
+  transition: fill 300ms ease-out;
 }
 
 span {
@@ -53,8 +69,7 @@ span {
 
 &:hover {
   a {
-    box-shadow: 0px 0px 0px ${p => p.theme.primary};
-    transform: translateX(2px);
+    // transform: translateX(2px);
   }
 
   span {
@@ -62,8 +77,8 @@ span {
     opacity: 1;
   }
 
-  svg {
-    // transform: translate3d(-50%, -50%, 0) scale(1.4);
+  svg.icone {
+    fill: ${p => p.theme.primary};
   }
 }
 `;
@@ -78,7 +93,8 @@ class ButtonPicto extends Component {
       <Styled>
         <Link to={this.props.link}>
           <span>{this.props.text}</span>
-          <Svg useid={this.props.useid} />
+          <Svg className="icone" useid={this.props.useid} />
+          <Svg className="circle" useid="circle" />
         </Link>
       </Styled>
     );

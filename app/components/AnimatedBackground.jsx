@@ -25,7 +25,7 @@ import shader from '../shaders/glitch1and2';
 
 const BackBanner = styled.div.attrs({
   className: 'back-banner',
-})`
+}) `
   position: absolute;
   bottom: 0;
   height: 40%;
@@ -38,7 +38,7 @@ const BackBanner = styled.div.attrs({
 
 const Wrap = styled.div.attrs({
   className: 'animated-background',
-})`
+}) `
   width: 100%;
   height: ${p => p.height}px;
 `;
@@ -58,13 +58,8 @@ const Styled = styled.div`
 
   canvas {
     margin: 0 auto;
-    // width: ${p => p.width}px;
     width: 100%;
     height: ${p => p.height}px;
-  }
-
-  @media screen and (max-width: ${p => p.theme.breakPoint}px) {
-    position: relative;
   }
 `;
 
@@ -81,6 +76,8 @@ class AnimatedBackground extends Component {
     this.state = { cpt: 0 };
 
     this.coor = { x: 0, y: 0 };
+
+    this.texSize = 1024;
 
     const p = new ParseObj();
     p.setup(walkman);
@@ -136,7 +133,6 @@ class AnimatedBackground extends Component {
   // }
 
   componentWillMount() {
-    this.onResize();
     window.addEventListener('mousemove', this.mouseMove, false);
   }
 
@@ -222,11 +218,20 @@ class AnimatedBackground extends Component {
   }
 
   render() {
+    this.width = document.body.clientWidth;
+    this.height = window.innerHeight;
+
     return (
       <Wrap height={this.height}>
-        <Styled width={this.width} height={this.height}>
+        <Styled
+          width={this.width}
+          height={this.height}
+        >
           <BackBanner />
-          <Scene width={1024} height={1024}>
+          <Scene
+            width={this.texSize}
+            height={this.texSize}
+          >
             <Loop onAnimate={this.onAnimate}>
               <Camera
                 width={this.width}
@@ -247,7 +252,10 @@ class AnimatedBackground extends Component {
                     ))}
                   </Vbo>
                 </Program>
-                <Program vertex={basique.vertex} fragment={basique.fragment}>
+                <Program
+                  vertex={basique.vertex}
+                  fragment={basique.fragment}
+                >
                   <Vbo points={this.points2}>
                     {this.objets2.map(obj => (
                       <span key={obj.key}>
@@ -268,7 +276,10 @@ class AnimatedBackground extends Component {
                   </Vbo>
                 </Program>
 
-                <Program vertex={shadow.vertex} fragment={shadow.fragment}>
+                <Program
+                  vertex={shadow.vertex}
+                  fragment={shadow.fragment}
+                >
                   <Vbo points={this.points}>
                     {this.objets.map((obj, idx) => (
                       <Objet
@@ -289,8 +300,17 @@ class AnimatedBackground extends Component {
                 time={this.state.cpt}
                 amplitude={this.amplitude}
               >
-                <Fbo width={1024} height={1024}>
-                  <Texture id={1} width={1024} height={1024}>
+                <Fbo
+                  width={this.texSize}
+                  height={this.texSize}
+                  filter="NEAREST_MIPMAP_LINEAR"
+                >
+                  <Texture
+                    id={1}
+                    width={this.texSize}
+                    height={this.texSize}
+                    filter="NEAREST_MIPMAP_LINEAR"
+                  >
                     <Primitive />
                   </Texture>
                 </Fbo>

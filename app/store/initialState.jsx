@@ -18,19 +18,19 @@ const initialState = {
     6: 'WebGL',
   },
   entries: [
-    {
-      id: 0,
-      slug: 'netmap',
-      title: 'Net Map',
-      category: 1,
-      tags: [],
-      date: 2014,
-      description:
-        'Datavisualisation désignant les différentes institutions "ennemies d\'Internet" à travers le monde. Projet réalisé au sein de l\'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher.',
-      sources: '',
-      context: '',
-      images: 1,
-    },
+    // {
+    //   id: 0,
+    //   slug: 'netmap',
+    //   title: 'Net Map',
+    //   category: 1,
+    //   tags: [],
+    //   date: 2014,
+    //   description:
+    //     'Datavisualisation désignant les différentes institutions "ennemies d\'Internet" à travers le monde. Projet réalisé au sein de l\'association Reporters sans frontières sous la direction artistique de Pierre-Alain Leboucher.',
+    //   sources: '',
+    //   context: '',
+    //   images: 1,
+    // },
     {
       id: 1,
       slug: 'religionmap',
@@ -170,17 +170,17 @@ const initialState = {
       context: '',
       images: 4,
     },
-    {
-      id: 12,
-      slug: 'amour',
-      title: 'Amour',
-      category: 1,
-      tags: [],
-      date: 1,
-      description: 'Site HappyLovers',
-      sources: '',
-      context: '',
-    },
+    // {
+    //   id: 12,
+    //   slug: 'amour',
+    //   title: 'Amour',
+    //   category: 1,
+    //   tags: [],
+    //   date: 1,
+    //   description: 'Site HappyLovers',
+    //   sources: '',
+    //   context: '',
+    // },
   ],
 };
 

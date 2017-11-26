@@ -1,4 +1,4 @@
-import React, { Component, Children, cloneElement } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Texture extends Component {
@@ -6,21 +6,13 @@ class Texture extends Component {
     super(props);
 
     this.texture = null;
-    this.filter;
+    this.filter = null;
+    this.filterMag = null;
   }
 
   componentWillMount() {
-    const { gl } = this.context;
     const { mode } = this.props;
 
-    this.filter = gl.NEAREST;
-    // gl.LINEAR;
-
-    this.texture = gl.createTexture();
-
-    // this.texture.image = new Image();
-    // this.texture.image.addEventListener("load", this.apply.bind(this), false);
-    // this.texture.image.src = chemin;
     switch (mode) {
       case 'NOISE':
       default:
@@ -32,32 +24,11 @@ class Texture extends Component {
     }
   }
 
-  apply() {
-    const { gl } = this.context;
-
-    gl.bindTexture(gl.TEXTURE_2D, this.texture);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.texture.image);
-    // FILTRE
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, this.filter);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, this.filter);
-    // REPETITION
-    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); // uv > 1 il repete 1
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT); // uv > 1 il repete la texture
-    // MIPMAP
-    gl.generateMipmap(gl.TEXTURE_2D);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); // gl.LINEAR_MIPMAP_NEAREST
-    //gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_LOD_BIAS, -0.4); // niveau de detail
-    gl.bindTexture(gl.TEXTURE_2D, null);
-  }
-
   setupNoiseRVB() {
     const { gl } = this.context;
     const { width, height } = this.props;
 
-    let b = new ArrayBuffer(width * height * 4);
+    const b = new ArrayBuffer(width * height * 4);
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
@@ -73,12 +44,9 @@ class Texture extends Component {
 
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
-    //gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, this.filter);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, this.filter);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+    this.setOptions();
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
 
@@ -86,7 +54,7 @@ class Texture extends Component {
     const { gl } = this.context;
     const { width, height } = this.props;
 
-    let b = new ArrayBuffer(width * height * 4);
+    const b = new ArrayBuffer(width * height * 4);
     const pixel = new Uint8Array(b);
     let cptRVBA = 0;
 
@@ -102,39 +70,58 @@ class Texture extends Component {
 
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
-    //gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, this.filter);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, this.filter);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+    this.setOptions();
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
 
-  setupNoise(taille) {
+  setupNoise() {
     const { gl } = this.context;
     const { width, height } = this.props;
 
-    let b = new ArrayBuffer(width * height);
-    let pixel = new Uint8Array(b);
+    const b = new ArrayBuffer(width * height);
+    const pixel = new Uint8Array(b);
     let cpt = 0;
 
     for (let y = 0; y < height; y += 1) {
       for (let x = 0; x < width; x += 1) {
-        pixel[cpt] = random(0, 255);
+        pixel[cpt] = Math.random() * 255;
         cpt += 1;
       }
     }
 
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
-    //gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, pixel);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, this.filter);
+    this.setOptions();
+    gl.bindTexture(gl.TEXTURE_2D, null);
+  }
+
+  setOptions() {
+    const { gl } = this.context;
+    const { filter, filterMag } = this.props;
+
+    switch (filter) {
+      default: case 'LINEAR': this.filter = gl.LINEAR; break;
+      case 'NEAREST': this.filter = gl.NEAREST; break;
+      case 'LINEAR_MIPMAP_NEAREST': this.filter = gl.LINEAR_MIPMAP_NEAREST; break;
+      case 'LINEAR_MIPMAP_LINEAR': this.filter = gl.LINEAR_MIPMAP_LINEAR; break;
+      case 'NEAREST_MIPMAP_NEAREST': this.filter = gl.NEAREST_MIPMAP_NEAREST; break;
+      case 'NEAREST_MIPMAP_LINEAR': this.filter = gl.NEAREST_MIPMAP_LINEAR; break;
+    }
+
+    switch (filterMag) {
+      default: case 'LINEAR': this.filterMag = gl.LINEAR; break;
+      case 'NEAREST': this.filterMag = gl.NEAREST; break;
+    }
+
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, this.filter);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, this.filterMag);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-    gl.bindTexture(gl.TEXTURE_2D, null);
+    gl.generateMipmap(gl.TEXTURE_2D);
   }
 
   setTexture() {
@@ -178,7 +165,7 @@ class Texture extends Component {
 
   render() {
     if (this.texture) {
-      this.setTexture();
+      // this.setTexture();
       return this.props.children;
     }
     return null;
@@ -192,6 +179,8 @@ if (process.env.NODE_ENV !== 'production') {
     height: PropTypes.number,
     id: PropTypes.number,
     mode: PropTypes.string,
+    filter: PropTypes.string,
+    filterMag: PropTypes.string,
   };
 }
 
@@ -201,6 +190,8 @@ Texture.defaultProps = {
   height: 1024,
   id: 0,
   mode: 'NOISE',
+  filter: 'LINEAR',
+  filterMag: 'NEAREST',
 };
 
 Texture.contextTypes = {
