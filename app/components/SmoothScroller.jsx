@@ -13,7 +13,8 @@ class SmoothScroller extends Component {
   }
 
   shouldComponentUpdate(newProps) {
-    return newProps.targetY !== this.props.targetY;
+    return newProps.targetY !== this.props.targetY
+      || (newProps.targetY === 0 && window.pageYOffset !== 0);
   }
 
   start() {

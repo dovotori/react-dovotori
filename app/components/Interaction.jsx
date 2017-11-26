@@ -16,7 +16,8 @@ class Interaction extends Component {
   }
 
   shouldComponentUpdate(newProps, newState) {
-    return newState.targetY !== this.state.targetY;
+    return newState.targetY !== this.state.targetY
+      || (newState.targetY === 0 && window.pageYOffset !== 0);
   }
 
   pressArrowDown(e) {
@@ -43,7 +44,7 @@ class Interaction extends Component {
         <SmoothScroller
           easing={easeOutQuad}
           targetY={this.state.targetY}
-          duration={600}
+          duration={300}
         >
           {this.props.children}
         </SmoothScroller>

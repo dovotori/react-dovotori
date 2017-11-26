@@ -23,7 +23,7 @@ class TypingMessage extends Component {
   componentDidMount() {
     if (!this.props.disabled) {
       this.start();
-    } else {
+    } else if (this.div) {
       this.div.innerHTML = this.props.message;
     }
   }
@@ -35,6 +35,8 @@ class TypingMessage extends Component {
   componentDidUpdate() {
     if (!this.props.disabled) {
       this.start();
+    } else if (this.div) {
+      this.div.innerHTML = this.props.message;
     }
   }
 
@@ -70,10 +72,12 @@ class TypingMessage extends Component {
       }
       window.requestAnimationFrame(this.anim);
     } else {
-      if (this.isBackward) {
-        this.div.innerHTML = '';
-      } else {
-        this.div.innerHTML = message;
+      if (this.div) {
+        if (this.isBackward) {
+          this.div.innerHTML = '';
+        } else {
+          this.div.innerHTML = message;
+        }
       }
       window.setTimeout(this.restart, nextCallTime);
     }

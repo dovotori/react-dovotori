@@ -46,7 +46,7 @@ WrapperTooltip.defaultProps = {
   children: null,
   message: '',
   className: '',
-  disabled: true,
+  disabled: false,
 };
 
 export default WrapperTooltip;

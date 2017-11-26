@@ -67,12 +67,13 @@ const ImagesList = styled.div.attrs({
 }) `
   position: absolute;
   top: 0;
-  right: 0;
+  left: 50%;
   width: 50%;
   height: 100%;
+  max-width: ${p => p.theme.breakpoint.tablet}px;
   z-index: 1;
-  border-left: solid 1px #aaa;
-  border-right: solid 1px #aaa;
+  border-left: solid 1px #ccc;
+  // background-color: ${p => p.theme.grey};
   overflow-x: hidden;
   overflow-y: auto;
   ${p => p.theme.scrollbar}
@@ -88,6 +89,7 @@ const ImagesList = styled.div.attrs({
     overflow-x: hidden;
     overflow-y: hidden;
     height: auto;
+    left: auto;
   `}
 `;
 
@@ -106,10 +108,13 @@ const Date = styled.p.attrs({
   left: 50%;
   transform: rotate(-90deg) translateY(-100%) translateX(-100%);
   transform-origin: 0 0;
-  font-size: 1em;
+  font-size: 2em;
   letter-spacing: 0.1em;
   overflow-x: hidden;
   overflow-y: auto;
+  z-index: 1;
+  text-shadow: 1px 1px 0 #fff;
+  padding: 4px;
 
   span {
     display: block;
@@ -121,10 +126,13 @@ const Date = styled.p.attrs({
     // display: block;
     top: auto;
     left: auto;
+    width: auto;
     overflow: visible;
     z-index: 1;
     text-align: right;
     height: 0;
+    font-size: 1em;
+    text-shadow: none;
 
     span {
       display: inline-block;
@@ -166,7 +174,7 @@ class View extends Component {
         </Hidden>
         <Date
           style={{
-            transform: `rotate(-90deg) translateY(-100%) translateX(-${100 + (x * 100)}%)`,
+            transform: `rotate(-90deg) translateY(-100%) translateX(-${((1 - x) * 100)}%)`,
             opacity: 1 - x,
           }}
           isprimary={isprimary}
@@ -174,7 +182,7 @@ class View extends Component {
           <span>{date}</span>
         </Date>
         <Description
-          style={{ transform: `translateX(${x * 100}%)` }}
+          style={{ transform: `scaleY(${1 - x})` }}
         >
           <StyledTyping
             message={description}

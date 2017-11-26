@@ -1,4 +1,4 @@
-/* global window */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectGlobal, ThemeProvider } from 'styled-components';
@@ -9,7 +9,6 @@ import SvgDisplayer from '../components/SvgDisplayer';
 import theme from '../themes/theme';
 import Routes from '../components/Routes';
 import commonCss from '../themes/commonCss';
-import Interaction from '../components/Interaction';
 // import { detectTouch } from '../actions';
 
 class App extends Component {
@@ -30,12 +29,12 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Interaction>
+        <div style={{ height: '100%' }}>
           <SvgDisplayer />
           <BrowserRouter>
             <Route component={Routes} />
           </BrowserRouter>
-        </Interaction>
+        </div>
       </ThemeProvider>
     );
   }

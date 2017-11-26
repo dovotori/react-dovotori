@@ -23,6 +23,10 @@ const theme = {
     background-color: #ccc;
   }
   `,
+  breakpoint: {
+    mobile: 420,
+    tablet: 1020,
+  },
   media: {
     mobile: (...args) => css`@media (max-width: 420px) { ${css(...args)}; }`,
     tablet: (...args) => css`@media (max-width: 1020px) { ${css(...args)}; }`,

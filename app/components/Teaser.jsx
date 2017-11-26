@@ -11,10 +11,6 @@ const LINK = styled(Link).attrs({
   position: relative;
   display: block;
   text-decoration: none;
-
-  ${p => p.theme.media.tablet`
-    border-bottom: solid 1px #fff;
-  `};
 `;
 
 const Banner = styled.div`
@@ -48,7 +44,7 @@ const Back = styled.div`
 const IMG = styled.img`
   display: inline-block;
   vertical-align: middle;
-  transition: transform 0.4s ${p => p.theme.elastic2}, opacity 0.4s ${p => p.theme.elastic2};
+  transition: transform 0.3s ${p => p.theme.elastic2}, opacity 0.2s ${p => p.theme.elastic2};
   transform: ${p => (p.hover || p.noHover ? 'scale(1)' : 'scale(40)')};
   opacity: 0.8;
   width: auto;
@@ -121,6 +117,20 @@ const Number = styled.p`
   font-size: 0.7em;
   padding: 2px 0;
   transform: translateX(230px);
+  letter-spacing: 0.1em;
+`;
+
+const BackLine = styled.div.attrs({
+  className: 'back-line',
+}) `
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transform: ${p => (p.hover ? 'translateY(-50%) scaleY(1)' : 'translateY(-50%) scaleY(0)')};
+  transition: transform 0.5s ${p => p.theme.elastic2}, opacity 0.5s ${p => p.theme.elastic2};
 `;
 
 class Teaser extends Component {
@@ -153,7 +163,11 @@ class Teaser extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        {/* <Line2 hover={this.state.hover} isprimary={!isprimary} time="2000" /> */}
+        <BackLine
+          hover={this.state.hover}
+          noHover={noHover}
+          isprimary={isprimary}
+        />
         <Banner hover={this.state.hover}>
           <Back isprimary={!isprimary} />
           <IMG

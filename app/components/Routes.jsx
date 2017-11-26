@@ -7,7 +7,7 @@ import Header from './Header';
 import Footer from './Footer';
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
-
+import Interaction from './Interaction';
 class Routes extends Component {
   shouldComponentUpdate(newProps) {
     return newProps.location.pathname !== this.props.location.pathname;
@@ -16,13 +16,13 @@ class Routes extends Component {
   render() {
     // const locationKey = this.props.location.pathname;
     return (
-      <div style={{ height: '100%' }}>
+      <Interaction>
         <Header location={this.props.location} />
         <Signature />
         <AnimatedBackground />
         <MotionRoutes />
         <Footer />
-      </div>
+      </Interaction>
     );
   }
 }

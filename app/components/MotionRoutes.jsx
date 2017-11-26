@@ -16,6 +16,7 @@ const Wrap = styled.div.attrs({
   height: calc(100% - 105px);
   bottom: 0;
   background: url('../assets/img/stripes.png') #fff repeat;
+  background-attachment: fixed;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 `;

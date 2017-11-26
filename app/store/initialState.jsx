@@ -31,18 +31,18 @@ const initialState = {
     //   context: '',
     //   images: 1,
     // },
-    {
-      id: 1,
-      slug: 'religionmap',
-      title: 'Religion Map',
-      category: 0,
-      tags: [],
-      date: 2014,
-      description:
-        'Datavisualisation désignant les pays qui utilisent la religion comme moyen de censure.',
-      sources: '',
-      context: '',
-    },
+    // {
+    //   id: 1,
+    //   slug: 'religionmap',
+    //   title: 'Religion Map',
+    //   category: 0,
+    //   tags: [],
+    //   date: 2014,
+    //   description:
+    //     'Datavisualisation désignant les pays qui utilisent la religion comme moyen de censure.',
+    //   sources: '',
+    //   context: '',
+    // },
     {
       id: 2,
       slug: 'barason',
