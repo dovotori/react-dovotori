@@ -13,14 +13,15 @@ class SmoothScroller extends Component {
   }
 
   shouldComponentUpdate(newProps) {
-    return newProps.targetY !== this.props.targetY
-      || (newProps.targetY === 0 && window.pageYOffset !== 0);
+    return newProps.shouldUpdate;
   }
 
   start() {
     this.date = Date.now();
     this.oldY = window.pageYOffset;
-    window.requestAnimationFrame(this.animation);
+    if (this.oldY !== this.props.targetY) {
+      window.requestAnimationFrame(this.animation);
+    }
   }
 
   animation() {
@@ -32,30 +33,33 @@ class SmoothScroller extends Component {
       window.requestAnimationFrame(this.animation);
     } else {
       window.scrollTo(0, targetY);
+      if (this.props.callback) {
+        this.callback(window.pageYOffset);
+      }
     }
   }
 
   render() {
-    if (!this.props.disabled) { this.start(); }
-    return this.props.children;
+    this.start();
+    return null;
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
   SmoothScroller.propTypes = {
-    children: PropTypes.node,
     duration: PropTypes.number,
     targetY: PropTypes.number,
     easing: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
+    shouldUpdate: PropTypes.bool,
+    callback: PropTypes.func,
   };
 }
 
 SmoothScroller.defaultProps = {
-  children: null,
   duration: 400,
   targetY: 0,
-  disabled: false,
+  callback: null,
+  shouldUpdate: false,
 };
 
 export default SmoothScroller;

@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 
 const Wrap = styled.div`
-${p => p.wrapstyle}
+${p => p.wrapperStyle}
 `;
+
+const Item = styled.div`
+${p => p.itemStyle}
+`;
+
 class HandlerScale extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +54,10 @@ class HandlerScale extends Component {
     if (this.isAnimeAll) {
       return { x: items[idx].in && this.props.in ? 1 : 0 };
     }
-    return { x: items[idx].in && this.props.in ? spring(1, this.props.motion) : spring(0, this.props.motion) };
+    return {
+      x: items[idx].in && this.props.in
+        ? spring(1, this.props.motion) : spring(0, this.props.motion),
+    };
   }
 
   getFinaleItemStyle(idx, staggerStyle, interpolatingStyle) {
@@ -72,7 +80,7 @@ class HandlerScale extends Component {
   }
 
   render() {
-    const { items, wrapperStyle } = this.props;
+    const { items, wrapperStyle, itemStyle } = this.props;
     const defaultStyles = this.props.in
       ? items.map(() => ({ x: 0 }))
       : items.map(() => ({ x: 1 }));
@@ -83,7 +91,7 @@ class HandlerScale extends Component {
         styles={this.getInterpolatedStyle}
       >
         {staggerStyles => (
-          <Wrap wrapstyle={wrapperStyle}>
+          <Wrap wrapperStyle={wrapperStyle}>
             {staggerStyles.map((staggerStyle, idx) => (
               <Motion
                 key={`${items[idx].key}-${items[idx].in ? 'in' : 'out'}`}
@@ -91,7 +99,8 @@ class HandlerScale extends Component {
                 style={this.getItemTargetStyle(idx)}
               >
                 {interpolatingStyle => (
-                  <div
+                  <Item
+                    itemStyle={itemStyle}
                     key={`item-${items[idx].key}-${items[idx].in ? 'in' : 'out'}`}
                     style={{
                       transform: this.applyMode(
@@ -100,12 +109,13 @@ class HandlerScale extends Component {
                     }}
                   >
                     {items[idx].data}
-                  </div>
+                  </Item>
                 )}
               </Motion>
             ))}
           </Wrap>
-        )}
+        )
+        }
       </StaggeredMotion>
     );
   }
@@ -116,6 +126,7 @@ if (process.env.NODE_ENV !== 'production') {
     items: PropTypes.arrayOf(PropTypes.shape),
     in: PropTypes.bool,
     wrapperStyle: PropTypes.arrayOf(PropTypes.any),
+    itemStyle: PropTypes.arrayOf(PropTypes.any),
     motion: PropTypes.objectOf(PropTypes.number),
     mode: PropTypes.string,
   };
@@ -125,6 +136,7 @@ HandlerScale.defaultProps = {
   items: [],
   in: false,
   wrapperStyle: [],
+  itemStyle: [],
   motion: { stiffness: 120, damping: 9 },
   mode: 'SCALE',
 };

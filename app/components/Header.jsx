@@ -102,7 +102,7 @@ const Fullscreen = styled.div.attrs({
 }) `
   position: fixed;
   top: 0;
-  left: -400%;
+  left: -200%;
   background: ${p => p.theme.grey};
   width: 100%;
   height: 100%;
@@ -207,10 +207,12 @@ class Header extends Component {
             </FixedLogo>
             <FixedNav>
               <ViewNavigationContainer
+                pathname={this.props.location.pathname}
+                slug={this.props.match.params.slug}
                 menuOpened={this.state.open}
               />
             </FixedNav>
-            <Fullscreen style={{ transform: `translateX(${interpolatingStyle.x2 * 400}%)` }} />
+            <Fullscreen style={{ transform: `translateX(${interpolatingStyle.x2 * 200}%)` }} />
             <Banner style={{ transform: `translateX(${interpolatingStyle.x2 * 100}%)` }}>
               <SocialLinks in={this.state.open} />
             </Banner>
@@ -226,6 +228,11 @@ class Header extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   Header.propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        slug: PropTypes.string,
+      }),
+    }),
     location: PropTypes.shape({
       hash: PropTypes.string,
       key: PropTypes.string,
@@ -236,6 +243,8 @@ if (process.env.NODE_ENV !== 'production') {
   };
 }
 
-Header.defaultProps = {};
+Header.defaultProps = {
+  match: {},
+};
 
 export default Header;

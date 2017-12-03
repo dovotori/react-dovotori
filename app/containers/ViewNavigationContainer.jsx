@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
 
 import ViewNavigation from '../components/ViewNavigation';
 
 class ViewNavigationContainer extends Component {
   shouldComponentUpdate(newProps) {
-    return newProps.location.pathname !== this.props.location.pathname
+    return newProps.pathname !== this.props.pathname
       || newProps.menuOpened !== this.props.menuOpened
       || this.props.nextSlug !== newProps.nextSlug
       || this.props.previousSlug !== newProps.previousSlug;
   }
 
   render() {
-    const { nextSlug, previousSlug, location, menuOpened } = this.props;
+    const { nextSlug, previousSlug, pathname, menuOpened } = this.props;
     return (<ViewNavigation
       nextSlug={nextSlug}
       previousSlug={previousSlug}
-      pathname={location.pathname}
+      pathname={pathname}
       menuOpened={menuOpened}
     />);
   }
@@ -27,9 +25,8 @@ class ViewNavigationContainer extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   ViewNavigationContainer.propTypes = {
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }).isRequired,
+    pathname: PropTypes.string,
+    slug: PropTypes.string,
     nextSlug: PropTypes.string,
     previousSlug: PropTypes.string,
     menuOpened: PropTypes.bool,
@@ -40,6 +37,8 @@ ViewNavigationContainer.defaultProps = {
   nextSlug: null,
   previousSlug: null,
   menuOpened: true,
+  slug: null,
+  pathname: null,
 };
 
 const getNextSlug = (entries, idx) => (
@@ -51,10 +50,8 @@ const getPreviousSlug = (entries, idx) => (
 );
 
 const mapStateToProps = (state, props) => {
-  const { pathname } = props.location;
-  if (pathname.indexOf('/view/') !== -1) {
-    const slug = props.location.pathname.replace('/view/', '');
-    const idx = state.entries.findIndex(i => i.slug === slug);
+  if (props.slug) {
+    const idx = state.entries.findIndex(i => i.slug === props.slug);
     return {
       previousSlug: getPreviousSlug(state.entries, idx),
       nextSlug: getNextSlug(state.entries, idx),
@@ -63,7 +60,4 @@ const mapStateToProps = (state, props) => {
   return {};
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps),
-)(ViewNavigationContainer);
+export default connect(mapStateToProps)(ViewNavigationContainer);

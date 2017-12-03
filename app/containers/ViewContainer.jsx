@@ -11,6 +11,7 @@ class ViewContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     const motion = { stiffness: 80, damping: 12 };
     // const motion = { stiffness: 60, damping: 40 };
     const items = [];
@@ -52,7 +53,7 @@ class ViewContainer extends Component {
 
 if (process.env.NODE_ENV !== 'production') {
   ViewContainer.propTypes = {
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.string,
     entry: PropTypes.shape({
       slug: PropTypes.string,
       title: PropTypes.string,
@@ -67,6 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ViewContainer.defaultProps = {
   isTouchDevice: false,
+  slug: '',
 };
 
 const getEntry = (entries, slug) => (

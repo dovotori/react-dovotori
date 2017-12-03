@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Scene extends Component {
-  getChildContext() {
-    return { gl: this.gl };
-  }
-
   constructor(props) {
     super(props);
     this.canvas = document.createElement('canvas');
@@ -14,6 +10,10 @@ class Scene extends Component {
     this.canvas.setAttribute('width', width);
     this.canvas.setAttribute('height', height);
     this.setupGL();
+  }
+
+  getChildContext() {
+    return { gl: this.gl };
   }
 
   componentDidMount() {

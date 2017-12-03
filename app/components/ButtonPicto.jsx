@@ -89,7 +89,7 @@ class ButtonPicto extends Component {
   }
 
   render() {
-    return (
+    return this.props.link ? (
       <Styled>
         <Link to={this.props.link}>
           <span>{this.props.text}</span>
@@ -97,7 +97,7 @@ class ButtonPicto extends Component {
           <Svg className="circle" useid="circle" />
         </Link>
       </Styled>
-    );
+    ) : null;
   }
 }
 

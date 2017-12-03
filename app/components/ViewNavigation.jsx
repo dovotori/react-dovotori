@@ -10,6 +10,10 @@ const wrapperStyle = css`
   justify-content: flex-start;
 `;
 
+const itemStyle = css`
+  min-width: 55px;
+`;
+
 class ViewNavigation extends Component {
   shouldComponentUpdate(newProps) {
     return this.props.pathname !== newProps.pathname
@@ -35,7 +39,7 @@ class ViewNavigation extends Component {
         key: 'previous',
         data: <ButtonPicto
           key={previousSlug}
-          link={`/view/${previousSlug}`}
+          link={previousSlug ? `/${previousSlug}` : null}
           useid="arrow-previous"
           text="Previous"
         />,
@@ -44,7 +48,7 @@ class ViewNavigation extends Component {
         key: 'next',
         data: <ButtonPicto
           key={nextSlug}
-          link={`/view/${nextSlug}`}
+          link={nextSlug ? `/${nextSlug}` : null}
           useid="arrow-next"
           text="Next"
         />,
@@ -57,6 +61,7 @@ class ViewNavigation extends Component {
         items={items}
         in={!menuOpened && pathname !== '/'}
         wrapperStyle={wrapperStyle}
+        itemStyle={itemStyle}
         motion={{ stiffness: 300, damping: 40 }}
       />
     );

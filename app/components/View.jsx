@@ -133,6 +133,7 @@ const Date = styled.p.attrs({
     height: 0;
     font-size: 1em;
     text-shadow: none;
+    padding: 0;
 
     span {
       display: inline-block;

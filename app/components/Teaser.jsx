@@ -66,10 +66,10 @@ const Infos = styled.div.attrs({
   className: 'infos',
 }) `
   position: absolute;
-  top: 0;
+  top: 50%;
   left: ${p => (p.noHover ? 'auto' : '50%')};
   right: ${p => (p.noHover ? '0' : 'auto')};
-  transform: ${p => (p.noHover ? 'none' : `translateX(${180 - OFFSET_X}px)`)};
+  transform: ${p => (p.noHover ? 'translateY(-50%)' : `translateY(-50%) translateX(${180 - OFFSET_X}px)`)};
   text-align: left;
 
   ${p => p.theme.media.tablet`
@@ -159,7 +159,7 @@ class Teaser extends Component {
     return (
       <LINK
         className={className}
-        to={`/view/${entry.slug}`}
+        to={`/${entry.slug}`}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
@@ -171,7 +171,7 @@ class Teaser extends Component {
         <Banner hover={this.state.hover}>
           <Back isprimary={!isprimary} />
           <IMG
-            src={`assets/teasers/${entry.slug}.png`}
+            src={`./assets/teasers/${entry.slug}.png`}
             alt={entry.title}
             hover={this.state.hover}
             noHover={noHover}

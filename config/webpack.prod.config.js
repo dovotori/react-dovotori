@@ -22,7 +22,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['es2015', { loose: true, modules: false }],
+                ['env'],
               ],
             },
           },
@@ -62,15 +62,17 @@ module.exports = {
     new ServiceWorkerWebpackPlugin({
       entry: path.resolve(__dirname, '../app/utils/serviceWorker.js'),
     }),
-    new UglifyJSPlugin({ uglifyOptions: {
-      beautify: false,
-      mangle: {
-        keep_fnames: true,
+    new UglifyJSPlugin({
+      uglifyOptions: {
+        beautify: false,
+        mangle: {
+          keep_fnames: true,
+        },
+        compress: {
+          warnings: false,
+        },
+        comments: false,
       },
-      compress: {
-        warnings: false,
-      },
-      comments: false,
-    } }),
+    }),
   ],
 };

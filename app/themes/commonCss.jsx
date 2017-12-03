@@ -18,7 +18,7 @@ a,
 a:hover,
 a:active,
 a:focus {
-  outline: 0;
+  // outline: 0;
 }
 
 button {
@@ -30,7 +30,7 @@ button {
 a:focus,
 button:focus {
   text-decoration: none;
-  outline: none;
+  // outline: none;
 }
 
 button::-moz-focus-inner {

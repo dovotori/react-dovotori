@@ -1,19 +1,26 @@
-/* global document, window */
+/* global document */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 
+import Routes from './Routes';
+import Header from './Header';
+import Footer from './Footer';
+import AnimatedBackground from './AnimatedBackground';
+import Signature from './Signature';
+import SvgDisplayer from './SvgDisplayer';
 import EventsWatcher from './EventsWatcher';
 import SmoothScroller from './SmoothScroller';
 import { easeOutQuad } from '../utils/numbers';
 
-class Interaction extends Component {
+class Structure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      targetY: 0,
+      mousePressed: false,
+      mousePosition: { x: null, y: null },
+      targetY: -1,
     };
-    this.mousePressed = false;
-    this.mousePosition = { x: null, y: null };
 
     this.scrollBottom = this.scrollBottom.bind(this);
     this.scrollTop = this.scrollTop.bind(this);
@@ -21,18 +28,12 @@ class Interaction extends Component {
     this.handleMouseup = this.handleMouseup.bind(this);
     this.handleMousedown = this.handleMousedown.bind(this);
     this.handleMousemove = this.handleMousemove.bind(this);
+    this.resetScrolling = this.resetScrolling.bind(this);
   }
 
-  getChildContext() {
-    return {
-      mousePosition: this.mousePosition,
-      mousePressed: this.mousePressed,
-    };
+  shouldComponentUpdate(newProps) {
+    return this.props.location.pathname !== newProps.location.pathname;
   }
-
-  // shouldComponentUpdate(newProps, newState) {
-  //   return newState.targetY !== this.state.targetY;
-  // }
 
   pressArrowDown(e) {
     switch (e.keyCode) {
@@ -51,15 +52,19 @@ class Interaction extends Component {
   }
 
   handleMouseup() {
-    this.mousePressed = false;
+    this.setState({ mousePressed: false });
   }
 
   handleMousedown() {
-    this.mousePressed = true;
+    this.setState({ mousePressed: true });
   }
 
   handleMousemove(e) {
-    this.mousePosition = { x: e.clientX, y: e.clientY };
+    this.setState({ mousePosition: { x: e.clientX, y: e.clientY } });
+  }
+
+  resetScrolling() {
+    this.setState({ targetY: -1 });
   }
 
   render() {
@@ -71,29 +76,30 @@ class Interaction extends Component {
         handleMousemove={this.handleMousemove}
       >
         <SmoothScroller
+          shouldUpdate={this.props.location.pathname !== '/'}
           easing={easeOutQuad}
-          targetY={this.state.targetY}
+          targetY={document.body.scrollHeight - document.body.offsetHeight}
           duration={300}
         />
-        {this.props.children}
+        <SvgDisplayer />
+        <Route path={'/:slug*'} component={Header} />
+        <Signature />
+        <AnimatedBackground />
+        <Route path={'/:slug*'} component={Routes} />
+        <Footer />
       </EventsWatcher>
     );
   }
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  Interaction.propTypes = {
-    children: PropTypes.node,
+  Structure.propTypes = {
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }).isRequired,
   };
 }
 
-Interaction.defaultProps = {
-  children: null,
-};
+Structure.defaultProps = {};
 
-Interaction.childContextTypes = {
-  mousePosition: PropTypes.object,
-  mousePressed: PropTypes.bool,
-};
-
-export default Interaction;
+export default Structure;
