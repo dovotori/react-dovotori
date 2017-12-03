@@ -1,10 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const port = 8080;
 const host = 'localhost';
-
 
 module.exports = {
   entry: [
@@ -12,11 +10,10 @@ module.exports = {
     'webpack/hot/only-dev-server',
     'babel-polyfill',
     `webpack-dev-server/client?http://${host}:${port}`,
-    './app/index',
+    './src/index',
   ],
   output: {
     filename: 'dovotori-main.js',
-    path: path.resolve(__dirname, '../build'),
     publicPath: '/',
   },
   devtool: 'eval',
@@ -43,9 +40,6 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('developement'),
       },
-    }),
-    new ServiceWorkerWebpackPlugin({
-      entry: path.resolve(__dirname, '../app/utils/serviceWorker.js'),
     }),
   ],
   devServer: {

@@ -1,54 +1,66 @@
 {
   "name": "react-dovotori",
   "version": "0.0.1",
-  "description": "react version of my website",
-  "author": {
-    "name": "Dorian R.",
-    "email": "dorian.r@openmailbox.org",
-    "url": "https://dovotori.fr.nf"
-  },
-  "license": "GPL-2.0",
+  "description": "React version of my portfolio website",
+  "author": "Dorian R. <dorian.r@openmailbox.org> (https://dovotori.fr.nf)",
+  "license": "Creative Commons - Attribution 3.0",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.config.js",
+    "build:prelive": "webpack --progress --profile --colors -p --config ./config/webpack.prelive.config.js",
     "build": "webpack --progress --profile --colors -p --config ./config/webpack.prod.config.js",
-    "lint": "eslint app/ --fix",
-    "prettier": "prettier --config ./.prettierrc --write './app/**/*.{js,jsx,css}'"
+    "lint": "eslint src/ --fix",
+    "prettier": "prettier --config ./.prettierrc --write './src/**/*.{js,jsx,css}'"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "html-webpack-inline-source-plugin": "^0.0.9",
-    "html-webpack-plugin": "^2.28.0",
-    "prettier": "^1.7.4",
-    "prop-types": "^15.5.10",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-hot-loader": "^3.1.1",
-    "react-motion": "^0.5.0",
-    "react-redux": "^5.0.5",
-    "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1",
+    "copy-webpack-plugin": "^4.2.3",
+    "html-webpack-inline-source-plugin": "0.0.9",
+    "html-webpack-plugin": "^2.30.1",
+    "prettier": "^1.8.2",
+    "primer": "^10.1.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
+    "react-motion": "^0.5.2",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.1",
-    "redux": "^3.6.0",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "serviceworker-webpack-plugin": "^0.2.3",
-    "styled-components": "^2.2.1",
-    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "styled-components": "^2.2.4",
+    "uglifyjs-webpack-plugin": "^1.1.2",
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.9.5"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.0.1",
-    "file-loader": "^0.11.2",
+    "file-loader": "^1.1.5",
     "todo-webpack-plugin": "^1.8.0",
-    "url-loader": "^0.5.8"
-  }
+    "url-loader": "^0.6.2"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dovotori/react-dovotori.git"
+  },
+  "keywords": [
+    "dovotori"
+  ],
+  "bugs": {
+    "url": "https://github.com/dovotori/react-dovotori/issues",
+    "email": "dorian.r@openmailbox.org"
+  },
+  "homepage": "https://github.com/dovotori/react-dovotori#readme"
 }

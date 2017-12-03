@@ -1,4 +1,4 @@
+.gitignore
+.eslintrc
 node_modules/
-*.sublime-project
 build/
-.vscode/

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -10,7 +11,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     filename: 'dovotori-main.js',
-    path: path.resolve(__dirname, '../build/prod/'),
+    path: path.resolve(__dirname, '../build/prelive/'),
   },
   module: {
     rules: [
@@ -70,7 +71,7 @@ module.exports = {
         },
         compress: {
           warnings: false,
-          drop_console: true,
+          // drop_console: true,
         },
         comments: false,
       },
