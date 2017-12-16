@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { media } from '../themes/theme';
 
 import StyledBlink from './StyledBlink';
 import Cursor from './Cursor';
@@ -36,7 +35,7 @@ const Name = styled.p`
 `;
 
 class Signature extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
   shouldComponentUpdate() {
     return false;
@@ -93,7 +92,7 @@ class Signature extends Component {
             />
           </svg>
           <Name>
-            dorian ratovo<Cursor size={8} color={'#000'} />
+            dorian ratovo<Cursor size={8} color="#000" />
           </Name>
         </StyledBlink>
       </Styled>

@@ -23,6 +23,10 @@ const P = styled.p`
   color: ${p => p.theme.grey};
 `;
 
+const IMG = styled.img`
+  display: block;
+`;
+
 class Footer extends Component {
   shouldComponentUpdate() {
     return false;
@@ -32,7 +36,7 @@ class Footer extends Component {
     return (
       <div className="footer">
         <Wrap>
-          <P>cc commons</P>
+          <P><IMG alt="license creative common" src="./assets/app/CClicense80x15.png" /></P>
         </Wrap>
         <Border />
       </div>

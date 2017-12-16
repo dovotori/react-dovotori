@@ -5,6 +5,8 @@ const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: './src/index.jsx',
@@ -78,5 +80,17 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './assets/', to: './assets/' },
     ]),
+    new BrotliPlugin({
+      asset: '[path].br[query]',
+      test: /\.(html)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+    }),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      test: /\.(html)$/,
+      threshold: 0,
+      minRatio: 0.8,
+    }),
   ],
 };

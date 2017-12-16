@@ -11,7 +11,7 @@ class ParseObj {
     let cptObj = -1;
     let idVertice = 1;
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       const firstLetter = line.charAt(0);
       switch (firstLetter) {
         case 'o':
@@ -23,7 +23,7 @@ class ParseObj {
           };
           break;
         case 'v':
-          this.setVertice(line, idVertice);
+          this.setVertice(line);
           idVertice += 1;
           break;
         case 'f':
@@ -35,7 +35,7 @@ class ParseObj {
     });
   }
 
-  setVertice(line, id) {
+  setVertice(line) {
     const words = line.split(' ');
     // this.vertices[id] = {
     //   x: parseFloat(words[1], 10),

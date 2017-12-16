@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import HandlerScale from './HandlerScale';
 import ButtonPicto from './ButtonPicto';
+import { motion } from '../themes/theme';
 
 const wrapperStyle = css`
   display: flex;
@@ -64,7 +65,7 @@ class ViewNavigation extends Component {
         in={!menuOpened && pathname !== '/'}
         wrapperStyle={wrapperStyle}
         itemStyle={itemStyle}
-        motion={{ stiffness: 300, damping: 40 }}
+        motion={motion}
       />
     );
   }

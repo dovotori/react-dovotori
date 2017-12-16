@@ -10,7 +10,7 @@ import configureStore from './store/configureStore';
 
 const store = configureStore();
 
-__webpack_nonce__ = 'dovotori-assets';
+// __webpack_nonce__ = 'dovotori-assets';
 
 if (process.env.NODE_ENV === 'production') {
   SetupServiceWorker();

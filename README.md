@@ -28,3 +28,9 @@ then go to your <http://localhost:8080>
 ```shell
 npm build
 ```
+
+# Todo
+* lazy loading with loader image, use caption
+* arrow on left of teaser when hover
+* picto traverse when route change between home and view
+* keyboard to change view + indicator

@@ -4,34 +4,45 @@ import PropTypes from 'prop-types';
 
 import TypingMessage from './TypingMessage';
 import Bloc from './Bloc';
+import Loader from './Loader';
 
 const Styled = styled(Bloc).attrs({
   className: 'view',
 }) `
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+`;
+
+const WrapTexte = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  width: 50%;
+
+  ${p => p.theme.media.tablet`
+    position: relative;
+  `};
 `;
+
 
 const Hidden = styled.div`
   position: relative;
   overflow: hidden;
-  // border-bottom: solid 1px #aaa;
-  // border-top: solid 1px #aaa;
   z-index: 0;
 `;
 
 const H1 = styled.h1.attrs({
   className: 'slide-bottom',
 }) `
-  width: 50%;
+  // width: 50%;
+  width: 100%;
   text-align: center;
   font-size: 3em;
   font-weight: 100;
   letter-spacing: 0.04em;
   color: ${p => p.theme.grey};
   text-shadow: 2px -1px 0 ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-  // border-bottom: solid 1px ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
   text-align: left;
   margin: 0;
   padding: 0 4%;
@@ -50,11 +61,11 @@ const Description = styled.div.attrs({
   width: 100%;
   background-color: #fff;
   line-height: 1.6;
-  // border-bottom: solid 1px #aaa;
+  transform-origin: center top;
 `;
 
 const StyledTyping = styled(TypingMessage) `
-  width: 50%;
+  width: 100%;
   padding: 4%;
 
   ${p => p.theme.media.tablet`
@@ -65,17 +76,18 @@ const StyledTyping = styled(TypingMessage) `
 const ImagesList = styled.div.attrs({
   className: 'images-list',
 }) `
-  position: absolute;
-  top: 0;
-  left: 50%;
+  // position: absolute;
+  // top: 0;
+  // left: 50%;
+  float: left;
   width: 50%;
   height: 100%;
+  margin-left: 50%;
   max-width: ${p => p.theme.breakpoint.tablet}px;
   z-index: 1;
-  border-left: solid 1px #ccc;
-  // background-color: ${p => p.theme.grey};
-  overflow-x: hidden;
-  overflow-y: auto;
+  border-left: solid 2px #ccc;
+  // overflow-x: hidden;
+  // overflow-y: auto;
   ${p => p.theme.scrollbar}
 
   img {
@@ -102,9 +114,9 @@ const Date = styled.p.attrs({
 }) `
   font-family: ${p => p.theme.font2};
   position: absolute;
-  color: #aaa;
+  color: #999;
   top: 0px;
-  left: 50%;
+  left: 100%;
   transform: rotate(-90deg) translateY(-100%) translateX(-100%);
   transform-origin: 0 0;
   font-size: 2em;
@@ -122,7 +134,6 @@ const Date = styled.p.attrs({
   ${p => p.theme.media.tablet`
     position: relative;
     transform: none!important;
-    // display: block;
     top: auto;
     left: auto;
     width: auto;
@@ -144,6 +155,15 @@ const Date = styled.p.attrs({
   `};
 `;
 
+const WrapLoader = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${p => p.theme.dark};
+`;
+
 class View extends Component {
   shouldComponentUpdate(newProps) {
     return newProps.entry.slug !== this.props.entry.slug || newProps.x !== this.props.x;
@@ -156,34 +176,39 @@ class View extends Component {
 
     return (
       <Styled key={key}>
-        <Hidden isprimary={isprimary}>
-          <H1 isprimary={isprimary} style={{ transform: `translateY(${x * 100}%)` }}>
-            {title}
-          </H1>
-        </Hidden>
-        <Date
-          style={{
-            transform: `rotate(-90deg) translateY(-100%) translateX(-${(1 - x) * 100}%)`,
-            opacity: 1 - x,
-          }}
-          isprimary={isprimary}
-        >
-          <span>{date}</span>
-        </Date>
-        <Description style={{ transform: `scaleY(${1 - x})` }}>
-          <StyledTyping message={description} cursorSize={8} disabled={isTouchDevice} />
-        </Description>
+        <WrapTexte>
+          <Hidden isprimary={isprimary}>
+            <H1 isprimary={!isprimary} style={{ transform: `translateY(${x * 100}%)` }}>
+              {title}
+            </H1>
+          </Hidden>
+          <Date
+            style={{
+              transform: `rotate(-90deg) translateY(-100%) translateX(-${(1 - x) * 100}%)`,
+              opacity: 1 - x,
+            }}
+            isprimary={isprimary}
+          >
+            <span>{date}</span>
+          </Date>
+          <Description style={{ transform: `scaleY(${1 - x})` }}>
+            <StyledTyping message={description} cursorSize={8} disabled={isTouchDevice} />
+          </Description>
+        </WrapTexte>
         <ImagesList>
           {images && (
             <Images style={{ transform: `translateX(${x * 100}%)` }}>
               {Array(images)
                 .fill()
                 .map((_, idx) => (
-                  <img
-                    alt="."
-                    key={`image-${slug}-${idx}`}
-                    src={`./assets/img/${slug}/${slug}-${idx}.jpg`}
-                  />
+                  // <img
+                  //   alt="."
+                  //   key={`image-${slug}-${idx}`}
+                  //   src={`./assets/img/${slug}/${slug}-${idx}.jpg`}
+                  // />
+                  <WrapLoader key={idx}>
+                    <Loader />
+                  </WrapLoader>
                 ))}
             </Images>
           )}

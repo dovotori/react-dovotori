@@ -1,3 +1,4 @@
+// import { css } from 'styled-components';
 import theme from './theme';
 
 const commonCss = `
@@ -14,11 +15,8 @@ body,
   height: 100%;
 }
 
-a,
-a:hover,
-a:active,
-a:focus {
-  // outline: 0;
+body {
+  font-size: 16px;
 }
 
 button {
@@ -30,26 +28,20 @@ button {
 a:focus,
 button:focus {
   text-decoration: none;
-  // outline: none;
-}
-
-button::-moz-focus-inner {
-  border: 0;
 }
 
 body {
-  // font-family: ${theme.font1};
-  font-family: 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace, sans-serif;
   ${theme.scrollbar}
 }
 
 @font-face {
   font-family: 'White Rabbit';
-  src: url('../../assets/fonts/whitrabt.eot');
-  src: url('../../assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
-       url('../../assets/fonts/whitrabt.woff') format('woff'),
-       url('../../assets/fonts/whitrabt.ttf')  format('truetype'),
-       url('../../assets/fonts/whitrabt.svg#svgFontName') format('svg');
+  src: url('./assets/fonts/whitrabt.eot');
+  src: url('./assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
+       url('./assets/fonts/whitrabt.woff') format('woff'),
+       url('./assets/fonts/whitrabt.ttf')  format('truetype'),
+       url('./assets/fonts/whitrabt.svg#svgFontName') format('svg');
 }
 `;
 

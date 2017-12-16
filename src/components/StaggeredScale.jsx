@@ -36,7 +36,7 @@ class StaggeredScale extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, opacity } = this.props;
 
     const defaultStyles = this.props.in ? items.map(() => ({ x: 0 })) : items.map(() => ({ x: 1 }));
 
@@ -49,6 +49,7 @@ class StaggeredScale extends Component {
                 key={items[i].key}
                 style={{
                   transform: this.applyMode(style.x),
+                  opacity: opacity ? style.x : 1,
                 }}
               >
                 {items[i].data}
@@ -68,6 +69,7 @@ if (process.env.NODE_ENV !== 'production') {
     wrapperStyle: PropTypes.arrayOf(PropTypes.any),
     motion: PropTypes.objectOf(PropTypes.number),
     mode: PropTypes.string,
+    opacity: PropTypes.bool,
   };
 }
 
@@ -77,6 +79,7 @@ StaggeredScale.defaultProps = {
   wrapperStyle: [],
   motion: { stiffness: 120, damping: 9 },
   mode: 'SCALE',
+  opacity: false,
 };
 
 export default StaggeredScale;

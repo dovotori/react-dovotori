@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { TransitionMotion, spring } from 'react-motion';
 
 import View from '../components/View';
+import { motion } from '../themes/theme';
+
 
 class ViewContainer extends Component {
   shouldComponentUpdate(newProps) {
@@ -11,8 +13,6 @@ class ViewContainer extends Component {
   }
 
   render() {
-    const motion = { stiffness: 80, damping: 12 };
-    // const motion = { stiffness: 60, damping: 40 };
     const items = [];
 
     items.push({

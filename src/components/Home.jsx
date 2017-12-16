@@ -5,14 +5,15 @@ import styled from 'styled-components';
 import Teaser from './Teaser';
 import Bloc from './Bloc';
 import StaggeredScale from './StaggeredScale';
+import { motion } from '../themes/theme';
 
 const StyledHome = styled(Bloc).attrs({
   className: 'home',
-})``;
+}) ``;
 
 const ListTeasers = styled.div.attrs({
   className: 'list-teasers',
-})``;
+}) ``;
 
 class Home extends Component {
   shouldComponentUpdate() {
@@ -32,7 +33,8 @@ class Home extends Component {
             items={items}
             in
             mode="TRANSLATE-LEFT"
-            motion={{ stiffness: 500, damping: 40 }}
+            motion={motion}
+            opacity
           />
         </ListTeasers>
       </StyledHome>

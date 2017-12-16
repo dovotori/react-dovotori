@@ -6,14 +6,15 @@ import { withRouter, Route } from 'react-router-dom';
 
 import HomeContainer from '../containers/HomeContainer';
 import ViewContainer from '../containers/ViewContainer';
+import { motion } from '../themes/theme';
 
 const Wrap = styled.div.attrs({
   className: 'wrap',
 }) `
   position: relative;
   width: 100%;
-  height: calc(100% - 105px);
-  bottom: 0;
+  // height: calc(100% - 105px);
+  // bottom: 0;
   background: url('./assets/img/stripes.png') #fff repeat;
   background-attachment: fixed;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
@@ -23,9 +24,9 @@ const Wrap = styled.div.attrs({
 const AnimatedBloc = styled.div.attrs({
   className: 'animated-bloc',
 }) `
-  position: absolute;
-  top: 0;
-  left: 0;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -47,7 +48,6 @@ class Routes extends Component {
 
   render() {
     const { pathname } = this.props.location;
-    const motion = { stiffness: 80, damping: 12 };
     const isHome = pathname === '/';
     const items = [];
     if (isHome) {

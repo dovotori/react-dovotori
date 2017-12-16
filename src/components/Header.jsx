@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // import { Route, Switch } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 
+import { motion } from '../themes/theme';
 import SocialLinks from './SocialLinks';
 import Logo from './Logo';
 import SvgAnimation from './SvgAnimation';
@@ -11,12 +12,14 @@ import ViewNavigationContainer from '../containers/ViewNavigationContainer';
 
 const StyledHeader = styled.div.attrs({
   className: 'header',
-})`
+}) `
   position: relative;
   z-index: 10;
 `;
 
-const FixedLogo = styled.button`
+const FixedLogo = styled.button.attrs({
+  className: 'toggle menu',
+}) `
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -74,7 +77,7 @@ const Cross = styled.svg`
 
 const BackgroundLogo = styled.div.attrs({
   className: 'background-logo',
-})`
+}) `
   position: fixed;
   display: block;
   left: 100%;
@@ -85,21 +88,21 @@ const BackgroundLogo = styled.div.attrs({
   color: ${p => p.theme.primary};
   opacity: 0.2;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 
   ${p => p.theme.media.tablet`
     width: 200%;
   `};
 `;
 
-const StyledLogoBack = styled(Logo)`
+const StyledLogoBack = styled(Logo) `
   width: 100%;
   height: 100%;
 `;
 
 const Fullscreen = styled.div.attrs({
   className: 'fullscreen',
-})`
+}) `
   position: fixed;
   top: 0;
   left: -200%;
@@ -126,12 +129,33 @@ const Banner = styled.div`
   `};
 `;
 
+const Welcome = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 100;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 2px -1px 0 ${p => p.theme.grey};
+  word-wrap: break-word;
+  padding: 10px;
+
+  ${p => p.theme.media.mobile`
+    text-align: left;
+  `}
+`;
+
 class Header extends Component {
   constructor(props) {
     super(props);
     this.click = this.click.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
     this.state = { open: false, over: false };
+    this.isFirstLoad = true;
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -140,6 +164,12 @@ class Header extends Component {
       newState.over !== this.state.over ||
       newProps.location.pathname !== this.props.location.pathname
     );
+  }
+
+  componentWillUpdate() {
+    if (this.isFirstLoad) {
+      this.isFirstLoad = false;
+    }
   }
 
   click() {
@@ -151,7 +181,6 @@ class Header extends Component {
   }
 
   render() {
-    const motion = { stiffness: 120, damping: 14 };
     const motion2 = { stiffness: 200, damping: 30 };
     const defaultStyle = {
       x: this.state.open ? 0 : 1,
@@ -169,8 +198,8 @@ class Header extends Component {
             <FixedLogo
               onClick={this.click}
               onMouseEnter={this.mouseEnter}
-              name="toggle links menu"
               style={{ transform: `rotateZ(${interpolatingStyle.x * 90}deg)` }}
+              aria-label="toggle menu"
             >
               <SvgAnimation toggleAnim={this.state.over}>
                 <StyledLogo
@@ -219,7 +248,13 @@ class Header extends Component {
             </FixedNav>
             <Fullscreen style={{ transform: `translateX(${interpolatingStyle.x2 * 200}%)` }} />
             <Banner style={{ transform: `translateX(${interpolatingStyle.x2 * 100}%)` }}>
-              <SocialLinks in={this.state.open} />
+              {this.isFirstLoad
+                ? <Welcome>Processing...</Welcome>
+                : <SocialLinks
+                  isTouchDevice={this.props.isTouchDevice}
+                  in={this.state.open}
+                />
+              }
             </Banner>
             <BackgroundLogo
               style={{ transform: `translate3d(${interpolatingStyle.x * -50}%, -50%, 0)` }}
@@ -247,11 +282,13 @@ if (process.env.NODE_ENV !== 'production') {
       search: PropTypes.string,
       state: PropTypes.string,
     }).isRequired,
+    isTouchDevice: PropTypes.bool,
   };
 }
 
 Header.defaultProps = {
   match: {},
+  isTouchDevice: false,
 };
 
 export default Header;

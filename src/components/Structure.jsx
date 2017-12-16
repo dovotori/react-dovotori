@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
+import HeaderContainer from '../containers/HeaderContainer';
 import Routes from './Routes';
-import Header from './Header';
 import Footer from './Footer';
 import AnimatedBackground from './AnimatedBackground';
 import Signature from './Signature';
@@ -81,13 +81,14 @@ class Structure extends Component {
         handleMousemove={this.handleMousemove}
       >
         <SmoothScroller
-          shouldUpdate={this.props.location.pathname !== '/'}
+          shouldUpdate={false}
+          // shouldUpdate={this.props.location.pathname !== '/'}
           easing={easeOutQuad}
           targetY={document.body.scrollHeight - document.body.offsetHeight}
           duration={300}
         />
         <SvgDisplayer />
-        <Route path="/:slug*" component={Header} />
+        <Route path="/:slug*" component={HeaderContainer} />
         <Signature />
         <AnimatedBackground />
         <Route path="/:slug*" component={Routes} />

@@ -18,7 +18,7 @@ class TypingMessage extends Component {
     this.isBackward = false;
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     if (!this.props.disabled) {
@@ -86,7 +86,7 @@ class TypingMessage extends Component {
   render() {
     return (
       <p className={`${this.props.className} message`}>
-        <span ref={d => (this.div = d)} />
+        <span ref={d => this.div = d} />
         {!this.props.disabled && <Cursor color={this.props.color} size={this.props.cursorSize} />}
       </p>
     );

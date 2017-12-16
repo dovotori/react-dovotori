@@ -7,54 +7,45 @@ import Svg from './Svg';
 
 const Styled = styled.div.attrs({
   className: 'button-picto',
-})`
+}) `
 a {
   position: relative;
   display: block;
   margin: 5px 10px 5px;
-  width: 35px;
-  height: 35px;
-  // border-radius: 50%;
+  width: 40px;
+  height: 40px;
   background-color: transparent;
   transition: box-shadow 300ms ease-out, transform 300ms ease-out;
   text-decoration: none;
-  // box-shadow: 2px 0 0 ${p => p.theme.primary};
-  // border: solid 1px ${p => p.theme.primary};
-  // transform: translateX(0);
 }
 
-svg.icone,
-svg.circle {
+svg.icone {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  // transition: transform 300ms ease-out;
+  fill: ${p => p.theme.primary};
+  width: 16px;
+  height: 16px;
 }
 
-svg.circle {
-  display: none;
-  width: 100%;
-  height: 100%;
+svg.losange {
+  position: absolute;
+  top: 0;
+  left: 0;
   fill: none;
   stroke: ${p => p.theme.primary};
-  stroke-width: 0.4;
-}
-
-svg.icone {
-  fill: rgba(0,0,0,0);
-  stroke: ${p => p.theme.primary};
-  stroke-width: 1;
-  height: 20px;
+  stroke-width: .4;
   max-width: 100%;
-  transition: fill 300ms ease-out;
+  width: 40px;
+  height: 40px;
 }
 
-span {
+p {
   position: absolute;
   top: 120%;
   left: 40%;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: ${p => p.theme.grey};
   background-color: ${p => p.theme.primary};
   transition: transform 300ms ease-out, opacity 300ms ease-out;
@@ -67,16 +58,16 @@ span {
 }
 
 &:hover {
-  a {
-    // transform: translateX(2px);
-  }
-
-  span {
+  p {
     transform: none;
     opacity: 1;
   }
 
   svg.icone {
+    fill: ${p => p.theme.dark};
+  }
+
+  svg.losange {
     fill: ${p => p.theme.primary};
   }
 }
@@ -89,11 +80,11 @@ class ButtonPicto extends Component {
 
   render() {
     return this.props.link ? (
-      <Styled>
+      <Styled aria-label={this.props.text}>
         <Link to={this.props.link}>
-          <span>{this.props.text}</span>
-          <Svg className="icone" useid={this.props.useid} />
-          <Svg className="circle" useid="circle" />
+          <p>{this.props.text}</p>
+          <Svg className="losange" useid="losange" width={40} height={40} />
+          <Svg className="icone" useid={this.props.useid} width={16} height={16} />
         </Link>
       </Styled>
     ) : null;

@@ -68,17 +68,23 @@ const Infos = styled.div.attrs({
   position: absolute;
   top: 50%;
   left: ${p => (p.noHover ? 'auto' : '50%')};
-  right: ${p => (p.noHover ? '0' : 'auto')};
+  right: ${p => (p.noHover ? '50%' : 'auto')};
   transform: ${p =>
-    p.noHover ? 'translateY(-50%)' : `translateY(-50%) translateX(${180 - OFFSET_X}px)`};
+    (p.noHover ? 'translateY(-50%) translateX(200px)' : `translateY(-50%) translateX(${180 - OFFSET_X}px)`)};
   text-align: left;
 
   ${p => p.theme.media.tablet`
-    transform: none;
     left: auto;
-    right: 0;
+    right: 50%;
+    transform: 'translateX(200px)';
     text-align: right;
   `};
+  ${p => p.theme.media.mobile`
+    transform: none;
+    right: 0;
+    left: auto;
+    text-align: right;
+  `}
 `;
 
 const H5 = styled.h5`
@@ -163,6 +169,8 @@ class Teaser extends Component {
         to={`/${entry.slug}`}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        onFocus={this.onMouseEnter}
+        onBlur={this.onMouseLeave}
       >
         <BackLine hover={this.state.hover} noHover={noHover} isprimary={isprimary} />
         <Banner hover={this.state.hover}>

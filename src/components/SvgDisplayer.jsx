@@ -44,6 +44,9 @@ class SvgDisplayer extends Component {
         <symbol width="10" height="10" viewBox="0 0 10 10" id="circle">
           <circle cx="5" cy="5" r="4" />
         </symbol>
+        <symbol width="10" height="10" viewBox="0 0 10 10" id="losange">
+          <path d="M0 5 L5 0 L 10 5 L5 10Z" />
+        </symbol>
       </svg>
     );
     /* eslint-enable max-len */
