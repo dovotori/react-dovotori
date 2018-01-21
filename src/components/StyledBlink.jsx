@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const blink = keyframes`
   0% { opacity: 1; }
@@ -24,7 +24,7 @@ const inverseblink = keyframes`
 
 const StyledBlink = styled.div`
   svg {
-    fill: ${p => p.theme.back};
+    fill: #fff;
     color: ${p => p.theme.secondary};
 
     .blink {

@@ -1,11 +1,10 @@
-import React, { Component, cloneElement } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { TransitionMotion, spring } from 'react-motion';
+import React, { Component, cloneElement } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { TransitionMotion, spring } from "react-motion";
 
-import View from '../components/View';
-import { motion } from '../themes/theme';
-
+import View from "../components/View";
+import { motion } from "../themes/theme";
 
 class ViewContainer extends Component {
   shouldComponentUpdate(newProps) {
@@ -17,7 +16,12 @@ class ViewContainer extends Component {
 
     items.push({
       key: `view-${this.props.entry.slug}`,
-      component: <View entry={this.props.entry} isTouchDevice={this.props.isTouchDevice} />,
+      component: (
+        <View
+          entry={this.props.entry}
+          isTouchDevice={this.props.isTouchDevice}
+        />
+      ),
     });
 
     return (
@@ -46,7 +50,7 @@ class ViewContainer extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   ViewContainer.propTypes = {
     slug: PropTypes.string,
     entry: PropTypes.shape({
@@ -63,13 +67,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 ViewContainer.defaultProps = {
   isTouchDevice: false,
-  slug: '',
+  slug: "",
 };
 
-const getEntry = (entries, slug) => entries.filter(entry => entry.slug === slug);
+const getEntry = (entries, slug) =>
+  entries.filter(entry => entry.slug === slug);
 
 const mapStateToProps = (state, props) => ({
-  entry: getEntry(state.entries, props.slug)[0],
+  entry: getEntry(state.content.entries, props.slug)[0],
   isTouchDevice: state.device.isTouch,
 });
 

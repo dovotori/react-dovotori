@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-// import StyledBlink from './StyledBlink';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 class Logo extends Component {
-  componentWillMount() {}
-
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
+  shouldComponentUpdate() {
+    return false;
+  }
 
   render() {
     return (
-      <svg width="40" height="40" viewBox="0 -10 40 60" className={this.props.className}>
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 -10 40 60"
+        className={this.props.className}
+      >
         <path
           className="inverse-blink"
           d="m12 8h-4.8l-7.5 7.5v1.6l7.2 7.2h1.9v-5.9l1.3-1.3v-7.2z"
@@ -35,14 +37,14 @@ class Logo extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Logo.propTypes = {
     className: PropTypes.string,
   };
 }
 
 Logo.defaultProps = {
-  className: '',
+  className: "",
 };
 
 export default Logo;

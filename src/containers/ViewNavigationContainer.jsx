@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import ViewNavigation from '../components/ViewNavigation';
+import ViewNavigation from "../components/ViewNavigation";
 
 class ViewNavigationContainer extends Component {
   shouldComponentUpdate(newProps) {
@@ -27,7 +27,7 @@ class ViewNavigationContainer extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   ViewNavigationContainer.propTypes = {
     pathname: PropTypes.string,
     slug: PropTypes.string,
@@ -45,16 +45,18 @@ ViewNavigationContainer.defaultProps = {
   pathname: null,
 };
 
-const getNextSlug = (entries, idx) => (idx < entries.length - 1 ? entries[idx + 1].slug : null);
+const getNextSlug = (entries, idx) =>
+  idx < entries.length - 1 ? entries[idx + 1].slug : null;
 
-const getPreviousSlug = (entries, idx) => (idx > 0 ? entries[idx - 1].slug : null);
+const getPreviousSlug = (entries, idx) =>
+  idx > 0 ? entries[idx - 1].slug : null;
 
 const mapStateToProps = (state, props) => {
   if (props.slug) {
-    const idx = state.entries.findIndex(i => i.slug === props.slug);
+    const idx = state.content.entries.findIndex(i => i.slug === props.slug);
     return {
-      previousSlug: getPreviousSlug(state.entries, idx),
-      nextSlug: getNextSlug(state.entries, idx),
+      previousSlug: getPreviousSlug(state.content.entries, idx),
+      nextSlug: getNextSlug(state.content.entries, idx),
     };
   }
   return {};

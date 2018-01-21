@@ -1,0 +1,2 @@
+export const DEVICE_IS_TOUCH = "DEVICE_IS_TOUCH";
+export const UI_MENU_IS_OPENED = "UI_MENU_IS_OPENED";

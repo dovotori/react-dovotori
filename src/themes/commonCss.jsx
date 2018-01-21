@@ -1,5 +1,5 @@
 // import { css } from 'styled-components';
-import theme from './theme';
+import theme from "./theme";
 
 const commonCss = `
 * {
@@ -31,17 +31,35 @@ button:focus {
 }
 
 body {
-  font-family: 'Space Mono', monospace, sans-serif;
+  font-family: ${theme.font1};
   ${theme.scrollbar}
 }
 
-@font-face {
-  font-family: 'White Rabbit';
-  src: url('./assets/fonts/whitrabt.eot');
-  src: url('./assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
-       url('./assets/fonts/whitrabt.woff') format('woff'),
-       url('./assets/fonts/whitrabt.ttf')  format('truetype'),
-       url('./assets/fonts/whitrabt.svg#svgFontName') format('svg');
+// @font-face {
+//   font-family: 'White Rabbit';
+//   src: url('./assets/fonts/whitrabt.eot');
+//   src: url('./assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
+//        url('./assets/fonts/whitrabt.woff') format('woff'),
+//        url('./assets/fonts/whitrabt.ttf')  format('truetype'),
+//        url('./assets/fonts/whitrabt.svg#svgFontName') format('svg');
+// }
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 800ms ease-in;
 }
 `;
 

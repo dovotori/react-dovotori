@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Svg extends Component {
   shouldComponentUpdate() {
@@ -9,29 +9,21 @@ class Svg extends Component {
   render() {
     return (
       <svg className={this.props.className}>
-        <use
-          href={`#${this.props.useid}`}
-          width={this.props.width}
-          height={this.props.height}
-        />
+        <use href={`#${this.props.useid}`} />
       </svg>
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Svg.propTypes = {
     className: PropTypes.string,
     useid: PropTypes.string.isRequired,
-    width: PropTypes.number,
-    height: PropTypes.number,
   };
 }
 
 Svg.defaultProps = {
-  className: '',
-  width: 20,
-  height: 20,
+  className: "",
 };
 
 export default Svg;

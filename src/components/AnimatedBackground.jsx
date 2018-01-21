@@ -1,43 +1,43 @@
 /* global window, document */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
-import Scene from './webgl/Scene';
-import Camera from './webgl/Camera';
-import Vbo from './webgl/Vbo';
-import Objet from './webgl/Objet';
-import Program from './webgl/Program';
-import Primitive from './webgl/Primitive';
-import Loop from './webgl/Loop';
-import Fbo from './webgl/Fbo';
-import Texture from './webgl/Texture';
-import Mat4 from './geometry/Mat4';
-import Vec3 from './geometry/Vec3';
-import { easeInOutElastic, degToRad, map } from '../utils/numbers';
-import { walkman, ribbon } from '../constants/objets';
+import Scene from "./webgl/Scene";
+import Camera from "./webgl/Camera";
+import Vbo from "./webgl/Vbo";
+import Objet from "./webgl/Objet";
+import Program from "./webgl/Program";
+import Primitive from "./webgl/Primitive";
+import Loop from "./webgl/Loop";
+import Fbo from "./webgl/Fbo";
+import Texture from "./webgl/Texture";
+import Mat4 from "./geometry/Mat4";
+import Vec3 from "./geometry/Vec3";
+import { easeInOutElastic, degToRad, map } from "../utils/numbers";
+import { walkman, ribbon } from "../constants/objets";
 
-import ParseObj from '../utils/ParseObj';
-import basique from '../shaders/basique';
-import shadow from '../shaders/fakeshadow';
-import shader from '../shaders/glitch1and2';
+import ParseObj from "../utils/ParseObj";
+import basique from "../shaders/basique";
+import shadow from "../shaders/fakeshadow";
+import shader from "../shaders/glitch1and2";
 // import fxaa from '../shaders/fxaa';
 
 const BackBanner = styled.div.attrs({
-  className: 'back-banner',
+  className: "back-banner",
 })`
-  position: absolute;
-  bottom: 0;
-  height: 40%;
-  width: 100%;
-  left: 0;
-  background-color: #000;
-  opacity: 0.2;
-  z-index: 1;
+  // position: absolute;
+  // bottom: 0;
+  // height: 40%;
+  // width: 100%;
+  // left: 0;
+  // background-color: #000;
+  // opacity: 0.2;
+  // z-index: 1;
 `;
 
 const Wrap = styled.div.attrs({
-  className: 'animated-background',
+  className: "animated-background",
 })`
   width: 100%;
   height: ${p => p.height}px;
@@ -48,7 +48,7 @@ const Styled = styled.div`
   text-align: center;
   width: 100%;
   height: auto;
-  background: ${p => p.theme.grey};
+  background: ${p => p.theme.dark};
   z-index: -1;
 
   .containerGL {
@@ -133,17 +133,17 @@ class AnimatedBackground extends Component {
   // }
 
   componentWillMount() {
-    window.addEventListener('mousemove', this.mouseMove, false);
+    window.addEventListener("mousemove", this.mouseMove, false);
   }
 
   componentDidMount() {
     this.toggleGlitching();
-    window.addEventListener('resize', this.onResize, false);
+    window.addEventListener("resize", this.onResize, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mousemove', this.mouseMove, false);
-    window.removeEventListener('resize', this.onResize, false);
+    window.removeEventListener("mousemove", this.mouseMove, false);
+    window.removeEventListener("resize", this.onResize, false);
   }
 
   onResize() {
@@ -162,7 +162,8 @@ class AnimatedBackground extends Component {
   }
 
   toggleGlitching() {
-    this.amplitude = this.amplitude === 0 ? (this.toggleAmpli ? 0.05 : -0.05) : 0;
+    this.amplitude =
+      this.amplitude === 0 ? (this.toggleAmpli ? 0.05 : -0.05) : 0;
     const delay = this.amplitude === 0 ? 10000 : 1000;
     window.setTimeout(this.toggleGlitching, Math.random() * delay);
     if (this.amplitude === 0) {
@@ -195,7 +196,9 @@ class AnimatedBackground extends Component {
 
     const diffTime = Date.now() - this.refDate;
     if (diffTime < this.timeDelay) {
-      const tmpAngle = degToRad(easeInOutElastic(diffTime, this.camAngle, 90, this.timeDelay));
+      const tmpAngle = degToRad(
+        easeInOutElastic(diffTime, this.camAngle, 90, this.timeDelay),
+      );
       this.camPos.set(
         Math.sin(tmpAngle) * this.camDistance,
         this.camHeight,
@@ -288,7 +291,11 @@ class AnimatedBackground extends Component {
                 time={this.state.cpt}
                 amplitude={this.amplitude}
               >
-                <Fbo width={this.texSize} height={this.texSize} filter="NEAREST_MIPMAP_LINEAR">
+                <Fbo
+                  width={this.texSize}
+                  height={this.texSize}
+                  filter="NEAREST_MIPMAP_LINEAR"
+                >
                   <Texture
                     id={1}
                     width={this.texSize}
@@ -307,7 +314,7 @@ class AnimatedBackground extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   AnimatedBackground.propTypes = {};
 }
 

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { StaggeredMotion, spring } from 'react-motion';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { StaggeredMotion, spring } from "react-motion";
 
 const Wrap = styled.div`
   ${p => p.wrapstyle};
 `;
-class StaggeredScale extends Component {
+class Staggered extends Component {
   constructor(props) {
     super(props);
     this.setInterpolatedStyle = this.setInterpolatedStyle.bind(this);
@@ -25,25 +25,30 @@ class StaggeredScale extends Component {
 
   applyMode(x) {
     switch (this.props.mode) {
-      case 'SCALE':
+      case "SCALE":
       default:
         return `scale(${x})`;
-      case 'TRANSLATE-RIGHT':
+      case "TRANSLATE-RIGHT":
         return `translateX(${100 - x * 100}%)`;
-      case 'TRANSLATE-LEFT':
+      case "TRANSLATE-LEFT":
         return `translateX(${-100 + x * 100}%)`;
     }
   }
 
   render() {
-    const { items, opacity } = this.props;
+    const { items, opacity, className } = this.props;
 
-    const defaultStyles = this.props.in ? items.map(() => ({ x: 0 })) : items.map(() => ({ x: 1 }));
+    const defaultStyles = this.props.in
+      ? items.map(() => ({ x: 0 }))
+      : items.map(() => ({ x: 1 }));
 
     return (
-      <StaggeredMotion defaultStyles={defaultStyles} styles={this.setInterpolatedStyle}>
+      <StaggeredMotion
+        defaultStyles={defaultStyles}
+        styles={this.setInterpolatedStyle}
+      >
         {interpolatingStyles => (
-          <Wrap wrapstyle={this.props.wrapperStyle}>
+          <Wrap className={className}>
             {interpolatingStyles.map((style, i) => (
               <div
                 key={items[i].key}
@@ -62,24 +67,24 @@ class StaggeredScale extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  StaggeredScale.propTypes = {
+if (process.env.NODE_ENV !== "production") {
+  Staggered.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape),
     in: PropTypes.bool,
-    wrapperStyle: PropTypes.arrayOf(PropTypes.any),
     motion: PropTypes.objectOf(PropTypes.number),
     mode: PropTypes.string,
     opacity: PropTypes.bool,
+    className: PropTypes.string,
   };
 }
 
-StaggeredScale.defaultProps = {
+Staggered.defaultProps = {
+  className: "",
   items: [],
   in: false,
-  wrapperStyle: [],
   motion: { stiffness: 120, damping: 9 },
-  mode: 'SCALE',
+  mode: "SCALE",
   opacity: false,
 };
 
-export default StaggeredScale;
+export default Staggered;

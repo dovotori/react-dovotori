@@ -1,26 +1,32 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 
-const theme = {
-  primary: '#66ffcc',
-  secondary: '#ff6633',
-  tertiary: '#ffa600',
-  back: '#fff',
-  grey: '#222226',
-  dark: '#222',
-  lightgrey: '#bbb',
-  gradient: 'linear-gradient(#009966, #66ffcc)',
-  gradient2: 'linear-gradient(to right, #009966, #66ffcc)',
-  elastic: 'cubic-bezier(0.64, 0.57, 0.67, 1.53)',
-  elastic2: 'cubic-bezier(0.860, 0.000, 0.070, 1.000)',
-  font1: 'Geneva, sans-serif',
-  font2: 'White Rabbit, sans-serif',
+const hue = {
+  primary: 160, // hsl(160, 100%, 70%) // rgb(102, 255, 204) // #66ffcc
+  secondary: 30, // hsl(30, 100%, 70%) // rgb(255, 179, 102) // #ffb366
+};
+
+export default {
+  primary: `hsl(${hue.primary}, 100%, 70%)`,
+  primaryDark: `hsl(${hue.primary}, 60%, 60%)`,
+  secondary: `hsl(${hue.secondary}, 100%, 70%)`,
+  secondaryDark: `hsl(${hue.secondary}, 60%, 60%)`,
+  tertiary: "#ffa600",
+  dark: "#222",
+  mild: "#666",
+  light: "#bbb",
+  gradient: "linear-gradient(#009966, #66ffcc)",
+  gradient2: "linear-gradient(to right, #009966, #66ffcc)",
+  elastic: "cubic-bezier(0.64, 0.57, 0.67, 1.53)",
+  elastic2: "cubic-bezier(0.860, 0.000, 0.070, 1.000)",
+  font1: "Verdana, Helvetica, sans-serif",
+  font2: "'Courier New', serif",
   scrollbar: css`
     ::-webkit-scrollbar {
-      width: 6px;
-      background-color: #fff;
+      width: 4px;
+      background-color: #222;
     }
     ::-webkit-scrollbar-thumb {
-      background-color: #ccc;
+      background-color: #66ffcc;
     }
   `,
   breakpoint: {
@@ -41,8 +47,10 @@ const theme = {
         }
       `,
   },
+  motion: { stiffness: 120, damping: 20 },
+  zindex: {
+    logo: 100,
+    menu: 50,
+    content: 10,
+  },
 };
-
-export default theme;
-
-export const motion = { stiffness: 120, damping: 20 };

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const Border = styled.div`
   position: fixed;
@@ -13,14 +13,14 @@ const Border = styled.div`
 `;
 
 const Wrap = styled.div`
-  padding: 4px;
+  padding: 10px 4%;
   background: ${p => p.theme.gradient2};
 `;
 
 const P = styled.p`
   font-size: 0.7em;
   text-align: right;
-  color: ${p => p.theme.grey};
+  color: ${p => p.theme.dark};
 `;
 
 const IMG = styled.img`
@@ -36,7 +36,12 @@ class Footer extends Component {
     return (
       <div className="footer">
         <Wrap>
-          <P><IMG alt="license creative common" src="./assets/app/CClicense80x15.png" /></P>
+          <P>
+            <IMG
+              alt="license creative common"
+              src="./assets/app/CClicense80x15.png"
+            />
+          </P>
         </Wrap>
         <Border />
       </div>
@@ -44,7 +49,7 @@ class Footer extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Footer.propTypes = {};
 }
 

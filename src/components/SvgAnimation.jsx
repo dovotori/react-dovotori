@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { keyframes, withTheme } from 'styled-components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { keyframes, withTheme } from "styled-components";
 
 const dash = keyframes`
   to {
@@ -22,7 +22,7 @@ class SvgAnimation extends Component {
   }
 
   componentDidMount() {
-    this.paths = this.div.getElementsByTagName('path');
+    this.paths = this.div.getElementsByTagName("path");
     this.lengths = [];
     this.start();
   }
@@ -53,17 +53,17 @@ class SvgAnimation extends Component {
       // path.style.stroke = theme.primary;
       // }
       if (idx === 0) {
-        path.addEventListener('animationend', this.animEnd, false);
+        path.addEventListener("animationend", this.animEnd, false);
       }
     });
   }
 
   animEnd(e) {
     Array.prototype.forEach.call(this.paths, (path, idx) => {
-      path.style.stroke = 'none';
-      path.style.animation = 'none';
+      path.style.stroke = "none";
+      path.style.animation = "none";
       if (idx === 0) {
-        path.removeEventListener('animationend', this.animEnd, false);
+        path.removeEventListener("animationend", this.animEnd, false);
       }
     });
     this.isAnimated = false;
@@ -74,7 +74,7 @@ class SvgAnimation extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   SvgAnimation.propTypes = {
     children: PropTypes.node,
     toggleAnim: PropTypes.bool,

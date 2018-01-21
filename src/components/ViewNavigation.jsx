@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { css } from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { css } from "styled-components";
+import PropTypes from "prop-types";
 
-import HandlerScale from './HandlerScale';
-import ButtonPicto from './ButtonPicto';
-import { motion } from '../themes/theme';
+import HandlerScale from "./HandlerScale";
+import ButtonPicto from "./ButtonPicto";
+import { motion } from "../themes/theme";
 
 const wrapperStyle = css`
   display: flex;
@@ -12,7 +12,7 @@ const wrapperStyle = css`
 `;
 
 const itemStyle = css`
-  min-width: 55px;
+  min-width: 60px;
 `;
 
 class ViewNavigation extends Component {
@@ -29,12 +29,12 @@ class ViewNavigation extends Component {
     const { nextSlug, previousSlug, menuOpened, pathname } = this.props;
     const items = [
       {
-        key: 'back',
+        key: "back",
         data: <ButtonPicto key="/" link="/" useid="arrow-back" text="Back" />,
         in: true,
       },
       {
-        key: 'previous',
+        key: "previous",
         data: (
           <ButtonPicto
             key={previousSlug}
@@ -46,7 +46,7 @@ class ViewNavigation extends Component {
         in: previousSlug !== null,
       },
       {
-        key: 'next',
+        key: "next",
         data: (
           <ButtonPicto
             key={nextSlug}
@@ -62,7 +62,7 @@ class ViewNavigation extends Component {
     return (
       <HandlerScale
         items={items}
-        in={!menuOpened && pathname !== '/'}
+        in={!menuOpened && pathname !== "/"}
         wrapperStyle={wrapperStyle}
         itemStyle={itemStyle}
         motion={motion}
@@ -71,7 +71,7 @@ class ViewNavigation extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   ViewNavigation.propTypes = {
     nextSlug: PropTypes.string,
     previousSlug: PropTypes.string,

@@ -1,33 +1,39 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 // import { Route, Switch } from 'react-router-dom';
-import { Motion, spring } from 'react-motion';
+import { Motion, spring } from "react-motion";
 
-import { motion } from '../themes/theme';
-import SocialLinks from './SocialLinks';
-import Logo from './Logo';
-import SvgAnimation from './SvgAnimation';
-import ViewNavigationContainer from '../containers/ViewNavigationContainer';
+import { motion } from "../themes/theme";
+import SocialLinks from "./SocialLinks";
+import Logo from "./Logo";
+import SvgAnimation from "./SvgAnimation";
+import ViewNavigationContainer from "../containers/ViewNavigationContainer";
 
 const StyledHeader = styled.div.attrs({
-  className: 'header',
-}) `
-  position: relative;
+  className: "header",
+})`
+  position: fixed;
+  top: 0;
+  left: 0;
+  // width: 100%;
+  // height: 80px;
+  // background-color: ${p => p.theme.dark};
+  // background-color: rgba(40, 40, 40, 0.9);
   z-index: 10;
 `;
 
 const FixedLogo = styled.button.attrs({
-  className: 'toggle menu',
-}) `
+  className: "toggle menu",
+})`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: auto;
-  z-index: 2;
+  z-index: 1;
 
   ${p => p.theme.media.mobile`
     // left: 50%;
@@ -39,7 +45,7 @@ const FixedNav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 80px;
   width: auto;
@@ -55,11 +61,11 @@ const FixedNav = styled.div`
 const StyledLogo = styled.svg`
   position: relative;
   display: block;
-  width: 80px;
-  height: 80px;
-  margin: 0 auto;
-  fill: ${p => p.theme.back};
-  stroke: ${p => p.theme.grey};
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  fill: #fff;
+  stroke: ${p => p.theme.dark};
   color: ${p => p.theme.primary};
 `;
 
@@ -72,12 +78,12 @@ const Cross = styled.svg`
   height: 40px;
   margin: 20px;
   fill: #fff;
-  stroke: ${p => p.theme.grey};
+  stroke: ${p => p.theme.dark};
 `;
 
 const BackgroundLogo = styled.div.attrs({
-  className: 'background-logo',
-}) `
+  className: "background-logo",
+})`
   position: fixed;
   display: block;
   left: 100%;
@@ -95,18 +101,18 @@ const BackgroundLogo = styled.div.attrs({
   `};
 `;
 
-const StyledLogoBack = styled(Logo) `
+const StyledLogoBack = styled(Logo)`
   width: 100%;
   height: 100%;
 `;
 
 const Fullscreen = styled.div.attrs({
-  className: 'fullscreen',
-}) `
+  className: "fullscreen",
+})`
   position: fixed;
   top: 0;
   left: -200%;
-  background: ${p => p.theme.grey};
+  background: ${p => p.theme.dark};
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -119,7 +125,7 @@ const Banner = styled.div`
   width: 100%;
   height: 50%;
   background: ${p => p.theme.gradient};
-  z-index: 1;
+  z-index: 2;
   box-shadow: -20px 0 20px rgba(0, 0, 0, 0.8);
   transform: translateX(100%);
 
@@ -140,13 +146,13 @@ const Welcome = styled.div`
   font-weight: 100;
   letter-spacing: 0.04em;
   color: #fff;
-  text-shadow: 2px -1px 0 ${p => p.theme.grey};
+  text-shadow: 2px -1px 0 ${p => p.theme.dark};
   word-wrap: break-word;
   padding: 10px;
 
   ${p => p.theme.media.mobile`
     text-align: left;
-  `}
+  `};
 `;
 
 class Header extends Component {
@@ -202,12 +208,7 @@ class Header extends Component {
               aria-label="toggle menu"
             >
               <SvgAnimation toggleAnim={this.state.over}>
-                <StyledLogo
-                  width="40"
-                  height="40"
-                  viewBox="0 -10 40 60"
-                  style={{ opacity: 1 - interpolatingStyle.x }}
-                >
+                <StyledLogo style={{ opacity: 1 - interpolatingStyle.x }}>
                   <path
                     className="inverse-blink"
                     d="m12 8h-4.8l-7.5 7.5v1.6l7.2 7.2h1.9v-5.9l1.3-1.3v-7.2z"
@@ -246,18 +247,30 @@ class Header extends Component {
                 menuOpened={this.state.open}
               />
             </FixedNav>
-            <Fullscreen style={{ transform: `translateX(${interpolatingStyle.x2 * 200}%)` }} />
-            <Banner style={{ transform: `translateX(${interpolatingStyle.x2 * 100}%)` }}>
-              {this.isFirstLoad
-                ? <Welcome>Processing...</Welcome>
-                : <SocialLinks
+            <Fullscreen
+              style={{
+                transform: `translateX(${interpolatingStyle.x2 * 200}%)`,
+              }}
+            />
+            <Banner
+              style={{
+                transform: `translateX(${interpolatingStyle.x2 * 100}%)`,
+              }}
+            >
+              {this.isFirstLoad ? (
+                <Welcome>Processing...</Welcome>
+              ) : (
+                <SocialLinks
                   isTouchDevice={this.props.isTouchDevice}
                   in={this.state.open}
                 />
-              }
+              )}
             </Banner>
             <BackgroundLogo
-              style={{ transform: `translate3d(${interpolatingStyle.x * -50}%, -50%, 0)` }}
+              style={{
+                transform: `translate3d(${interpolatingStyle.x *
+                  -50}%, -50%, 0)`,
+              }}
             >
               <StyledLogoBack />
             </BackgroundLogo>
@@ -268,7 +281,7 @@ class Header extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Header.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({

@@ -1,41 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
-import StyledBlink from './StyledBlink';
-import Cursor from './Cursor';
+import StyledBlink from "./StyledBlink";
+import Cursor from "./Cursor";
+import Overline from "./Overline";
 
 const Styled = styled.div`
   position: absolute;
-  top: 50%;
-  right: 50%;
+  bottom: 0;
+  left: 0;
   width: 50%;
-  max-width: 200px;
-  transform: translate3d(0, -50%, 0);
-  text-align: right;
+  max-width: 400px;
+  transform-origin: left bottom;
+  transform: translateX(100%) rotate(-90deg);
+  text-align: left;
 
   svg {
     width: 100%;
     height: auto;
+    margin-left: 10px;
   }
 
   ${p => p.theme.media.mobile`
-    transform: translate3d(50%, -50%, 0);
+    transform: translateY(-50%);
+    top: 50%;
+    left: 10px;
   `};
 `;
 
-const Name = styled.p`
+const Name = styled(Overline)`
   display: inline-block;
-  text-align: right;
-  font-size: 0.9em;
-  letter-spacing: 0.1em;
   background-color: ${p => p.theme.primary};
-  color: ${p => p.theme.grey};
-  padding: 0 2px;
+  color: ${p => p.theme.dark};
 `;
 
 class Signature extends Component {
-  componentWillMount() { }
+  componentWillMount() {}
 
   shouldComponentUpdate() {
     return false;
@@ -45,7 +46,13 @@ class Signature extends Component {
     return (
       <Styled>
         <StyledBlink>
-          <svg width="186" height="70" version="1.1" viewBox="0 -1 186 70" className="signature">
+          <svg
+            width="186"
+            height="70"
+            version="1.1"
+            viewBox="0 -1 186 70"
+            className="signature"
+          >
             <path
               className="blink stroke"
               fill="currentColor"
@@ -91,16 +98,14 @@ class Signature extends Component {
               d="m112 55.6s-3.97 0-3.97-3.97v-15.9s0-3.97 3.97-3.97z"
             />
           </svg>
-          <Name>
-            dorian ratovo<Cursor size={8} color="#000" />
-          </Name>
+          <Name>dorian ratovo</Name>
         </StyledBlink>
       </Styled>
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Signature.propTypes = {};
 }
 
