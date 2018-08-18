@@ -111,7 +111,7 @@ if (process.env.NODE_ENV !== "production") {
     children: PropTypes.node,
     names: PropTypes.string,
     timeout: PropTypes.number,
-    timing: PropTypes.string,
+    timing: PropTypes.string
   };
 }
 
@@ -119,7 +119,7 @@ TransitionRoute.defaultProps = {
   children: null,
   names: "left",
   timeout: 300,
-  timing: "ease-out",
+  timing: "ease-out"
 };
 
 export default withRouter(TransitionRoute);

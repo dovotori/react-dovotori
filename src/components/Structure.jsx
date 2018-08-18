@@ -1,17 +1,17 @@
 /* global document */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Route } from "react-router-dom";
 
-import HeaderContainer from '../containers/HeaderContainer';
-import Routes from './Routes';
-import Footer from './Footer';
-import AnimatedBackground from './AnimatedBackground';
-import Signature from './Signature';
-import SvgDisplayer from './SvgDisplayer';
-import EventsWatcher from './EventsWatcher';
-import SmoothScroller from './SmoothScroller';
-import { easeOutQuad } from '../utils/numbers';
+import HeaderContainer from "../containers/HeaderContainer";
+import Routes from "./Routes";
+import Footer from "./Footer";
+import AnimatedBackground from "./AnimatedBackground";
+import Signature from "./Signature";
+import SvgDisplayer from "./SvgDisplayer";
+import EventsWatcher from "./EventsWatcher";
+import SmoothScroller from "./SmoothScroller";
+import { easeOutQuad } from "../utils/numbers";
 
 class Structure extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Structure extends Component {
     this.state = {
       mousePressed: false,
       mousePosition: { x: null, y: null },
-      targetY: -1,
+      targetY: -1
     };
 
     this.scrollBottom = this.scrollBottom.bind(this);
@@ -49,7 +49,9 @@ class Structure extends Component {
   }
 
   scrollBottom() {
-    this.setState({ targetY: document.body.scrollHeight - document.body.offsetHeight });
+    this.setState({
+      targetY: document.body.scrollHeight - document.body.offsetHeight
+    });
   }
 
   scrollTop() {
@@ -98,11 +100,11 @@ class Structure extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Structure.propTypes = {
     location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }).isRequired,
+      pathname: PropTypes.string
+    }).isRequired
   };
 }
 

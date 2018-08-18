@@ -6,8 +6,8 @@ import Svg from "./Svg";
 import SvgAnimation from "./SvgAnimation";
 
 const Button = styled.button.attrs({
-  className: "toggle-logo",
-}) `
+  className: "toggle-logo"
+})`
   position: fixed;
   z-index: ${p => p.theme.zindex.logo};
   bottom: 20px;
@@ -23,11 +23,11 @@ const Button = styled.button.attrs({
   }
 
   &:hover {
-    box-shadow: -2px 2px 1px rgba(0,0,0,0.2);
+    box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
   }
 `;
 
-const Icon = styled(Svg) `
+const Icon = styled(Svg)`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -35,16 +35,16 @@ const Icon = styled(Svg) `
   height: 26px;
   fill: ${p => p.theme.light};
   color: ${p => p.theme.primary};
-  opacity: ${p => p.in ? 1 : 0};
+  opacity: ${p => (p.in ? 1 : 0)};
   transition: transform 300ms ease-out, opacity 300ms ease-out;
 `;
 
 const CrossIcon = Icon.extend`
-  transform: translate3d(-50%, -50%, 0) ${p => p.in ? '' : 'rotate(90deg)'};
+  transform: translate3d(-50%, -50%, 0) ${p => (p.in ? "" : "rotate(90deg)")};
 `;
 
 const LogoIcon = Icon.extend`
-  transform: translate3d(-50%, -50%, 0) ${p => p.in ? '' : 'rotate(-90deg)'};
+  transform: translate3d(-50%, -50%, 0) ${p => (p.in ? "" : "rotate(-90deg)")};
 `;
 
 class ToggleLogo extends Component {
@@ -83,13 +83,13 @@ class ToggleLogo extends Component {
 if (process.env.NODE_ENV !== "production") {
   ToggleLogo.propTypes = {
     className: PropTypes.string,
-    isMenuOpened: PropTypes.bool,
+    isMenuOpened: PropTypes.bool
   };
 }
 
 ToggleLogo.defaultProps = {
   isMenuOpened: false,
-  className: "",
+  className: ""
 };
 
 export default ToggleLogo;

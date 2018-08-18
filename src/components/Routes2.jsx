@@ -12,18 +12,18 @@ const routes = [
   {
     path: "/",
     component: Home,
-    exact: true,
+    exact: true
   },
   {
     path: "/cv",
     component: Cv,
-    exact: true,
+    exact: true
   },
   {
     path: "/:slug",
     component: ProjectContainer,
-    exact: false,
-  },
+    exact: false
+  }
 ];
 
 class Routes extends Component {

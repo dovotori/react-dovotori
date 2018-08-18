@@ -5,8 +5,8 @@ import styled from "styled-components";
 import Svg from "./Svg";
 
 const LINK = styled(Link).attrs({
-  className: "wrap-content",
-}) `
+  className: "wrap-content"
+})`
   dispkay: block;
   position: fixed;
   bottom: 20px;
@@ -21,8 +21,8 @@ const LINK = styled(Link).attrs({
 `;
 
 const StyledSvg = styled(Svg).attrs({
-  className: "anim-content",
-}) `
+  className: "anim-content"
+})`
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -31,7 +31,7 @@ const StyledSvg = styled(Svg).attrs({
   stroke-width: 1.5;
   transition: box-shadow 300ms ease-out;
   &:hover {
-    box-shadow: -2px 2px 1px rgba(0,0,0,0.2);
+    box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
   }
 `;
 

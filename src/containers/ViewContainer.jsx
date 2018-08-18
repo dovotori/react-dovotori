@@ -21,7 +21,7 @@ class ViewContainer extends Component {
           entry={this.props.entry}
           isTouchDevice={this.props.isTouchDevice}
         />
-      ),
+      )
     });
 
     return (
@@ -31,7 +31,7 @@ class ViewContainer extends Component {
         styles={items.map(item => ({
           key: item.key,
           style: { x: spring(0, motion) },
-          data: item.component,
+          data: item.component
         }))}
       >
         {interpolatedStyles => (
@@ -39,8 +39,8 @@ class ViewContainer extends Component {
             {interpolatedStyles.map(config =>
               cloneElement(config.data, {
                 x: config.style.x,
-                key: config.key,
-              }),
+                key: config.key
+              })
             )}
           </div>
         )}
@@ -59,15 +59,15 @@ if (process.env.NODE_ENV !== "production") {
       description: PropTypes.string,
       images: PropTypes.number,
       category: PropTypes.number,
-      date: PropTypes.number,
+      date: PropTypes.number
     }).isRequired,
-    isTouchDevice: PropTypes.bool,
+    isTouchDevice: PropTypes.bool
   };
 }
 
 ViewContainer.defaultProps = {
   isTouchDevice: false,
-  slug: "",
+  slug: ""
 };
 
 const getEntry = (entries, slug) =>
@@ -75,7 +75,7 @@ const getEntry = (entries, slug) =>
 
 const mapStateToProps = (state, props) => ({
   entry: getEntry(state.content.entries, props.slug)[0],
-  isTouchDevice: state.device.isTouch,
+  isTouchDevice: state.device.isTouch
 });
 
 export default connect(mapStateToProps)(ViewContainer);

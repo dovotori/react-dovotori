@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { TransitionMotion, spring } from 'react-motion';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { TransitionMotion, spring } from "react-motion";
 
 const Wrap = styled.div`
   ${p => p.wrapstyle};
@@ -18,7 +18,7 @@ class TransitionScale extends Component {
     return this.props.items.map(item => ({
       key: item.key,
       style: { scale: spring(1, this.motion) },
-      data: item.data,
+      data: item.data
     }));
   }
 
@@ -40,7 +40,7 @@ class TransitionScale extends Component {
               <div
                 key={config.key}
                 style={{
-                  transform: `scale(${config.style.scale})`,
+                  transform: `scale(${config.style.scale})`
                 }}
               >
                 {config.data}
@@ -53,18 +53,18 @@ class TransitionScale extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   TransitionScale.propTypes = {
     className: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape),
-    wrapperStyle: PropTypes.arrayOf(PropTypes.any),
+    wrapperStyle: PropTypes.arrayOf(PropTypes.any)
   };
 }
 
 TransitionScale.defaultProps = {
-  className: '',
+  className: "",
   items: [],
-  wrapperStyle: [],
+  wrapperStyle: []
 };
 
 export default TransitionScale;

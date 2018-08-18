@@ -1,6 +1,6 @@
 /* global window */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class WatcherEvents extends Component {
   constructor(props) {
@@ -12,17 +12,17 @@ class WatcherEvents extends Component {
     this.mousedown = this.mousedown.bind(this);
     this.mousemove = this.mousemove.bind(this);
     this.oldScroll = window.pageYOffset;
-    this.scrollDirection = '';
+    this.scrollDirection = "";
   }
 
   componentDidMount() {
     this.resize();
-    window.addEventListener('resize', this.resize, false);
-    window.addEventListener('scroll', this.scroll, false);
-    window.addEventListener('keyup', this.keyup, false);
-    window.addEventListener('mouseup', this.mouseup, false);
-    window.addEventListener('mousedown', this.mousedown, false);
-    window.addEventListener('mousemove', this.mousemove, false);
+    window.addEventListener("resize", this.resize, false);
+    window.addEventListener("scroll", this.scroll, false);
+    window.addEventListener("keyup", this.keyup, false);
+    window.addEventListener("mouseup", this.mouseup, false);
+    window.addEventListener("mousedown", this.mousedown, false);
+    window.addEventListener("mousemove", this.mousemove, false);
   }
 
   // shouldComponentUpdate() {
@@ -30,7 +30,7 @@ class WatcherEvents extends Component {
   // }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize, false);
+    window.removeEventListener("resize", this.resize, false);
   }
 
   resize() {
@@ -40,9 +40,9 @@ class WatcherEvents extends Component {
 
   scroll() {
     if (window.pageYOffset > this.oldScroll) {
-      this.scrollDirection = 'down';
+      this.scrollDirection = "down";
     } else {
-      this.scrollDirection = 'up';
+      this.scrollDirection = "up";
     }
     this.oldScroll = window.pageYOffset;
   }
@@ -76,13 +76,13 @@ class WatcherEvents extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   WatcherEvents.propTypes = {
     children: PropTypes.node,
     handleKeyup: PropTypes.func,
     handleMouseup: PropTypes.func,
     handleMousedown: PropTypes.func,
-    handleMousemove: PropTypes.func,
+    handleMousemove: PropTypes.func
   };
 }
 
@@ -91,7 +91,7 @@ WatcherEvents.defaultProps = {
   handleKeyup: null,
   handleMouseup: null,
   handleMousedown: null,
-  handleMousemove: null,
+  handleMousemove: null
 };
 
 export default WatcherEvents;

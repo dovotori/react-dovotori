@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Texture extends Component {
   constructor(props) {
@@ -14,11 +14,11 @@ class Texture extends Component {
     const { mode } = this.props;
 
     switch (mode) {
-      case 'NOISE':
+      case "NOISE":
       default:
         this.setupNoiseRVB();
         break;
-      case 'GRADIENT':
+      case "GRADIENT":
         this.setupGradient();
         break;
     }
@@ -45,7 +45,17 @@ class Texture extends Component {
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      width,
+      height,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixel
+    );
     this.setOptions();
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
@@ -71,7 +81,17 @@ class Texture extends Component {
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      width,
+      height,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixel
+    );
     this.setOptions();
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
@@ -94,7 +114,17 @@ class Texture extends Component {
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, pixel);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.ALPHA,
+      width,
+      height,
+      0,
+      gl.ALPHA,
+      gl.UNSIGNED_BYTE,
+      pixel
+    );
     this.setOptions();
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
@@ -105,32 +135,32 @@ class Texture extends Component {
 
     switch (filter) {
       default:
-      case 'LINEAR':
+      case "LINEAR":
         this.filter = gl.LINEAR;
         break;
-      case 'NEAREST':
+      case "NEAREST":
         this.filter = gl.NEAREST;
         break;
-      case 'LINEAR_MIPMAP_NEAREST':
+      case "LINEAR_MIPMAP_NEAREST":
         this.filter = gl.LINEAR_MIPMAP_NEAREST;
         break;
-      case 'LINEAR_MIPMAP_LINEAR':
+      case "LINEAR_MIPMAP_LINEAR":
         this.filter = gl.LINEAR_MIPMAP_LINEAR;
         break;
-      case 'NEAREST_MIPMAP_NEAREST':
+      case "NEAREST_MIPMAP_NEAREST":
         this.filter = gl.NEAREST_MIPMAP_NEAREST;
         break;
-      case 'NEAREST_MIPMAP_LINEAR':
+      case "NEAREST_MIPMAP_LINEAR":
         this.filter = gl.NEAREST_MIPMAP_LINEAR;
         break;
     }
 
     switch (filterMag) {
       default:
-      case 'LINEAR':
+      case "LINEAR":
         this.filterMag = gl.LINEAR;
         break;
-      case 'NEAREST':
+      case "NEAREST":
         this.filterMag = gl.NEAREST;
         break;
     }
@@ -190,7 +220,7 @@ class Texture extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Texture.propTypes = {
     children: PropTypes.node,
     width: PropTypes.number,
@@ -198,7 +228,7 @@ if (process.env.NODE_ENV !== 'production') {
     id: PropTypes.number,
     mode: PropTypes.string,
     filter: PropTypes.string,
-    filterMag: PropTypes.string,
+    filterMag: PropTypes.string
   };
 }
 
@@ -207,14 +237,14 @@ Texture.defaultProps = {
   width: 1024,
   height: 1024,
   id: 0,
-  mode: 'NOISE',
-  filter: 'LINEAR',
-  filterMag: 'NEAREST',
+  mode: "NOISE",
+  filter: "LINEAR",
+  filterMag: "NEAREST"
 };
 
 Texture.contextTypes = {
   gl: PropTypes.object,
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Texture;

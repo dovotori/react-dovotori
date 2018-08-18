@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import TypingMessage from './TypingMessage';
+import TypingMessage from "./TypingMessage";
 
 class WrapperTooltip extends Component {
   constructor(props) {
@@ -33,20 +33,20 @@ class WrapperTooltip extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   WrapperTooltip.propTypes = {
     children: PropTypes.node,
     message: PropTypes.string,
     className: PropTypes.string,
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool
   };
 }
 
 WrapperTooltip.defaultProps = {
   children: null,
-  message: '',
-  className: '',
-  disabled: false,
+  message: "",
+  className: "",
+  disabled: false
 };
 
 export default WrapperTooltip;

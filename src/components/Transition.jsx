@@ -60,7 +60,7 @@ if (process.env.NODE_ENV !== "production") {
     show: PropTypes.bool.isRequired,
     names: PropTypes.string,
     timeout: PropTypes.number,
-    timing: PropTypes.string,
+    timing: PropTypes.string
   };
 }
 
@@ -68,7 +68,7 @@ Transition.defaultProps = {
   children: null,
   names: "fade",
   timeout: 300,
-  timing: "ease-out",
+  timing: "ease-out"
 };
 
 export default Transition;

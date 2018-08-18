@@ -24,7 +24,7 @@ import shader from "../shaders/glitch1and2";
 // import fxaa from '../shaders/fxaa';
 
 const BackBanner = styled.div.attrs({
-  className: "back-banner",
+  className: "back-banner"
 })`
   // position: absolute;
   // bottom: 0;
@@ -37,7 +37,7 @@ const BackBanner = styled.div.attrs({
 `;
 
 const Wrap = styled.div.attrs({
-  className: "animated-background",
+  className: "animated-background"
 })`
   width: 100%;
   height: ${p => p.height}px;
@@ -154,7 +154,7 @@ class AnimatedBackground extends Component {
   mouseMove(e) {
     this.coor = {
       x: e.clientX,
-      y: e.clientY,
+      y: e.clientY
     };
 
     const relX = map(this.coor.x / window.innerWidth, 0, 1, 0, Math.PI);
@@ -197,26 +197,26 @@ class AnimatedBackground extends Component {
     const diffTime = Date.now() - this.refDate;
     if (diffTime < this.timeDelay) {
       const tmpAngle = degToRad(
-        easeInOutElastic(diffTime, this.camAngle, 90, this.timeDelay),
+        easeInOutElastic(diffTime, this.camAngle, 90, this.timeDelay)
       );
       this.camPos.set(
         Math.sin(tmpAngle) * this.camDistance,
         this.camHeight,
-        Math.cos(tmpAngle) * this.camDistance,
+        Math.cos(tmpAngle) * this.camDistance
       );
     } else if (!this.finish) {
       const angle = degToRad(this.camAngle + 90);
       this.camPos.set(
         Math.sin(angle) * this.camDistance,
         this.camHeight,
-        Math.cos(angle) * this.camDistance,
+        Math.cos(angle) * this.camDistance
       );
       this.req = window.setTimeout(this.restartRotation, 4000);
       this.finish = true;
     }
 
     this.setState(prevState => ({
-      cpt: prevState.cpt + 1,
+      cpt: prevState.cpt + 1
     }));
   }
 

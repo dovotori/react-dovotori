@@ -33,7 +33,7 @@ if (process.env.NODE_ENV !== "production") {
     slug: PropTypes.string,
     nextSlug: PropTypes.string,
     previousSlug: PropTypes.string,
-    menuOpened: PropTypes.bool,
+    menuOpened: PropTypes.bool
   };
 }
 
@@ -42,7 +42,7 @@ ViewNavigationContainer.defaultProps = {
   previousSlug: null,
   menuOpened: true,
   slug: null,
-  pathname: null,
+  pathname: null
 };
 
 const getNextSlug = (entries, idx) =>
@@ -56,7 +56,7 @@ const mapStateToProps = (state, props) => {
     const idx = state.content.entries.findIndex(i => i.slug === props.slug);
     return {
       previousSlug: getPreviousSlug(state.content.entries, idx),
-      nextSlug: getNextSlug(state.content.entries, idx),
+      nextSlug: getNextSlug(state.content.entries, idx)
     };
   }
   return {};

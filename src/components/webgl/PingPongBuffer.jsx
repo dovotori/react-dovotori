@@ -1,5 +1,5 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, cloneElement } from "react";
+import PropTypes from "prop-types";
 
 class Effect extends Component {
   constructor(props) {
@@ -32,22 +32,22 @@ class Effect extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   PingPongBuffer.propTypes = {
     children: PropTypes.node,
     width: PropTypes.number,
-    height: PropTypes.number,
+    height: PropTypes.number
   };
 }
 
 PingPongBuffer.defaultProps = {
   children: null,
   width: 100,
-  height: 100,
+  height: 100
 };
 
 PingPongBuffer.contextTypes = {
-  gl: PropTypes.object,
+  gl: PropTypes.object
 };
 
 export default PingPongBuffer;

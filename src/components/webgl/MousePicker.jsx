@@ -9,7 +9,7 @@ MousePicker.prototype.setup = function() {
 
 MousePicker.prototype.resize = function() {
   // calcul marge du haut
-  var elem = document.getElementById('canvas3d');
+  var elem = document.getElementById("canvas3d");
   while (elem.offsetTop != null) {
     this.margeTop += elem.offsetTop;
     elem = elem.parentNode;

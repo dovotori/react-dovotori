@@ -10,7 +10,7 @@ import Overline from "./Overline";
 const TEXT_WIDTH = 700;
 
 const Styled = styled(Bloc).attrs({
-  className: "view",
+  className: "view"
 })`
   // position: absolute;
   // top: 0;
@@ -35,7 +35,7 @@ const Hidden = styled.div`
 `;
 
 const H1 = styled.h1.attrs({
-  className: "slide-bottom",
+  className: "slide-bottom"
 })`
   // width: 50%;
   // color: ${p => p.theme.dark};
@@ -58,7 +58,7 @@ const H1 = styled.h1.attrs({
 `;
 
 const Description = styled.div.attrs({
-  className: "description",
+  className: "description"
 })`
   text-align: left;
   font-size: 1em;
@@ -81,7 +81,7 @@ const StyledTyping = styled(TypingMessage)`
 `;
 
 const ImagesList = styled.div.attrs({
-  className: "images-list",
+  className: "images-list"
 })`
   // position: absolute;
   // top: 0;
@@ -110,7 +110,7 @@ const ImagesList = styled.div.attrs({
 `;
 
 const Images = styled.div.attrs({
-  className: "images",
+  className: "images"
 })``;
 
 const StyledLazyImage = styled(LazyImage)`
@@ -118,7 +118,7 @@ const StyledLazyImage = styled(LazyImage)`
 `;
 
 const Date = styled.p.attrs({
-  className: "date",
+  className: "date"
 })`
   position: relative;
   z-index: 1;
@@ -157,7 +157,7 @@ class View extends Component {
       description,
       images,
       category,
-      date,
+      date
     } = this.props.entry;
     const { x, key, isTouchDevice } = this.props;
     const isprimary = category === 0;
@@ -219,11 +219,11 @@ if (process.env.NODE_ENV !== "production") {
       description: PropTypes.string,
       images: PropTypes.number,
       category: PropTypes.number,
-      date: PropTypes.number,
+      date: PropTypes.number
     }),
     key: PropTypes.string,
     x: PropTypes.number,
-    isTouchDevice: PropTypes.bool,
+    isTouchDevice: PropTypes.bool
   };
 }
 
@@ -231,7 +231,7 @@ View.defaultProps = {
   entry: {},
   key: "",
   x: 0,
-  isTouchDevice: false,
+  isTouchDevice: false
 };
 
 export default View;

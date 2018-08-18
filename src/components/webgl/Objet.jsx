@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Objet extends Component {
   constructor(props) {
@@ -26,20 +26,20 @@ class Objet extends Component {
     // gl.STREAM_DRAW // une fois au moins
 
     switch (mode) {
-      case 'TRIANGLES':
+      case "TRIANGLES":
       default:
         this.modeDessin = gl.TRIANGLES;
         break;
-      case 'LINES':
+      case "LINES":
         this.modeDessin = gl.LINES;
         break;
-      case 'POINTS':
+      case "POINTS":
         this.modeDessin = gl.POINTS;
         break;
-      case 'LINE_STRIP':
+      case "LINE_STRIP":
         this.modeDessin = gl.LINE_STRIP;
         break;
-      case 'LINE_LOOP':
+      case "LINE_LOOP":
         this.modeDessin = gl.LINE_LOOP;
         break;
     }
@@ -77,7 +77,11 @@ class Objet extends Component {
     // INDICES
     this.vbo[0] = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vbo[0]);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.modeCalcul);
+    gl.bufferData(
+      gl.ELEMENT_ARRAY_BUFFER,
+      new Uint16Array(indices),
+      this.modeCalcul
+    );
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
   }
 
@@ -98,27 +102,27 @@ class Objet extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Objet.propTypes = {
     modeCalcul: PropTypes.number,
     model: PropTypes.object,
     mode: PropTypes.string,
     indices: PropTypes.array,
-    color: PropTypes.array,
+    color: PropTypes.array
   };
 }
 
 Objet.defaultProps = {
   modeCalcul: 0,
   model: null,
-  mode: 'TRIANGLES',
+  mode: "TRIANGLES",
   indices: [],
-  color: null,
+  color: null
 };
 
 Objet.contextTypes = {
   gl: PropTypes.object,
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Objet;

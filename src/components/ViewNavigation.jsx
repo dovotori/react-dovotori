@@ -31,7 +31,7 @@ class ViewNavigation extends Component {
       {
         key: "back",
         data: <ButtonPicto key="/" link="/" useid="arrow-back" text="Back" />,
-        in: true,
+        in: true
       },
       {
         key: "previous",
@@ -43,7 +43,7 @@ class ViewNavigation extends Component {
             text="Previous"
           />
         ),
-        in: previousSlug !== null,
+        in: previousSlug !== null
       },
       {
         key: "next",
@@ -55,8 +55,8 @@ class ViewNavigation extends Component {
             text="Next"
           />
         ),
-        in: nextSlug !== null,
-      },
+        in: nextSlug !== null
+      }
     ];
 
     return (
@@ -76,7 +76,7 @@ if (process.env.NODE_ENV !== "production") {
     nextSlug: PropTypes.string,
     previousSlug: PropTypes.string,
     pathname: PropTypes.string,
-    menuOpened: PropTypes.bool,
+    menuOpened: PropTypes.bool
   };
 }
 
@@ -84,7 +84,7 @@ ViewNavigation.defaultProps = {
   previousSlug: null,
   nextSlug: null,
   pathname: null,
-  menuOpened: false,
+  menuOpened: false
 };
 
 export default ViewNavigation;

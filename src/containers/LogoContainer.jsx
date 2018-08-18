@@ -5,11 +5,14 @@ import uiActions from "../actions/ui";
 import ToggleLogo from "../components/ToggleLogo";
 
 const mapStateToProps = state => ({
-  isMenuOpened: state.ui.menuIsOpened,
+  isMenuOpened: state.ui.menuIsOpened
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(uiActions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleLogo);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToggleLogo);

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Motion, StaggeredMotion, spring } from 'react-motion';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { Motion, StaggeredMotion, spring } from "react-motion";
 
 const Wrap = styled.div`
   ${p => p.wrapperStyle};
@@ -58,7 +58,7 @@ class HandlerScale extends Component {
       x:
         items[idx].in && this.props.in
           ? spring(1, this.props.motion)
-          : spring(0, this.props.motion),
+          : spring(0, this.props.motion)
     };
   }
 
@@ -72,38 +72,49 @@ class HandlerScale extends Component {
 
   applyMode(x) {
     switch (this.props.mode) {
-      case 'SCALE':
+      case "SCALE":
       default:
         return `scale(${x})`;
-      case 'TRANSLATE-RIGHT':
+      case "TRANSLATE-RIGHT":
         return `translateX(${100 - x * 100}%)`;
-      case 'TRANSLATE-LEFT':
+      case "TRANSLATE-LEFT":
         return `translateX(${-100 + x * 100}%)`;
     }
   }
 
   render() {
     const { items, wrapperStyle, itemStyle } = this.props;
-    const defaultStyles = this.props.in ? items.map(() => ({ x: 0 })) : items.map(() => ({ x: 1 }));
+    const defaultStyles = this.props.in
+      ? items.map(() => ({ x: 0 }))
+      : items.map(() => ({ x: 1 }));
 
     return (
-      <StaggeredMotion defaultStyles={defaultStyles} styles={this.getInterpolatedStyle}>
+      <StaggeredMotion
+        defaultStyles={defaultStyles}
+        styles={this.getInterpolatedStyle}
+      >
         {staggerStyles => (
           <Wrap wrapperStyle={wrapperStyle}>
             {staggerStyles.map((staggerStyle, idx) => (
               <Motion
-                key={`${items[idx].key}-${items[idx].in ? 'in' : 'out'}`}
+                key={`${items[idx].key}-${items[idx].in ? "in" : "out"}`}
                 defaultStyle={this.getItemDefaultStyle(idx)}
                 style={this.getItemTargetStyle(idx)}
               >
                 {interpolatingStyle => (
                   <Item
                     itemStyle={itemStyle}
-                    key={`item-${items[idx].key}-${items[idx].in ? 'in' : 'out'}`}
+                    key={`item-${items[idx].key}-${
+                      items[idx].in ? "in" : "out"
+                    }`}
                     style={{
                       transform: this.applyMode(
-                        this.getFinaleItemStyle(idx, staggerStyle, interpolatingStyle),
-                      ),
+                        this.getFinaleItemStyle(
+                          idx,
+                          staggerStyle,
+                          interpolatingStyle
+                        )
+                      )
                     }}
                   >
                     {items[idx].data}
@@ -118,14 +129,14 @@ class HandlerScale extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   HandlerScale.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape),
     in: PropTypes.bool,
     wrapperStyle: PropTypes.arrayOf(PropTypes.any),
     itemStyle: PropTypes.arrayOf(PropTypes.any),
     motion: PropTypes.objectOf(PropTypes.number),
-    mode: PropTypes.string,
+    mode: PropTypes.string
   };
 }
 
@@ -135,7 +146,7 @@ HandlerScale.defaultProps = {
   wrapperStyle: [],
   itemStyle: [],
   motion: { stiffness: 120, damping: 9 },
-  mode: 'SCALE',
+  mode: "SCALE"
 };
 
 export default HandlerScale;

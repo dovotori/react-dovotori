@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import Mat4 from '../geometry/Mat4';
+import Mat4 from "../geometry/Mat4";
 
 class Primitive extends Component {
   constructor(props) {
@@ -22,20 +22,20 @@ class Primitive extends Component {
     const { mode, type } = this.props;
 
     switch (mode) {
-      case 'TRIANGLES':
+      case "TRIANGLES":
       default:
         this.modeDessin = gl.TRIANGLES;
         break;
-      case 'LINES':
+      case "LINES":
         this.modeDessin = gl.LINES;
         break;
-      case 'POINTS':
+      case "POINTS":
         this.modeDessin = gl.POINTS;
         break;
-      case 'LINE_STRIP':
+      case "LINE_STRIP":
         this.modeDessin = gl.LINE_STRIP;
         break;
-      case 'LINE_LOOP':
+      case "LINE_LOOP":
         this.modeDessin = gl.LINE_LOOP;
         break;
     }
@@ -46,11 +46,11 @@ class Primitive extends Component {
     // gl.STREAM_DRAW // une fois au moins
 
     switch (type) {
-      case 'PLANE':
+      case "PLANE":
       default:
         this.setupPlane();
         break;
-      case 'CUBE':
+      case "CUBE":
         this.setupCube();
         break;
     }
@@ -170,7 +170,7 @@ class Primitive extends Component {
       1.0,
       1.0,
       -1.0,
-      1.0,
+      1.0
     ];
     this.setup(points);
   }
@@ -228,25 +228,25 @@ class Primitive extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Primitive.propTypes = {
     model: PropTypes.object,
     mode: PropTypes.string,
     type: PropTypes.string,
-    color: PropTypes.array,
+    color: PropTypes.array
   };
 }
 
 Primitive.defaultProps = {
   model: new Mat4().get(),
-  mode: 'TRIANGLES',
-  type: 'PLANE',
-  color: null,
+  mode: "TRIANGLES",
+  type: "PLANE",
+  color: null
 };
 
 Primitive.contextTypes = {
   gl: PropTypes.object,
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Primitive;

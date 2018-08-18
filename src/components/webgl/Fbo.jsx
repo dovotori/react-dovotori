@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Fbo extends Component {
   constructor(props) {
@@ -18,22 +18,22 @@ class Fbo extends Component {
 
     switch (filter) {
       default:
-      case 'LINEAR':
+      case "LINEAR":
         this.filter = gl.LINEAR;
         break;
-      case 'NEAREST':
+      case "NEAREST":
         this.filter = gl.NEAREST;
         break;
-      case 'LINEAR_MIPMAP_NEAREST':
+      case "LINEAR_MIPMAP_NEAREST":
         this.filter = gl.LINEAR_MIPMAP_NEAREST;
         break;
-      case 'LINEAR_MIPMAP_LINEAR':
+      case "LINEAR_MIPMAP_LINEAR":
         this.filter = gl.LINEAR_MIPMAP_LINEAR;
         break;
-      case 'NEAREST_MIPMAP_NEAREST':
+      case "NEAREST_MIPMAP_NEAREST":
         this.filter = gl.NEAREST_MIPMAP_NEAREST;
         break;
-      case 'NEAREST_MIPMAP_LINEAR':
+      case "NEAREST_MIPMAP_LINEAR":
         this.filter = gl.NEAREST_MIPMAP_LINEAR;
         break;
     }
@@ -42,9 +42,23 @@ class Fbo extends Component {
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      width,
+      height,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      null
+    );
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+    gl.texParameteri(
+      gl.TEXTURE_2D,
+      gl.TEXTURE_MIN_FILTER,
+      gl.LINEAR_MIPMAP_NEAREST
+    );
     // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.generateMipmap(gl.TEXTURE_2D);
@@ -56,15 +70,26 @@ class Fbo extends Component {
 
     const renderbuffer = gl.createRenderbuffer();
     gl.bindRenderbuffer(gl.RENDERBUFFER, renderbuffer);
-    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+    gl.renderbufferStorage(
+      gl.RENDERBUFFER,
+      gl.DEPTH_COMPONENT16,
+      width,
+      height
+    );
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.texture, 0);
+    gl.framebufferTexture2D(
+      gl.FRAMEBUFFER,
+      gl.COLOR_ATTACHMENT0,
+      gl.TEXTURE_2D,
+      this.texture,
+      0
+    );
     gl.framebufferRenderbuffer(
       gl.FRAMEBUFFER,
       gl.DEPTH_ATTACHMENT,
       gl.RENDERBUFFER,
       renderbuffer,
-      0,
+      0
     );
 
     gl.bindTexture(gl.TEXTURE_2D, null);
@@ -142,13 +167,13 @@ class Fbo extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Fbo.propTypes = {
     children: PropTypes.node,
     width: PropTypes.number,
     height: PropTypes.number,
     id: PropTypes.number,
-    filter: PropTypes.string,
+    filter: PropTypes.string
   };
 }
 
@@ -157,12 +182,12 @@ Fbo.defaultProps = {
   width: 64,
   height: 64,
   id: 0,
-  filter: 'LINEAR',
+  filter: "LINEAR"
 };
 
 Fbo.contextTypes = {
   gl: PropTypes.object,
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Fbo;

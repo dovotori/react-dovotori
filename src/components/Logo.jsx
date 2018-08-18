@@ -39,12 +39,12 @@ class Logo extends Component {
 
 if (process.env.NODE_ENV !== "production") {
   Logo.propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 }
 
 Logo.defaultProps = {
-  className: "",
+  className: ""
 };
 
 export default Logo;

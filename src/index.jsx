@@ -23,7 +23,7 @@ const render = Component => {
         <Component />
       </Provider>
     </AppContainer>,
-    document.getElementById("dovotori-app"),
+    document.getElementById("dovotori-app")
   );
 };
 

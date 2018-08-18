@@ -54,7 +54,7 @@ class Staggered extends Component {
                 key={items[i].key}
                 style={{
                   transform: this.applyMode(style.x),
-                  opacity: opacity ? style.x : 1,
+                  opacity: opacity ? style.x : 1
                 }}
               >
                 {items[i].data}
@@ -74,7 +74,7 @@ if (process.env.NODE_ENV !== "production") {
     motion: PropTypes.objectOf(PropTypes.number),
     mode: PropTypes.string,
     opacity: PropTypes.bool,
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 }
 
@@ -84,7 +84,7 @@ Staggered.defaultProps = {
   in: false,
   motion: { stiffness: 120, damping: 9 },
   mode: "SCALE",
-  opacity: false,
+  opacity: false
 };
 
 export default Staggered;

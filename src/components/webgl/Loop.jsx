@@ -1,6 +1,6 @@
 /* global window, document */
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, cloneElement } from "react";
+import PropTypes from "prop-types";
 
 class Loop extends Component {
   constructor(props) {
@@ -37,26 +37,26 @@ class Loop extends Component {
 
     return Children.map(this.props.children, child =>
       cloneElement(child, {
-        toggle: this.state.toggle,
-      }),
+        toggle: this.state.toggle
+      })
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Loop.propTypes = {
     onAnimate: PropTypes.func,
-    children: PropTypes.node,
+    children: PropTypes.node
   };
 }
 
 Loop.defaultProps = {
   onAnimate: null,
-  children: null,
+  children: null
 };
 
 Loop.contextTypes = {
-  gl: PropTypes.object,
+  gl: PropTypes.object
 };
 
 export default Loop;

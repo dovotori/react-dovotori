@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.config.js",
     "build": "webpack --progress --profile --colors -p --config ./config/webpack.prod.config.js",
-    "lint": "eslint src/ --fix"
+    "lint": "prettier-eslint --write \"src/**/*.jsx\" --eslint-config-path .eslintrc"
   },
   "dependencies": {
     "@svgr/webpack": "^2.2.1",
@@ -51,6 +51,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
+    "prettier-eslint-cli": "^4.7.1",
     "todo-webpack-plugin": "^1.8.2",
     "webpack-dev-server": "^3.1.5"
   },

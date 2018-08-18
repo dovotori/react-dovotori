@@ -5,7 +5,7 @@ import styled from "styled-components";
 import SocialLinks from "./SocialLinks";
 
 const StyledMenu = styled.div.attrs({
-  className: "menu",
+  className: "menu"
 })``;
 
 const Background = styled.div`

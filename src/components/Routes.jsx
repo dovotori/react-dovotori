@@ -9,7 +9,7 @@ import ViewContainer from "../containers/ViewContainer";
 import { motion } from "../themes/theme";
 
 const Wrap = styled.div.attrs({
-  className: "wrap",
+  className: "wrap"
 })`
   position: relative;
   width: 100%;
@@ -22,7 +22,7 @@ const Wrap = styled.div.attrs({
 `;
 
 const AnimatedBloc = styled.div.attrs({
-  className: "animated-bloc",
+  className: "animated-bloc"
 })`
   // position: absolute;
   // top: 0;
@@ -38,7 +38,7 @@ const AnimatedBloc = styled.div.attrs({
 class Routes extends Component {
   static applyStyle(style) {
     return {
-      transform: `translateX(${style.x * 100}%)`,
+      transform: `translateX(${style.x * 100}%)`
     };
   }
 
@@ -53,20 +53,20 @@ class Routes extends Component {
     if (isHome) {
       items.push({
         key: "home",
-        component: <HomeContainer />,
+        component: <HomeContainer />
       });
     } else {
       const { slug } = this.props.match.params;
       items.push({
         key: "view",
-        component: <ViewContainer slug={slug} />,
+        component: <ViewContainer slug={slug} />
       });
     }
 
     const styles = items.map(item => ({
       key: item.key,
       style: { x: spring(0, motion) },
-      data: item.component,
+      data: item.component
     }));
 
     return (
@@ -96,21 +96,21 @@ if (process.env.NODE_ENV !== "production") {
   Routes.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        slug: PropTypes.string,
-      }),
+        slug: PropTypes.string
+      })
     }),
     location: PropTypes.shape({
       hash: PropTypes.string,
       key: PropTypes.string,
       pathname: PropTypes.string,
       search: PropTypes.string,
-      state: PropTypes.string,
-    }).isRequired,
+      state: PropTypes.string
+    }).isRequired
   };
 }
 
 Routes.defaultProps = {
-  match: {},
+  match: {}
 };
 
 export default withRouter(Routes);

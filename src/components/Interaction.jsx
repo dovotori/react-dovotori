@@ -1,16 +1,16 @@
 /* global document, window */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import EventsWatcher from './EventsWatcher';
-import SmoothScroller from './SmoothScroller';
-import { easeOutQuad } from '../utils/numbers';
+import EventsWatcher from "./EventsWatcher";
+import SmoothScroller from "./SmoothScroller";
+import { easeOutQuad } from "../utils/numbers";
 
 class Interaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      targetY: 0,
+      targetY: 0
     };
     this.mousePressed = false;
     this.mousePosition = { x: null, y: null };
@@ -26,7 +26,7 @@ class Interaction extends Component {
   getChildContext() {
     return {
       mousePosition: this.mousePosition,
-      mousePressed: this.mousePressed,
+      mousePressed: this.mousePressed
     };
   }
 
@@ -48,7 +48,9 @@ class Interaction extends Component {
   }
 
   scrollBottom() {
-    this.setState({ targetY: document.body.scrollHeight - document.body.offsetHeight });
+    this.setState({
+      targetY: document.body.scrollHeight - document.body.offsetHeight
+    });
   }
 
   scrollTop() {
@@ -75,26 +77,30 @@ class Interaction extends Component {
         handleMousedown={this.handleMousedown}
         handleMousemove={this.handleMousemove}
       >
-        <SmoothScroller easing={easeOutQuad} targetY={this.state.targetY} duration={300} />
+        <SmoothScroller
+          easing={easeOutQuad}
+          targetY={this.state.targetY}
+          duration={300}
+        />
         {this.props.children}
       </EventsWatcher>
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Interaction.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.node
   };
 }
 
 Interaction.defaultProps = {
-  children: null,
+  children: null
 };
 
 Interaction.childContextTypes = {
   mousePosition: PropTypes.object,
-  mousePressed: PropTypes.bool,
+  mousePressed: PropTypes.bool
 };
 
 export default Interaction;

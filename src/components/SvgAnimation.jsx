@@ -77,13 +77,13 @@ class SvgAnimation extends Component {
 if (process.env.NODE_ENV !== "production") {
   SvgAnimation.propTypes = {
     children: PropTypes.node,
-    toggleAnim: PropTypes.bool,
+    toggleAnim: PropTypes.bool
   };
 }
 
 SvgAnimation.defaultProps = {
   children: null,
-  toggleAnim: false,
+  toggleAnim: false
 };
 
 export default withTheme(SvgAnimation);

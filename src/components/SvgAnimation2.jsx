@@ -29,12 +29,12 @@ class SvgAnimation extends Component {
 
 if (process.env.NODE_ENV !== "production") {
   SvgAnimation.propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 }
 
 SvgAnimation.defaultProps = {
-  className: "",
+  className: ""
 };
 
 export default SvgAnimation;

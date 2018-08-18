@@ -1,8 +1,8 @@
 /* global window */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import Cursor from './Cursor';
+import Cursor from "./Cursor";
 
 class TypingMessage extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class TypingMessage extends Component {
     this.isBackward = false;
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     if (!this.props.disabled) {
@@ -41,7 +41,7 @@ class TypingMessage extends Component {
   }
 
   start() {
-    this.tempTxt = '';
+    this.tempTxt = "";
     this.cptLetter = 0;
     this.time = Date.now();
     window.requestAnimationFrame(this.anim);
@@ -61,7 +61,10 @@ class TypingMessage extends Component {
         const time = Date.now();
         if (time - this.time > intervalLetter) {
           if (this.isBackward) {
-            this.tempTxt = message.substr(0, message.length - 1 - this.cptLetter);
+            this.tempTxt = message.substr(
+              0,
+              message.length - 1 - this.cptLetter
+            );
           } else {
             this.tempTxt += message.charAt(this.cptLetter);
           }
@@ -74,7 +77,7 @@ class TypingMessage extends Component {
     } else {
       if (this.div) {
         if (this.isBackward) {
-          this.div.innerHTML = '';
+          this.div.innerHTML = "";
         } else {
           this.div.innerHTML = message;
         }
@@ -86,14 +89,16 @@ class TypingMessage extends Component {
   render() {
     return (
       <p className={`${this.props.className} message`}>
-        <span ref={d => this.div = d} />
-        {!this.props.disabled && <Cursor color={this.props.color} size={this.props.cursorSize} />}
+        <span ref={d => (this.div = d)} />
+        {!this.props.disabled && (
+          <Cursor color={this.props.color} size={this.props.cursorSize} />
+        )}
       </p>
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   TypingMessage.propTypes = {
     className: PropTypes.string,
     message: PropTypes.string,
@@ -101,18 +106,18 @@ if (process.env.NODE_ENV !== 'production') {
     nextCallTime: PropTypes.number,
     cursorSize: PropTypes.number,
     color: PropTypes.string,
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool
   };
 }
 
 TypingMessage.defaultProps = {
-  className: '',
-  message: '',
+  className: "",
+  message: "",
   intervalLetter: 10,
   nextCallTime: null,
   cursorSize: 6,
-  color: '#000',
-  disabled: false,
+  color: "#000",
+  disabled: false
 };
 
 export default TypingMessage;

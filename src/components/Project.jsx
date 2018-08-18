@@ -9,13 +9,13 @@ import Overline from "./Overline";
 const TEXT_WIDTH = 700;
 
 const StyledProject = styled(Bloc).attrs({
-  className: "project",
+  className: "project"
 })`
   padding: 10% 0;
 `;
 
 const WrapContent = styled.div.attrs({
-  className: "wrap-content",
+  className: "wrap-content"
 })`
   margin: 0 auto;
   max-width: ${p => p.theme.breakpoint.tablet}px;
@@ -30,7 +30,7 @@ const Hidden = styled.div`
 `;
 
 const H1 = styled.h1.attrs({
-  className: "slide-bottom",
+  className: "slide-bottom"
 })`
   text-align: left;
   font-size: 3em;
@@ -49,7 +49,7 @@ const H1 = styled.h1.attrs({
 `;
 
 const Description = styled.div.attrs({
-  className: "description",
+  className: "description"
 })`
   text-align: left;
   font-size: 1em;
@@ -72,7 +72,7 @@ const Text = styled.p`
 `;
 
 const ImagesList = styled.div.attrs({
-  className: "images-list",
+  className: "images-list"
 })`
   margin: 0 auto;
   ${p => p.theme.scrollbar} img {
@@ -91,7 +91,7 @@ const ImagesList = styled.div.attrs({
 `;
 
 const Images = styled.div.attrs({
-  className: "images",
+  className: "images"
 })``;
 
 const StyledLazyImage = styled(LazyImage)`
@@ -100,7 +100,7 @@ const StyledLazyImage = styled(LazyImage)`
 `;
 
 const Date = styled.p.attrs({
-  className: "date",
+  className: "date"
 })`
   position: relative;
   z-index: 1;
@@ -126,7 +126,7 @@ class Project extends Component {
       description,
       images,
       category,
-      date,
+      date
     } = this.props.entry;
     const { isTouchDevice } = this.props;
     const isprimary = category === 0;
@@ -175,15 +175,15 @@ if (process.env.NODE_ENV !== "production") {
       description: PropTypes.string,
       images: PropTypes.number,
       category: PropTypes.number,
-      date: PropTypes.number,
+      date: PropTypes.number
     }),
-    isTouchDevice: PropTypes.bool,
+    isTouchDevice: PropTypes.bool
   };
 }
 
 Project.defaultProps = {
   entries: null,
-  isTouchDevice: false,
+  isTouchDevice: false
 };
 
 export default Project;

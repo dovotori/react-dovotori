@@ -10,8 +10,8 @@ const OFFSET_X = 50;
 const IMG_WIDTH = 400;
 
 const LINK = styled(Link).attrs({
-  className: "teaser",
-}) `
+  className: "teaser"
+})`
   position: relative;
   display: block;
   text-decoration: none;
@@ -43,7 +43,7 @@ const Back = styled.div`
   background: ${p => (p.isprimary ? p.theme.gradient : p.theme.gradient2)};
 `;
 
-const StyledLazyImage = styled(LazyImage) `
+const StyledLazyImage = styled(LazyImage)`
   img {
     display: inline-block;
     vertical-align: middle;
@@ -59,8 +59,8 @@ const StyledLazyImage = styled(LazyImage) `
 `;
 
 const Infos = styled.div.attrs({
-  className: "infos",
-}) `
+  className: "infos"
+})`
   position: relative;
   z-index: 2;
   max-width: ${IMG_WIDTH}px;
@@ -129,7 +129,7 @@ const Date = styled.p`
 
   span {
     background-color: ${p =>
-    p.isprimary ? p.theme.primary : p.theme.secondary};
+      p.isprimary ? p.theme.primary : p.theme.secondary};
     color: ${p => p.theme.dark};
   }
 `;
@@ -148,8 +148,8 @@ const Number = styled.p`
 `;
 
 const BackLine = styled.div.attrs({
-  className: "back-line",
-}) `
+  className: "back-line"
+})`
   position: absolute;
   top: 50%;
   left: 0;
@@ -234,10 +234,10 @@ if (process.env.NODE_ENV !== "production") {
       category: PropTypes.number,
       tags: PropTypes.array,
       date: PropTypes.number,
-      description: PropTypes.string,
+      description: PropTypes.string
     }),
     idx: PropTypes.number,
-    noHover: PropTypes.bool,
+    noHover: PropTypes.bool
   };
 }
 
@@ -245,7 +245,7 @@ Teaser.defaultProps = {
   className: "",
   entry: {},
   idx: 0,
-  noHover: false,
+  noHover: false
 };
 
 export default Teaser;

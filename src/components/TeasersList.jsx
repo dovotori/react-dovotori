@@ -7,7 +7,7 @@ import Bloc from "./Bloc";
 import Staggered from "./Staggered";
 
 const Wrap = styled.div.attrs({
-  className: "teasers-list wrap-content",
+  className: "teasers-list wrap-content"
 })`
   max-width: 400px;
   margin: 0 auto;
@@ -29,7 +29,7 @@ class TeasersList extends Component {
           noHover={isTouchDevice}
         />
       ),
-      key: `teaser-${teaser.id}`,
+      key: `teaser-${teaser.id}`
     }));
     return (
       <Wrap>
@@ -58,13 +58,13 @@ class TeasersList extends Component {
 if (process.env.NODE_ENV !== "production") {
   TeasersList.propTypes = {
     entries: PropTypes.arrayOf(PropTypes.shape),
-    isTouchDevice: PropTypes.bool,
+    isTouchDevice: PropTypes.bool
   };
 }
 
 TeasersList.defaultProps = {
   entries: [],
-  isTouchDevice: false,
+  isTouchDevice: false
 };
 
 export default withTheme(TeasersList);

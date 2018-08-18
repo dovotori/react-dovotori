@@ -1,8 +1,8 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, cloneElement } from "react";
+import PropTypes from "prop-types";
 
-import Vec3 from '../geometry/Vec3';
-import Mat4 from '../geometry/Mat4';
+import Vec3 from "../geometry/Vec3";
+import Mat4 from "../geometry/Mat4";
 
 class Camera extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Camera extends Component {
       this.cible.z,
       0,
       1,
-      0,
+      0
     );
   }
 
@@ -47,13 +47,13 @@ class Camera extends Component {
     return Children.map(this.props.children, child =>
       cloneElement(child, {
         view: this.view.get(),
-        projection: this.projection.get(),
-      }),
+        projection: this.projection.get()
+      })
     );
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Camera.propTypes = {
     children: PropTypes.node,
     width: PropTypes.number,
@@ -61,7 +61,7 @@ if (process.env.NODE_ENV !== 'production') {
     position: PropTypes.array,
     angle: PropTypes.number,
     far: PropTypes.number,
-    near: PropTypes.number,
+    near: PropTypes.number
   };
 }
 
@@ -72,11 +72,11 @@ Camera.defaultProps = {
   position: [-10, 0, 0],
   angle: 50,
   far: 100,
-  near: 1,
+  near: 1
 };
 
 Camera.contextTypes = {
-  gl: PropTypes.object,
+  gl: PropTypes.object
 };
 
 export default Camera;

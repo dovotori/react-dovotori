@@ -36,7 +36,7 @@ const StyledSvg = styled(Svg)`
 `;
 
 const Tooltip = styled(WrapperTooltip).attrs({
-  className: "with-tooltip",
+  className: "with-tooltip"
 })`
   position: relative;
   padding-bottom: 30px;
@@ -83,7 +83,7 @@ class SocialLinks extends Component {
               <StyledSvg useid="linkedin" disabled={isTouchDevice} />
             </A>
           </Tooltip>
-        ),
+        )
       },
       {
         key: "code is law",
@@ -93,7 +93,7 @@ class SocialLinks extends Component {
               <StyledSvg useid="github" disabled={isTouchDevice} />
             </A>
           </Tooltip>
-        ),
+        )
       },
       {
         key: "konnichi wa",
@@ -103,8 +103,8 @@ class SocialLinks extends Component {
               <StyledSvg useid="mail" disabled={isTouchDevice} />
             </A>
           </Tooltip>
-        ),
-      },
+        )
+      }
     ];
 
     return (
@@ -124,14 +124,14 @@ if (process.env.NODE_ENV !== "production") {
   SocialLinks.propTypes = {
     in: PropTypes.bool,
     isTouchDevice: PropTypes.bool,
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 }
 
 SocialLinks.defaultProps = {
   in: false,
   isTouchDevice: false,
-  className: "",
+  className: ""
 };
 
 export default withTheme(SocialLinks);

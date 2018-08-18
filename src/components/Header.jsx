@@ -11,7 +11,7 @@ import SvgAnimation from "./SvgAnimation";
 import ViewNavigationContainer from "../containers/ViewNavigationContainer";
 
 const StyledHeader = styled.div.attrs({
-  className: "header",
+  className: "header"
 })`
   position: fixed;
   top: 0;
@@ -24,7 +24,7 @@ const StyledHeader = styled.div.attrs({
 `;
 
 const FixedLogo = styled.button.attrs({
-  className: "toggle menu",
+  className: "toggle menu"
 })`
   display: flex;
   justify-content: flex-start;
@@ -82,7 +82,7 @@ const Cross = styled.svg`
 `;
 
 const BackgroundLogo = styled.div.attrs({
-  className: "background-logo",
+  className: "background-logo"
 })`
   position: fixed;
   display: block;
@@ -107,7 +107,7 @@ const StyledLogoBack = styled(Logo)`
 `;
 
 const Fullscreen = styled.div.attrs({
-  className: "fullscreen",
+  className: "fullscreen"
 })`
   position: fixed;
   top: 0;
@@ -190,11 +190,11 @@ class Header extends Component {
     const motion2 = { stiffness: 200, damping: 30 };
     const defaultStyle = {
       x: this.state.open ? 0 : 1,
-      x2: this.state.open ? 0 : 1,
+      x2: this.state.open ? 0 : 1
     };
     const style = {
       x: this.state.open ? spring(1, motion) : spring(0, motion),
-      x2: this.state.open ? spring(1, motion2) : spring(0, motion2),
+      x2: this.state.open ? spring(1, motion2) : spring(0, motion2)
     };
 
     return (
@@ -249,12 +249,12 @@ class Header extends Component {
             </FixedNav>
             <Fullscreen
               style={{
-                transform: `translateX(${interpolatingStyle.x2 * 200}%)`,
+                transform: `translateX(${interpolatingStyle.x2 * 200}%)`
               }}
             />
             <Banner
               style={{
-                transform: `translateX(${interpolatingStyle.x2 * 100}%)`,
+                transform: `translateX(${interpolatingStyle.x2 * 100}%)`
               }}
             >
               {this.isFirstLoad ? (
@@ -269,7 +269,7 @@ class Header extends Component {
             <BackgroundLogo
               style={{
                 transform: `translate3d(${interpolatingStyle.x *
-                  -50}%, -50%, 0)`,
+                  -50}%, -50%, 0)`
               }}
             >
               <StyledLogoBack />
@@ -285,23 +285,23 @@ if (process.env.NODE_ENV !== "production") {
   Header.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        slug: PropTypes.string,
-      }),
+        slug: PropTypes.string
+      })
     }),
     location: PropTypes.shape({
       hash: PropTypes.string,
       key: PropTypes.string,
       pathname: PropTypes.string,
       search: PropTypes.string,
-      state: PropTypes.string,
+      state: PropTypes.string
     }).isRequired,
-    isTouchDevice: PropTypes.bool,
+    isTouchDevice: PropTypes.bool
   };
 }
 
 Header.defaultProps = {
   match: {},
-  isTouchDevice: false,
+  isTouchDevice: false
 };
 
 export default Header;

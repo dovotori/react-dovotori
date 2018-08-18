@@ -3,7 +3,7 @@ import { isTouchDevice } from "../utils/index";
 const initialState = {
   categories: {
     0: "design",
-    1: "code",
+    1: "code"
   },
   tags: {
     0: "javascript",
@@ -12,7 +12,7 @@ const initialState = {
     3: "processing",
     4: "openNI",
     5: "Kinect",
-    6: "WebGL",
+    6: "WebGL"
   },
   entries: [
     // {
@@ -51,7 +51,7 @@ const initialState = {
         "Transformation d'un comptoir de bar en séquenceur musicale, dont les sons sont déclenchés par les verres posés sur sa surface.",
       sources: "",
       context: "",
-      images: 2,
+      images: 2
     },
     {
       id: 3,
@@ -64,7 +64,7 @@ const initialState = {
         "Proposition pour l'identité d'une exposition fictive sur les arts de rue et le graffiti.",
       sources: "",
       context: "",
-      images: 4,
+      images: 4
     },
     {
       id: 4,
@@ -76,7 +76,7 @@ const initialState = {
       description: "Identités visuelles pour différentes marques.",
       sources: "",
       context: "",
-      images: 14,
+      images: 14
     },
     // {
     //   id: 5,
@@ -100,7 +100,7 @@ const initialState = {
         "Recherche pour l'identité d'une exposition au sein de la Soap Factory, musée d'art contemporain à Mineapolis.",
       sources: "",
       context: "",
-      images: 3,
+      images: 3
     },
     {
       id: 7,
@@ -113,7 +113,7 @@ const initialState = {
         "Animation promotionnelle installée dans les gares parisiennes de l'album de Reporters sans frontières, 100 photos de Ai Weiwei pour la liberté de la presse.",
       sources: "",
       context: "",
-      images: 2,
+      images: 2
     },
     {
       id: 8,
@@ -126,7 +126,7 @@ const initialState = {
         "Différents projets réalisés au sein de l'association Reporters sans frontières.",
       sources: "",
       context: "",
-      images: 6,
+      images: 6
     },
     {
       id: 9,
@@ -139,7 +139,7 @@ const initialState = {
         "Dispositif de jeu qui a pour ambition d'intégrer n'importe quel objet du quotidien pour influencer un espace virtuel.",
       sources: "",
       context: "",
-      images: 9,
+      images: 9
     },
     {
       id: 10,
@@ -152,7 +152,7 @@ const initialState = {
         "Élaboration d'une identité visuelle pour la biennale d'art contemporain de la ville du Havre.",
       sources: "",
       context: "",
-      images: 11,
+      images: 11
     },
     {
       id: 11,
@@ -165,8 +165,8 @@ const initialState = {
         "Recherche graphique pour un coffret de reportages de Raymond Depardon, la série sur le monde paysan, destin fragile des travailleurs de la terre.",
       sources: "",
       context: "",
-      images: 4,
-    },
+      images: 4
+    }
     // {
     //   id: 12,
     //   slug: 'amour',
@@ -178,7 +178,7 @@ const initialState = {
     //   sources: '',
     //   context: '',
     // },
-  ],
+  ]
 };
 
 export default initialState;

@@ -18,12 +18,12 @@ class Svg extends Component {
 if (process.env.NODE_ENV !== "production") {
   Svg.propTypes = {
     className: PropTypes.string,
-    useid: PropTypes.string.isRequired,
+    useid: PropTypes.string.isRequired
   };
 }
 
 Svg.defaultProps = {
-  className: "",
+  className: ""
 };
 
 export default Svg;

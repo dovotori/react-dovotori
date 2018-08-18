@@ -1,14 +1,14 @@
 /* global document */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Scene extends Component {
   constructor(props) {
     super(props);
-    this.canvas = document.createElement('canvas');
+    this.canvas = document.createElement("canvas");
     const { width, height } = this.props;
-    this.canvas.setAttribute('width', width);
-    this.canvas.setAttribute('height', height);
+    this.canvas.setAttribute("width", width);
+    this.canvas.setAttribute("height", height);
     this.setupGL();
   }
 
@@ -17,14 +17,16 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('.containerGL').appendChild(this.canvas);
+    document.querySelector(".containerGL").appendChild(this.canvas);
   }
 
   setupGL() {
     this.gl = null;
 
     try {
-      this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+      this.gl =
+        this.canvas.getContext("webgl") ||
+        this.canvas.getContext("experimental-webgl");
     } catch (e) {
       console.log(e.error);
     }
@@ -58,22 +60,22 @@ class Scene extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Scene.propTypes = {
     children: PropTypes.node,
     width: PropTypes.number,
-    height: PropTypes.number,
+    height: PropTypes.number
   };
 }
 
 Scene.defaultProps = {
   children: null,
   width: 1024,
-  height: 1024,
+  height: 1024
 };
 
 Scene.childContextTypes = {
-  gl: PropTypes.object,
+  gl: PropTypes.object
 };
 
 export default Scene;

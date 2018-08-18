@@ -1,8 +1,8 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, cloneElement } from "react";
+import PropTypes from "prop-types";
 
-import Vec3 from '../geometry/Vec3.js';
-import Mat4 from '../geometry/Mat4.js';
+import Vec3 from "../geometry/Vec3.js";
+import Mat4 from "../geometry/Mat4.js";
 
 class Program extends Component {
   getChildContext() {
@@ -20,12 +20,12 @@ class Program extends Component {
 
     this.program = gl.createProgram();
 
-    this.creerShader('vertex', vertex);
-    this.creerShader('fragment', fragment);
+    this.creerShader("vertex", vertex);
+    this.creerShader("fragment", fragment);
     gl.linkProgram(this.program);
 
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-      console.log('Ne peux pas lier le shader au program');
+      console.log("Ne peux pas lier le shader au program");
       gl.deleteProgram(this.program);
       return;
     }
@@ -39,12 +39,16 @@ class Program extends Component {
 
   creerShader(type, source) {
     const { gl } = this.context;
-    const s = gl.createShader(type === 'vertex' ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
+    const s = gl.createShader(
+      type === "vertex" ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER
+    );
     gl.shaderSource(s, source);
     gl.compileShader(s);
 
     if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.log(`Ne peux pas compiler le ${type} shader:\n${gl.getShaderInfoLog(s)}`);
+      console.log(
+        `Ne peux pas compiler le ${type} shader:\n${gl.getShaderInfoLog(s)}`
+      );
       gl.deleteShader(s);
       return;
     }
@@ -60,24 +64,27 @@ class Program extends Component {
     gl.useProgram(this.program);
 
     // ATTRIB
-    this.program.vLoc = gl.getAttribLocation(this.program, 'Vertice');
+    this.program.vLoc = gl.getAttribLocation(this.program, "Vertice");
 
     // UNIFORM
-    this.program.pMatLoc = gl.getUniformLocation(this.program, 'projection');
-    this.program.mMatLoc = gl.getUniformLocation(this.program, 'model');
-    this.program.vMatLoc = gl.getUniformLocation(this.program, 'view');
+    this.program.pMatLoc = gl.getUniformLocation(this.program, "projection");
+    this.program.mMatLoc = gl.getUniformLocation(this.program, "model");
+    this.program.vMatLoc = gl.getUniformLocation(this.program, "view");
 
-    this.program.cVecLoc = gl.getUniformLocation(this.program, 'color');
+    this.program.cVecLoc = gl.getUniformLocation(this.program, "color");
 
-    this.program.tex0Loc = gl.getUniformLocation(this.program, 'tex0');
-    this.program.tex1Loc = gl.getUniformLocation(this.program, 'tex1');
-    this.program.tex2Loc = gl.getUniformLocation(this.program, 'tex2');
-    this.program.tex3Loc = gl.getUniformLocation(this.program, 'tex3');
-    this.program.tex4Loc = gl.getUniformLocation(this.program, 'tex4');
-    this.program.tex5Loc = gl.getUniformLocation(this.program, 'tex5');
+    this.program.tex0Loc = gl.getUniformLocation(this.program, "tex0");
+    this.program.tex1Loc = gl.getUniformLocation(this.program, "tex1");
+    this.program.tex2Loc = gl.getUniformLocation(this.program, "tex2");
+    this.program.tex3Loc = gl.getUniformLocation(this.program, "tex3");
+    this.program.tex4Loc = gl.getUniformLocation(this.program, "tex4");
+    this.program.tex5Loc = gl.getUniformLocation(this.program, "tex5");
 
-    this.program.timeLoc = gl.getUniformLocation(this.program, 'time');
-    this.program.amplitudeLoc = gl.getUniformLocation(this.program, 'amplitude');
+    this.program.timeLoc = gl.getUniformLocation(this.program, "time");
+    this.program.amplitudeLoc = gl.getUniformLocation(
+      this.program,
+      "amplitude"
+    );
   }
 
   setMatrices(gl) {
@@ -117,7 +124,7 @@ class Program extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Program.propTypes = {
     children: PropTypes.node,
     vertex: PropTypes.string,
@@ -125,26 +132,26 @@ if (process.env.NODE_ENV !== 'production') {
     projection: PropTypes.object,
     view: PropTypes.object,
     time: PropTypes.number,
-    amplitude: PropTypes.number,
+    amplitude: PropTypes.number
   };
 }
 
 Program.defaultProps = {
   children: null,
-  vertex: '',
-  fragment: '',
+  vertex: "",
+  fragment: "",
   projection: null,
   view: null,
   time: null,
-  amplitude: null,
+  amplitude: null
 };
 
 Program.contextTypes = {
-  gl: PropTypes.object,
+  gl: PropTypes.object
 };
 
 Program.childContextTypes = {
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Program;

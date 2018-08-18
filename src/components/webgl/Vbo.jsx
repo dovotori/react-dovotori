@@ -1,5 +1,5 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, cloneElement } from "react";
+import PropTypes from "prop-types";
 
 class Vbo extends Component {
   constructor(props) {
@@ -46,21 +46,21 @@ class Vbo extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Vbo.propTypes = {
     children: PropTypes.node,
-    points: PropTypes.array,
+    points: PropTypes.array
   };
 }
 
 Vbo.defaultProps = {
   children: null,
-  points: [],
+  points: []
 };
 
 Vbo.contextTypes = {
   gl: PropTypes.object,
-  program: PropTypes.object,
+  program: PropTypes.object
 };
 
 export default Vbo;

@@ -1,6 +1,6 @@
 /* global window */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class SmoothScroller extends Component {
   constructor(props) {
@@ -45,13 +45,13 @@ class SmoothScroller extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   SmoothScroller.propTypes = {
     duration: PropTypes.number,
     targetY: PropTypes.number,
     easing: PropTypes.func.isRequired,
     shouldUpdate: PropTypes.bool,
-    callback: PropTypes.func,
+    callback: PropTypes.func
   };
 }
 
@@ -59,7 +59,7 @@ SmoothScroller.defaultProps = {
   duration: 400,
   targetY: 0,
   callback: null,
-  shouldUpdate: false,
+  shouldUpdate: false
 };
 
 export default SmoothScroller;

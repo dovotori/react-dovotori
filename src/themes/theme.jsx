@@ -2,7 +2,7 @@ import { css } from "styled-components";
 
 const hue = {
   primary: 160, // hsl(160, 100%, 70%) // rgb(102, 255, 204) // #66ffcc
-  secondary: 30, // hsl(30, 100%, 70%) // rgb(255, 179, 102) // #ffb366
+  secondary: 30 // hsl(30, 100%, 70%) // rgb(255, 179, 102) // #ffb366
 };
 
 export default {
@@ -29,7 +29,7 @@ export default {
   `,
   breakpoint: {
     mobile: 420,
-    tablet: 1020,
+    tablet: 1020
   },
   media: {
     mobile: (...args) =>
@@ -43,12 +43,12 @@ export default {
         @media (max-width: 1020px) {
           ${css(...args)};
         }
-      `,
+      `
   },
   motion: { stiffness: 120, damping: 20 },
   zindex: {
     logo: 100,
     menu: 50,
-    content: 10,
-  },
+    content: 10
+  }
 };

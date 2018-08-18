@@ -10,7 +10,7 @@ const mapStateToProps = (state, props) => {
   const entry = getEntry(state.content.entries, slug)[0] || null;
   return {
     entry,
-    isTouchDevice: state.device.isTouch,
+    isTouchDevice: state.device.isTouch
   };
 };
 

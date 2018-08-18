@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { blink } from '../themes/animations';
+import { blink } from "../themes/animations";
 
 const Cursor = styled.span`
   display: inline-block;

@@ -7,7 +7,7 @@ import Bloc from "./Bloc";
 import Signature from "./Signature2";
 
 const StyledHome = styled(Bloc).attrs({
-  className: "home",
+  className: "home"
 })`
   margin: 0 auto;
   padding: 10% 0;

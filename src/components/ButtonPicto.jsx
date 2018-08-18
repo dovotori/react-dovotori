@@ -7,7 +7,7 @@ import Svg from "./Svg";
 import Overline from "./Overline";
 
 const Styled = styled.div.attrs({
-  className: "button-picto",
+  className: "button-picto"
 })`
   a {
     position: relative;
@@ -92,13 +92,13 @@ if (process.env.NODE_ENV !== "production") {
   ButtonPicto.propTypes = {
     text: PropTypes.string,
     link: PropTypes.string,
-    useid: PropTypes.string.isRequired,
+    useid: PropTypes.string.isRequired
   };
 }
 
 ButtonPicto.defaultProps = {
   text: "",
-  link: "",
+  link: ""
 };
 
 export default ButtonPicto;

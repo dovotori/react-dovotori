@@ -8,7 +8,7 @@ const loading = keyframes`
 `;
 
 const Wrap = styled.div.attrs({
-  className: "loader",
+  className: "loader"
 })`
   position: absolute;
   top: 50%;

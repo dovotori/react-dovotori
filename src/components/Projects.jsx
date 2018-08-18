@@ -6,8 +6,8 @@ import Bloc from "./Bloc";
 import TeasersListContainer from "../containers/TeasersListContainer";
 
 const StyledProjects = styled(Bloc).attrs({
-  className: "projects",
-}) `
+  className: "projects"
+})`
   margin: 0 auto;
   padding: 10% 0;
 `;
