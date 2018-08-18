@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { injectGlobal, ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import styled from "styled-components";
 
 import theme from "../themes/theme";
 import Routes from "./Routes3";
@@ -13,40 +14,34 @@ import Footer from "./Footer";
 // import Signature from "./Signature";
 import SvgDisplayer from "./SvgDisplayer";
 
+const Wrap = styled.div`
+  height: 100%;
+  ${p => p.theme.scrollbar};
+`;
+
 class App extends Component {
   componentWillMount() {
     injectGlobal`${commonCss}`;
 
-    // Hello to developpers
     if (process.env.NODE_ENV !== "production") {
       console.log(
         "%c Hello JS Coders! ",
-        `background: ${theme.primary}; color: #000`,
+        `background: ${theme.primary}; color: #000`
       );
     }
   }
 
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
-
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <div>
-          {/*
-          <Route path="/:slug*" component={HeaderContainer} />
-          <Signature />
-          <AnimatedBackground />
-          <Route path="/:slug*" component={Routes} />
-          <Footer /> */}
+        <Wrap>
           <SvgDisplayer />
           <LogoContainer />
           <MenuContainer />
           <Router>
             <Routes />
           </Router>
-        </div>
+        </Wrap>
       </ThemeProvider>
     );
   }

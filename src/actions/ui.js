@@ -5,5 +5,5 @@ function setMenu(flag) {
 }
 
 export default {
-  setMenu,
+  setMenu
 };

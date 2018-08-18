@@ -10,7 +10,16 @@ const TEXT_WIDTH = 700;
 
 const StyledProject = styled(Bloc).attrs({
   className: "project",
-})``;
+})`
+  padding: 10% 0;
+`;
+
+const WrapContent = styled.div.attrs({
+  className: "wrap-content",
+})`
+  margin: 0 auto;
+  max-width: ${p => p.theme.breakpoint.tablet}px;
+`;
 
 const WrapTexte = styled.div``;
 
@@ -23,17 +32,16 @@ const Hidden = styled.div`
 const H1 = styled.h1.attrs({
   className: "slide-bottom",
 })`
-  width: 82%;
-  max-width: ${TEXT_WIDTH}px;
-  text-align: center;
+  text-align: left;
   font-size: 3em;
   font-weight: 100;
-  text-transform: lowercase;
-  letter-spacing: 0.2em;
-  margin: 10px auto;
   color: #fff;
-  text-shadow: 2px -1px 0 ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
-  padding: 20px 4%;
+  text-shadow: 2px -1px 0 ${p => (p.isprimary ? p.theme.primaryDark : p.theme.secondaryDark)};
+  overflow-wrap: break-word;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0;
+  padding: 0;
 
   ${p => p.theme.media.tablet`
     width: 100%;
@@ -47,16 +55,16 @@ const Description = styled.div.attrs({
   font-size: 1em;
   color: ${p => p.theme.dark};
   width: 100%;
-  background-color: #fff;
+  margin: 0 auto 10px;
   line-height: 1.6;
   transform-origin: center top;
 `;
 
 const Text = styled.p`
-  width: 82%;
-  padding: 4%;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
   max-width: ${TEXT_WIDTH}px;
-  margin: 0 auto;
 
   ${p => p.theme.media.tablet`
     width: 100%;
@@ -66,7 +74,6 @@ const Text = styled.p`
 const ImagesList = styled.div.attrs({
   className: "images-list",
 })`
-  max-width: ${p => p.theme.breakpoint.tablet}px;
   margin: 0 auto;
   ${p => p.theme.scrollbar} img {
     display: block;
@@ -89,6 +96,7 @@ const Images = styled.div.attrs({
 
 const StyledLazyImage = styled(LazyImage)`
   margin-bottom: 10px;
+  background: ${p => p.theme.mild};
 `;
 
 const Date = styled.p.attrs({
@@ -96,6 +104,7 @@ const Date = styled.p.attrs({
 })`
   position: relative;
   z-index: 1;
+  text-align: left;
 
   span {
     display: inline-block;
@@ -124,31 +133,35 @@ class Project extends Component {
 
     return (
       <StyledProject>
-        <WrapTexte>
-          <Hidden isprimary={isprimary}>
-            <H1 isprimary={isprimary}>{title}</H1>
-          </Hidden>
-          <Date isprimary={isprimary}>
-            <Overline>{date}</Overline>
-          </Date>
-          <Description>
-            <Text>{description}</Text>
-          </Description>
-        </WrapTexte>
-        <ImagesList>
-          {images && (
-            <Images>
-              {Array(images)
-                .fill()
-                .map((_, idx) => (
-                  <StyledLazyImage
-                    src={`./assets/img/${slug}/${slug}-${idx}.jpg`}
-                    key={`image-${slug}-${idx}`}
-                  />
-                ))}
-            </Images>
-          )}
-        </ImagesList>
+        <WrapContent>
+          <div className="anim-content">
+            <WrapTexte>
+              <Hidden isprimary={isprimary}>
+                <H1 isprimary={isprimary}>{title}</H1>
+              </Hidden>
+              <Date isprimary={isprimary}>
+                <Overline>{date}</Overline>
+              </Date>
+              <Description>
+                <Text>{description}</Text>
+              </Description>
+            </WrapTexte>
+            <ImagesList>
+              {images && (
+                <Images>
+                  {Array(images)
+                    .fill()
+                    .map((_, idx) => (
+                      <StyledLazyImage
+                        src={`./assets/img/${slug}/${slug}-${idx}.jpg`}
+                        key={`image-${slug}-${idx}`}
+                      />
+                    ))}
+                </Images>
+              )}
+            </ImagesList>
+          </div>
+        </WrapContent>
       </StyledProject>
     );
   }

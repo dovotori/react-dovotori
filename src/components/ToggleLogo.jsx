@@ -7,20 +7,44 @@ import SvgAnimation from "./SvgAnimation";
 
 const Button = styled.button.attrs({
   className: "toggle-logo",
-})`
+}) `
   position: fixed;
   z-index: ${p => p.theme.zindex.logo};
   bottom: 20px;
-  left: 20px;
-`;
-
-const StyledSvg = styled(Svg)`
+  right: 20px;
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  transition: box-shadow 300ms ease-out;
 
-  fill: #fff;
-  // stroke: ${p => p.theme.dark};
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    box-shadow: -2px 2px 1px rgba(0,0,0,0.2);
+  }
+`;
+
+const Icon = styled(Svg) `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  fill: ${p => p.theme.light};
   color: ${p => p.theme.primary};
+  opacity: ${p => p.in ? 1 : 0};
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+`;
+
+const CrossIcon = Icon.extend`
+  transform: translate3d(-50%, -50%, 0) ${p => p.in ? '' : 'rotate(90deg)'};
+`;
+
+const LogoIcon = Icon.extend`
+  transform: translate3d(-50%, -50%, 0) ${p => p.in ? '' : 'rotate(-90deg)'};
 `;
 
 class ToggleLogo extends Component {
@@ -46,11 +70,11 @@ class ToggleLogo extends Component {
   }
 
   render() {
-    const useid = this.props.isMenuOpened ? "cross" : "logo";
-    const onClick = this.props.isMenuOpened ? this.close : this.open;
+    const { isMenuOpened } = this.props;
     return (
-      <Button onClick={onClick}>
-        <StyledSvg key={useid} useid={useid} />
+      <Button onClick={isMenuOpened ? this.close : this.open}>
+        <CrossIcon useid={"cross"} in={isMenuOpened} />
+        <LogoIcon useid={"logo"} in={!isMenuOpened} />
       </Button>
     );
   }

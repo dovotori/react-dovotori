@@ -7,12 +7,13 @@ import Bloc from "./Bloc";
 import Staggered from "./Staggered";
 
 const Wrap = styled.div.attrs({
-  className: "list-teasers",
+  className: "teasers-list wrap-content",
 })`
-  margin: 10% 0;
+  max-width: 400px;
+  margin: 0 auto;
 `;
 
-class ListTeasers extends Component {
+class TeasersList extends Component {
   shouldComponentUpdate() {
     return false;
   }
@@ -32,28 +33,38 @@ class ListTeasers extends Component {
     }));
     return (
       <Wrap>
-        <Staggered
+        <div className="anim-content">
+          {/* <Staggered
           items={items}
           in
           mode="TRANSLATE-RIGHT"
           motion={theme.motion}
           opacity
-        />
+        /> */}
+          {entries.map((teaser, idx) => (
+            <Teaser
+              key={teaser.id}
+              entry={teaser}
+              idx={idx}
+              noHover={isTouchDevice}
+            />
+          ))}
+        </div>
       </Wrap>
     );
   }
 }
 
 if (process.env.NODE_ENV !== "production") {
-  ListTeasers.propTypes = {
+  TeasersList.propTypes = {
     entries: PropTypes.arrayOf(PropTypes.shape),
     isTouchDevice: PropTypes.bool,
   };
 }
 
-ListTeasers.defaultProps = {
+TeasersList.defaultProps = {
   entries: [],
   isTouchDevice: false,
 };
 
-export default withTheme(ListTeasers);
+export default withTheme(TeasersList);

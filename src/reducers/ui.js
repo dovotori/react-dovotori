@@ -2,7 +2,7 @@
 import { UI_MENU_IS_OPENED } from "../constants/actionsTypes";
 
 const initialState = {
-  menuIsOpened: false,
+  menuIsOpened: false
 };
 
 export default function ui(state = initialState, action) {
@@ -10,7 +10,7 @@ export default function ui(state = initialState, action) {
     case UI_MENU_IS_OPENED:
       return {
         ...state,
-        menuIsOpened: action.flag,
+        menuIsOpened: action.flag
       };
     default:
       return state;

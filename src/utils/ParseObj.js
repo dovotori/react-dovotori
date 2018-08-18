@@ -11,22 +11,22 @@ class ParseObj {
     let cptObj = -1;
     let idVertice = 1;
 
-    lines.forEach((line) => {
+    lines.forEach(line => {
       const firstLetter = line.charAt(0);
       switch (firstLetter) {
-        case 'o':
+        case "o":
           cptObj += 1;
-          const words = line.split(' ');
+          const words = line.split(" ");
           this.objets[cptObj] = {
             vID: [],
-            key: words[1],
+            key: words[1]
           };
           break;
-        case 'v':
+        case "v":
           this.setVertice(line);
           idVertice += 1;
           break;
-        case 'f':
+        case "f":
           this.setFace(line, cptObj);
           break;
         default:
@@ -36,7 +36,7 @@ class ParseObj {
   }
 
   setVertice(line) {
-    const words = line.split(' ');
+    const words = line.split(" ");
     // this.vertices[id] = {
     //   x: parseFloat(words[1], 10),
     //   y: parseFloat(words[2], 10),
@@ -48,7 +48,7 @@ class ParseObj {
   }
 
   setFace(line, cpt) {
-    const words = line.split(' ');
+    const words = line.split(" ");
     const nbPoints = words.length - 1;
     for (let i = 1; i <= nbPoints; i += 1) {
       this.objets[cpt].vID.push(parseInt(words[i], 10) - 1);

@@ -17,7 +17,7 @@ const Background = styled.div`
   background-color: ${p => p.theme.dark};
   z-index: ${p => p.theme.zindex.menu};
   transition: transform 300ms ease-out;
-  transform: ${p => (p.show ? "none" : "translateX(-100%)")};
+  transform: ${p => (p.show ? "none" : "translateX(100%)")};
 
   ${p => p.theme.media.mobile`
     display: none;
@@ -34,12 +34,12 @@ const WrapSocial = styled.div`
   z-index: ${p => p.theme.zindex.menu + 1};
   transition: transform 600ms ease-out;
   transform: ${p =>
-    p.show ? "translateY(-50%)" : "translate3d(-100%, -50%, 0)"};
+    p.show ? "translateY(-50%)" : "translate3d(100%, -50%, 0)"};
 
   ${p => p.theme.media.mobile`
     top: 0;
     height: 100%;
-    transform: ${p => (p.show ? "none" : "translateX(-100%)")};
+    transform: ${p => (p.show ? "none" : "translateX(100%)")};
   `};
 `;
 

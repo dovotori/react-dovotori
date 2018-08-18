@@ -7,15 +7,18 @@ import Loader from "./Loader";
 const WrapTexte = styled.div``;
 
 const Wrap = styled.div`
+  position: relative;
   width: 100%;
   height: ${p => (p.loaded ? "auto" : `${p.waitingHeight}px`)};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${p => p.theme.dark};
 `;
 
-const IMG = styled.img``;
+const IMG = styled.img`
+  opacity: ${p => (p.loaded ? 1 : 0)};
+  transition: opacity 300ms ease-out;
+`;
 
 class LazyImage extends Component {
   constructor(props) {
@@ -38,7 +41,12 @@ class LazyImage extends Component {
         waitingHeight={waitingHeight}
         alt={alt}
       >
-        <IMG alt="." src={this.props.src} onLoad={this.handleLoad} />
+        <IMG
+          alt="."
+          src={this.props.src}
+          onLoad={this.handleLoad}
+          loaded={loaded}
+        />
         {!loaded && <Loader />}
       </Wrap>
     );
@@ -50,14 +58,14 @@ if (process.env.NODE_ENV !== "production") {
     className: PropTypes.string,
     alt: PropTypes.string,
     src: PropTypes.string.isRequired,
-    waitingHeight: PropTypes.number,
+    waitingHeight: PropTypes.number
   };
 }
 
 LazyImage.defaultProps = {
   alt: "",
   className: "",
-  waitingHeight: 400,
+  waitingHeight: 400
 };
 
 export default LazyImage;

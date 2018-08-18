@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 const loading = keyframes`
   0% { transform: translateX(0) scale(0) rotateZ(45deg); }
@@ -7,10 +7,15 @@ const loading = keyframes`
   100% { transform: translateX(40px) scale(0) rotateZ(45deg); }
 `;
 
-const Wrap = styled.div`
-  position: relative;
+const Wrap = styled.div.attrs({
+  className: "loader",
+})`
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 40px;
   height: 10px;
+  transform: translate3d(-50%, -50%, 0);
 `;
 
 const Style = styled.div`

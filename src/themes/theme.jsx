@@ -14,12 +14,10 @@ export default {
   dark: "#222",
   mild: "#666",
   light: "#bbb",
-  gradient: "linear-gradient(#009966, #66ffcc)",
-  gradient2: "linear-gradient(to right, #009966, #66ffcc)",
+  gradient: "linear-gradient(to right, #006666, #66ffcc)",
+  gradient2: "linear-gradient(to right, #660000, #ffb366)",
   elastic: "cubic-bezier(0.64, 0.57, 0.67, 1.53)",
   elastic2: "cubic-bezier(0.860, 0.000, 0.070, 1.000)",
-  font1: "Verdana, Helvetica, sans-serif",
-  font2: "'Courier New', serif",
   scrollbar: css`
     ::-webkit-scrollbar {
       width: 4px;

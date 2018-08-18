@@ -15,10 +15,6 @@ body,
   height: 100%;
 }
 
-body {
-  font-size: 16px;
-}
-
 button {
   background: transparent;
   border: 0;
@@ -31,35 +27,19 @@ button:focus {
 }
 
 body {
-  font-family: ${theme.font1};
+  font-size: 16px;
+  font-family: 'White Rabbit', sans-serif;
   ${theme.scrollbar}
 }
 
-// @font-face {
-//   font-family: 'White Rabbit';
-//   src: url('./assets/fonts/whitrabt.eot');
-//   src: url('./assets/fonts/whitrabt.eot?#iefix') format('embedded-opentype'),
-//        url('./assets/fonts/whitrabt.woff') format('woff'),
-//        url('./assets/fonts/whitrabt.ttf')  format('truetype'),
-//        url('./assets/fonts/whitrabt.svg#svgFontName') format('svg');
-// }
-
-.fade-enter {
-  opacity: 0.01;
-}
-
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 1000ms ease-in;
-}
-
-.fade-exit {
-  opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-  opacity: 0.01;
-  transition: opacity 800ms ease-in;
+@font-face {
+  font-family: 'White Rabbit';
+  src: url('./assets/fonts/whiterabbit.eot'),
+    url('./assets/fonts/whiterabbit.eot?#iefix') format('embedded-opentype'),
+    url('./assets/fonts/whiterabbit.woff') format('woff'),
+    url('./assets/fonts/whiterabbit.woff2') format('woff2'),
+    url('./assets/fonts/whiterabbit.ttf')  format('truetype'),
+    url('./assets/fonts/whiterabbit.svg#svgFontName') format('svg');
 }
 `;
 

@@ -30,7 +30,7 @@ class Vec3 {
     return new Vec3(
       this.y * v.z - this.z * v.y,
       this.z * v.x - this.x * v.z,
-      this.x * v.y - this.y * v.x,
+      this.x * v.y - this.y * v.x
     );
   }
 
@@ -99,7 +99,7 @@ class Vec3 {
     return new Vec3(
       matrice.d[0] * this.x + matrice.d[1] * this.y + matrice.d[2] * this.z,
       matrice.d[3] * this.x + matrice.d[4] * this.y + matrice.d[5] * this.z,
-      matrice.d[6] * this.x + matrice.d[7] * this.y + matrice.d[8] * this.z,
+      matrice.d[6] * this.x + matrice.d[7] * this.y + matrice.d[8] * this.z
     );
   }
 
@@ -119,7 +119,7 @@ class Vec3 {
     return Math.sqrt(
       (vec32.x - this.x) * (vec32.x - this.x) +
         (vec32.y - this.y) * (vec32.y - this.y) +
-        (vec32.z - this.z) * (vec32.z - this.z),
+        (vec32.z - this.z) * (vec32.z - this.z)
     );
   }
 
@@ -127,7 +127,7 @@ class Vec3 {
     const dot = this.produitScalaire(v);
     const cosAngle = dot / (this.longueur() * v.longueur());
     const angleRadian = Math.acos(cosAngle);
-    const angle = angleRadian * 180 / Math.PI;
+    const angle = (angleRadian * 180) / Math.PI;
     const sens = signe(this.x * v.y + this.y * v.x); // sens de l'angle
     return angle * -sens;
   }
@@ -150,8 +150,10 @@ class Vec3 {
 
   getBarycentre(v1, v2, v3, pos) {
     const det = (v2.z - v3.z) * (v1.x - v3.x) + (v3.x - v2.x) * (v1.z - v3.z);
-    const l1 = ((v2.z - v3.z) * (pos[0] - v3.x) + (v3.x - v2.x) * (pos[1] - v3.z)) / det;
-    const l2 = ((v3.z - v1.z) * (pos[0] - v3.x) + (v1.x - v3.x) * (pos[1] - v3.z)) / det;
+    const l1 =
+      ((v2.z - v3.z) * (pos[0] - v3.x) + (v3.x - v2.x) * (pos[1] - v3.z)) / det;
+    const l2 =
+      ((v3.z - v1.z) * (pos[0] - v3.x) + (v1.x - v3.x) * (pos[1] - v3.z)) / det;
     const l3 = 1.0 - l1 - l2;
     return l1 * v1.y + l2 * v2.y + l3 * v3.y;
   }

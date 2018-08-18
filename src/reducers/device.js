@@ -1,7 +1,7 @@
 import { DEVICE_IS_TOUCH } from "../constants/actionsTypes";
 
 const initialState = {
-  isTouch: false,
+  isTouch: false
 };
 
 export default function device(state = initialState, action) {
@@ -9,7 +9,7 @@ export default function device(state = initialState, action) {
     case DEVICE_IS_TOUCH:
       return {
         ...state,
-        isTouch: action.flag,
+        isTouch: action.flag
       };
     default:
       return state;

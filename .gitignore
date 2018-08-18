@@ -1,5 +1,3 @@
 .gitignore
-.eslintrc
-.vscode
 node_modules/
 build/

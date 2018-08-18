@@ -3,12 +3,12 @@ import { Route } from "react-router-dom";
 import styled from "styled-components";
 
 import TransitionRoute from "./TransitionRoute";
+import ChangeRoute from "./ChangeRoute";
 
-const Empty = styled.div`
-  display: none;
-`;
+const Empty = props => props.children || null;
 
 import Home from "./Home";
+import Projects from "./Projects";
 import ProjectContainer from "../containers/ProjectContainer";
 import Cv from "./Cv";
 import ButtonBack from "./ButtonBack";
@@ -17,6 +17,11 @@ const routes = [
   {
     path: "/",
     component: Home,
+    exact: true,
+  },
+  {
+    path: "/projects",
+    component: Projects,
     exact: true,
   },
   {
@@ -41,8 +46,8 @@ class Routes extends Component {
   render() {
     const { location } = this.props;
     return (
-      <div>
-        <TransitionRoute>
+      <Empty>
+        <TransitionRoute names="translate" timeout={1000}>
           {routes.map(route => (
             <Route
               path={route.path}
@@ -52,11 +57,12 @@ class Routes extends Component {
             />
           ))}
         </TransitionRoute>
-        <TransitionRoute>
+        {/* <TransitionRoute>
           <Route path="/" exact component={EmptyComponent} />
           <Route component={ButtonBack} />
-        </TransitionRoute>
-      </div>
+        </TransitionRoute> */}
+        {/* <Route component={ChangeRoute} /> */}
+      </Empty>
     );
   }
 }

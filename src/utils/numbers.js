@@ -15,10 +15,23 @@ export const easeInOutElastic = (t, b, c, d) => {
   if (a < Math.abs(c)) {
     a = c;
     s = p / 4;
-  } else s = p / (2 * Math.PI) * Math.asin(c / a);
+  } else s = (p / (2 * Math.PI)) * Math.asin(c / a);
   if (t < 1)
-    return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-  return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;
+    return (
+      -0.5 *
+        (a *
+          Math.pow(2, 10 * (t -= 1)) *
+          Math.sin(((t * d - s) * (2 * Math.PI)) / p)) +
+      b
+    );
+  return (
+    a *
+      Math.pow(2, -10 * (t -= 1)) *
+      Math.sin(((t * d - s) * (2 * Math.PI)) / p) *
+      0.5 +
+    c +
+    b
+  );
 };
 
 export const easeOutBounce = (t, b, c, d) => {
@@ -32,23 +45,25 @@ export const easeOutBounce = (t, b, c, d) => {
   return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
 };
 
-export const easeInBounce = (t, b, c, d) => c - easeOutBounce(d - t, 0, c, d) + b;
+export const easeInBounce = (t, b, c, d) =>
+  c - easeOutBounce(d - t, 0, c, d) + b;
 
 export const easeInOutBounce = (t, b, c, d) => {
   if (t < d / 2) return easeInBounce(t * 2, 0, c, d) * 0.5 + b;
   return easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
 };
 
-export const degToRad = deg => Math.PI * deg / 180;
+export const degToRad = deg => (Math.PI * deg) / 180;
 
-export const radToDeg = rad => 180 * rad / Math.PI;
+export const radToDeg = rad => (180 * rad) / Math.PI;
 
 export const lerp = (t, a, b) => (1 - t) * a + t * b;
 
 export const random = (min, max) => Math.random() * (max - min) + min;
 
 export const map = (valeur, minRef, maxRef, minDest, maxDest) => {
-  let resultat = minDest + (valeur - minRef) * (maxDest - minDest) / (maxRef - minRef);
+  let resultat =
+    minDest + ((valeur - minRef) * (maxDest - minDest)) / (maxRef - minRef);
   if (resultat < Math.min(minDest, maxDest)) {
     resultat = Math.min(minDest, maxDest);
   }

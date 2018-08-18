@@ -5,5 +5,5 @@ function deviceIsTouch(flag) {
 }
 
 export default {
-  deviceIsTouch,
+  deviceIsTouch
 };

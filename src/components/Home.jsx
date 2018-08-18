@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import Bloc from "./Bloc";
-import ListTeasersContainer from "../containers/ListTeasersContainer";
+import Signature from "./Signature2";
 
 const StyledHome = styled(Bloc).attrs({
   className: "home",
-})``;
+})`
+  margin: 0 auto;
+  padding: 10% 0;
+`;
 
 class Home extends Component {
   shouldComponentUpdate() {
@@ -17,7 +21,8 @@ class Home extends Component {
   render() {
     return (
       <StyledHome>
-        <ListTeasersContainer />
+        {/* <Link to="/projects" /> */}
+        <Signature />
       </StyledHome>
     );
   }

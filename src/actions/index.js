@@ -3,5 +3,5 @@ import uiActions from "./ui";
 
 export default {
   deviceActions,
-  uiActions,
+  uiActions
 };

@@ -9,9 +9,6 @@ const Bloc = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   text-align: center;
-  border-top: solid 1px ${p => p.theme.primary};
-  ${p => p.theme.scrollbar};
-  background: url("./assets/img/stripes.png") #fff repeat;
 `;
 
 export default Bloc;

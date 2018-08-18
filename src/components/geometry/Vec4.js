@@ -26,7 +26,9 @@ class Vec4 {
   }
 
   longueur() {
-    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
+    return Math.sqrt(
+      this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
+    );
   }
 
   // ////////////////// OPERATOR ///////////////////////
@@ -107,9 +109,15 @@ class Vec4 {
   multiplierMatrice(matrice) {
     const resultat = new Vec4();
     resultat.x =
-      matrice.d[0] * this.x + matrice.d[1] * this.y + matrice.d[2] * this.z + matrice.d[3] * this.w;
+      matrice.d[0] * this.x +
+      matrice.d[1] * this.y +
+      matrice.d[2] * this.z +
+      matrice.d[3] * this.w;
     resultat.y =
-      matrice.d[4] * this.x + matrice.d[5] * this.y + matrice.d[6] * this.z + matrice.d[7] * this.w;
+      matrice.d[4] * this.x +
+      matrice.d[5] * this.y +
+      matrice.d[6] * this.z +
+      matrice.d[7] * this.w;
     resultat.z =
       matrice.d[8] * this.x +
       matrice.d[9] * this.y +
@@ -155,7 +163,7 @@ class Vec4 {
       (vec42.x - this.x) * (vec42.x - this.x) +
         (vec42.y - this.y) * (vec42.y - this.y) +
         (vec42.z - this.z) * (vec42.z - this.z) +
-        (vec42.w - this.w) * (vec42.w - this.w),
+        (vec42.w - this.w) * (vec42.w - this.w)
     );
   }
 }

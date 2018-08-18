@@ -10,5 +10,5 @@ function content(state = initialState, action) {
 export default combineReducers({
   content,
   device,
-  ui,
+  ui
 });

@@ -113,7 +113,7 @@ class SocialLinks extends Component {
         items={items}
         in={this.props.in}
         // wrapperStyle={wrapperStyle}
-        mode="TRANSLATE-LEFT"
+        mode="TRANSLATE-RIGHT"
         motion={this.props.theme.motion}
       />
     );

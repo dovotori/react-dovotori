@@ -1,50 +1,53 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { CSSTransition } from "react-transition-group";
 
+const fadeIn = keyframes`
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+`;
+
+const fadeOut = keyframes`
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+`;
+
 const Styled = styled(CSSTransition)`
-  &.fade-appear {
-    opacity: 0.01;
-  }
+  ${p => {
+    switch (p.classNames) {
+      default:
+      case "fade":
+        return `
+          opacity: ${p.in ? 1 : 0};
 
-  &.fade-appear.fade-appear-active {
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-  }
+          &.fade-enter {
+          }
 
-  &.fade-enter {
-    opacity: 0.01;
-  }
+          &.fade-enter.fade-enter-active {
+            animation: ${fadeIn} ${p.timeout}ms ${p.timing} 1 0ms forwards;
+          }
 
-  &.fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-  }
+          &.fade-exit {
+          }
 
-  &.fade-exit {
-    opacity: 1;
-  }
-
-  &.fade-exit.fade-exit-active {
-    opacity: 0.01;
-    transition: opacity 800ms ease-in;
-  }
+          &.fade-exit.fade-exit-active {
+            animation: ${fadeOut} ${p.timeout}ms ${p.timing} 1 0ms forwards;
+          }
+        `;
+    }
+  }};
 `;
 
 class Transition extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { show: false };
-
-    setInterval(() => {
-      this.setState({ show: !this.state.show });
-    }, 5000);
-  }
   render() {
-    console.log(this.state.show);
     return (
-      <Styled in={this.state.show} timeout={1000} classNames="fade">
+      <Styled
+        in={this.props.show}
+        timeout={1000}
+        classNames="fade"
+        timing={this.props.timing}
+      >
         {this.props.children}
       </Styled>
     );
@@ -54,11 +57,18 @@ class Transition extends Component {
 if (process.env.NODE_ENV !== "production") {
   Transition.propTypes = {
     children: PropTypes.node,
+    show: PropTypes.bool.isRequired,
+    names: PropTypes.string,
+    timeout: PropTypes.number,
+    timing: PropTypes.string,
   };
 }
 
 Transition.defaultProps = {
   children: null,
+  names: "fade",
+  timeout: 300,
+  timing: "ease-out",
 };
 
 export default Transition;

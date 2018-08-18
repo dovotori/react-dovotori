@@ -1,8 +1,20 @@
 {
-  "extends": "eslint:recommended",
-  "plugins": ["prettier"],
+  "extends": [
+    "prettier",
+    "prettier/react",
+    "prettier/standard"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "classes": true
+    }
   },
   "env": {
     "es6": true,
@@ -10,8 +22,6 @@
     "browser": true
   },
   "rules": {
-    "prettier/prettier": "error",
-    "no-console": "off",
-    "linebreak-style": "off"
+    "prettier/prettier": "error"
   }
 }

@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TransitionMotion, spring } from 'react-motion';
-import styled from 'styled-components';
-import { withRouter, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { TransitionMotion, spring } from "react-motion";
+import styled from "styled-components";
+import { withRouter, Route } from "react-router-dom";
 
-import HomeContainer from '../containers/HomeContainer';
-import ViewContainer from '../containers/ViewContainer';
-import { motion } from '../themes/theme';
+import HomeContainer from "../containers/HomeContainer";
+import ViewContainer from "../containers/ViewContainer";
+import { motion } from "../themes/theme";
 
 const Wrap = styled.div.attrs({
-  className: 'wrap',
-}) `
+  className: "wrap",
+})`
   position: relative;
   width: 100%;
   // height: calc(100% - 105px);
   // bottom: 0;
-  background: url('./assets/img/stripes.png') #fff repeat;
+  background: url("./assets/img/stripes.png") #fff repeat;
   background-attachment: fixed;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 `;
 
 const AnimatedBloc = styled.div.attrs({
-  className: 'animated-bloc',
-}) `
+  className: "animated-bloc",
+})`
   // position: absolute;
   // top: 0;
   // left: 0;
@@ -48,17 +48,17 @@ class Routes extends Component {
 
   render() {
     const { pathname } = this.props.location;
-    const isHome = pathname === '/';
+    const isHome = pathname === "/";
     const items = [];
     if (isHome) {
       items.push({
-        key: 'home',
+        key: "home",
         component: <HomeContainer />,
       });
     } else {
       const { slug } = this.props.match.params;
       items.push({
-        key: 'view',
+        key: "view",
         component: <ViewContainer slug={slug} />,
       });
     }
@@ -78,7 +78,10 @@ class Routes extends Component {
         {interpolatedStyles => (
           <Wrap>
             {interpolatedStyles.map(config => (
-              <AnimatedBloc key={config.key} style={Routes.applyStyle(config.style)}>
+              <AnimatedBloc
+                key={config.key}
+                style={Routes.applyStyle(config.style)}
+              >
                 {config.data}
               </AnimatedBloc>
             ))}
@@ -89,7 +92,7 @@ class Routes extends Component {
   }
 }
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   Routes.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
