@@ -11,10 +11,10 @@ const Wrap = styled.div.attrs({
   className: "loader"
 })`
   position: absolute;
+  width: 60px;
+  height: 10px;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 10px;
   transform: translate3d(-50%, -50%, 0);
 `;
 
@@ -24,14 +24,13 @@ const Style = styled.div`
   left: 0;
   width: 10px;
   height: 10px;
-  // background-color: ${p => p.theme.primary};
   border: solid 1px ${p => p.theme.primary};
   animation: ${loading} 1s linear infinite;
   animation-delay: ${p => p.delay}s;
 `;
 
-const Loader = () => (
-  <Wrap>
+const Loader = props => (
+  <Wrap className={props.className}>
     <Style delay={0} />
     <Style delay={0.5} />
   </Wrap>

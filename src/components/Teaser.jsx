@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
 import LazyImage from "./LazyImage";
-import Overline from "./Overline";
+import { getTeaserPath } from "../utils";
+import Loader from "./Loader";
 
-const OFFSET_X = 50;
-const IMG_WIDTH = 400;
+const fromLeft = keyframes`
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+`;
+
+const fromRight = keyframes`
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+`;
 
 const LINK = styled(Link).attrs({
   className: "teaser"
@@ -15,151 +23,81 @@ const LINK = styled(Link).attrs({
   position: relative;
   display: block;
   text-decoration: none;
-  margin: 0 0 30px;
+  padding: 5rem 0;
   width: 100%;
-  max-width: ${IMG_WIDTH}px;
-  margin: 0 auto;
+  text-align: center;
 `;
 
-const Banner = styled.div`
-  position: relative;
-  overflow: hidden;
-  height: 100px;
-  width: 100%;
-  margin: 0 auto;
-
-  ${p => p.theme.media.mobile`
-    width: 100%;
-    height: auto;
-  `};
-`;
-
-const Back = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: ${p => (p.isprimary ? p.theme.gradient : p.theme.gradient2)};
+const WrapImage = styled.div`
+  animation: ${p => (!p.isLeft ? fromLeft : fromRight)} 200ms
+    ${p => p.theme.elastic} forwards;
+  background: ${p => p.theme.gradient};
 `;
 
 const StyledLazyImage = styled(LazyImage)`
+  max-width: 100%;
+  width: 400px;
+  height: auto;
+  min-height: 150px;
   img {
-    display: inline-block;
-    vertical-align: middle;
-    transition: transform 0.3s ${p => p.theme.elastic2},
-      opacity 0.2s ${p => p.theme.elastic2};
-    opacity: 0.8;
-
-    ${p => p.theme.media.mobile`
-    width: 100%;
-    height: auto;
-  `};
+    display: block;
   }
 `;
 
-const Infos = styled.div.attrs({
-  className: "infos"
-})`
-  position: relative;
-  z-index: 2;
-  max-width: ${IMG_WIDTH}px;
-  margin: 0 auto;
-  text-align: ${p => (p.idx % 2 ? "right" : "left")};
-  padding-bottom: 30px;
+const StyledLoader = styled(Loader)``;
+
+const Infos = styled.div`
+  position: absolute;
+  top: 50%;
+  right: ${p => (p.isLeft ? "50%" : "auto")};
+  left: ${p => (p.isLeft ? "auto" : "50%")};
+  transform: translate3d(0, -50%, 0);
 `;
 
-const Cross = styled.div`
-  position: relative;
-  max-width: ${IMG_WIDTH}px;
-  width: 100%;
-  margin: 0 auto;
-  z-index: 3;
-
-  div {
-    position: absolute;
-    ${p => (p.idx % 2 === 0 ? "left: 0;" : "right: 0;")} top: 0;
-
-    &::after,
-    &::before {
-      position: absolute;
-      content: "";
-      background-color: ${p => p.theme.light};
-    }
-
-    &::after {
-      width: 1px;
-      height: 40px;
-      top: -20px;
-      left: 0;
-    }
-
-    &::before {
-      width: 40px;
-      height: 1px;
-      left: -20px;
-      top: 0;
-    }
-  }
-
-  ${p => p.theme.media.mobile`
-    display: none;
-  `};
+const Text = styled.div`
+  position: absolute;
+  top: 30%;
+  right: ${p => (p.isLeft ? "90%" : "auto")};
+  left: ${p => (p.isLeft ? "auto" : "90%")};
+  text-align: ${p => (p.isLeft ? "right" : "left")};
+  animation: ${p => (!p.isLeft ? fromLeft : fromRight)} 400ms
+    ${p => p.theme.elastic} forwards;
 `;
 
-const H5 = styled.h5`
-  position: relative;
-  z-index: 1;
-
-  span {
-    display: inline-block;
-    padding: 4px 0 4px 0.4em;
-    font-size: 1.1em;
-    text-transform: lowercase;
-    letter-spacing: 0.4em;
-    font-weight: 500;
-    background-color: #fff;
-    color: ${p => p.theme.mild};
-  }
+const Title = styled.h3`
+  display: inline-block;
+  padding: 0.4rem 0.2rem 0.4rem 0.6rem;
+  text-transform: lowercase;
+  letter-spacing: 0.4em;
+  background-color: #fff;
+  font-weight: normal;
+  margin: 0;
+  color: ${p => p.theme.mild};
+  white-space: nowrap;
 `;
 
 const Date = styled.p`
-  padding: 0;
-  line-height: 0.8em;
-
-  span {
-    background-color: ${p =>
-      p.isprimary ? p.theme.primary : p.theme.secondary};
-    color: ${p => p.theme.dark};
-  }
-`;
-
-const Number = styled.p`
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-  font-family: ${p => p.theme.font2};
-  text-align: right;
+  display: inline-block;
+  background-color: ${p => (p.isLeft ? p.theme.primary : p.theme.secondary)};
   color: ${p => p.theme.dark};
-  font-size: 0.7em;
-  padding: 2px 0;
-  transform: translateX(230px);
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  margin: 0;
+  padding: 0.4rem 0.2rem 0.4rem 0.4rem;
+  font-family: monospace;
 `;
 
-const BackLine = styled.div.attrs({
-  className: "back-line"
-})`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
+const Index = styled.span`
+  display: inline-block;
+  color: ${p => p.theme.primary};
+  font-size: 3.5rem;
   transform: ${p =>
-    p.hover ? "translateY(-50%) scaleY(1)" : "translateY(-50%) scaleY(0)"};
-  transition: transform 0.5s ${p => p.theme.elastic2},
-    opacity 0.5s ${p => p.theme.elastic2};
+    p.hover ? (p.isLeft ? "scale(1.5)" : "scale(1.5)") : "none"};
+  letter-spacing: 0.5rem;
+  transition: transform 200ms ${p => p.theme.elastic};
+  text-shadow: 0.2rem 0.2rem 0 ${p => p.theme.dark};
+  font-family: monospace;
+  font-weight: 100;
 `;
 
 class Teaser extends Component {
@@ -175,16 +113,16 @@ class Teaser extends Component {
   }
 
   onMouseEnter() {
-    this.setState({ hover: true });
+    this.setState(() => ({ hover: true }));
   }
 
   onMouseLeave() {
-    this.setState({ hover: false });
+    this.setState(() => ({ hover: false }));
   }
 
   render() {
-    const { entry, className, idx, noHover } = this.props;
-    const isprimary = entry.category === 0;
+    const { entry, className, idx } = this.props;
+    const isLeft = entry.category === 1;
     return (
       <LINK
         className={className}
@@ -194,58 +132,32 @@ class Teaser extends Component {
         onFocus={this.onMouseEnter}
         onBlur={this.onMouseLeave}
       >
-        <Banner hover={this.state.hover}>
-          <Back isprimary={isprimary} />
-          <StyledLazyImage
-            src={`./assets/teasers/${entry.slug}.png`}
-            hover={this.state.hover}
-            noHover={noHover}
-            alt={entry.title}
-            waitingHeight={100}
-          />
-        </Banner>
-        <Infos noHover={noHover} idx={idx}>
-          <H5 hover={this.state.hover} isprimary={isprimary} noHover={noHover}>
-            <span>{entry.title}</span>
-          </H5>
-          {/* <Cross idx={idx}>
-            <div />
-          </Cross> */}
-          <Date
-            hover={this.state.hover}
-            isprimary={isprimary}
-            noHover={noHover}
-          >
-            <Overline>{entry.date}</Overline>
-          </Date>
-        </Infos>
+        {this.state.hover && (
+          <Infos isLeft={isLeft}>
+            <WrapImage isLeft={isLeft}>
+              <StyledLazyImage
+                src={getTeaserPath(entry.slug)}
+                alt={entry.title}
+                width={400}
+                height={150}
+                withGlitch
+              >
+                <StyledLoader />
+              </StyledLazyImage>
+            </WrapImage>
+            <Text isLeft={isLeft}>
+              <Title isLeft={isLeft}>{entry.title}</Title>
+              <br />
+              <Date isLeft={isLeft}>{entry.date}</Date>
+            </Text>
+          </Infos>
+        )}
+        <Index isLeft={isLeft} hover={this.state.hover}>
+          {idx < 10 ? `0${idx}` : idx}
+        </Index>
       </LINK>
     );
   }
 }
-
-if (process.env.NODE_ENV !== "production") {
-  Teaser.propTypes = {
-    className: PropTypes.string,
-    entry: PropTypes.shape({
-      id: PropTypes.number,
-      slug: PropTypes.string,
-      title: PropTypes.string,
-      category: PropTypes.number,
-      tags: PropTypes.array,
-      date: PropTypes.number,
-      description: PropTypes.string
-    }),
-    idx: PropTypes.number,
-    noHover: PropTypes.bool
-  };
-}
-
-Teaser.defaultProps = {
-  className: "",
-  entry: {},
-  idx: 0,
-  noHover: false
-};
 
 export default Teaser;

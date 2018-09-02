@@ -16,8 +16,8 @@ export default {
   light: "#bbb",
   gradient: "linear-gradient(to right, #006666, #66ffcc)",
   gradient2: "linear-gradient(to right, #660000, #ffb366)",
-  elastic: "cubic-bezier(0.64, 0.57, 0.67, 1.53)",
-  elastic2: "cubic-bezier(0.860, 0.000, 0.070, 1.000)",
+  elastic2: "cubic-bezier(.75,-0.5,0,1.75)",
+  elastic1: "cubic-bezier(0.860, 0.000, 0.070, 1.000)",
   scrollbar: css`
     ::-webkit-scrollbar {
       width: 4px;

@@ -1,14 +1,16 @@
-import styled from "styled-components";
+import React from "react";
 
-const Bloc = styled.div`
-  position: relative;
-  z-index: ${p => p.theme.zindex.content};
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-`;
+const Bloc = props => (
+  <div
+    className={props.className}
+    ref={d => {
+      if (d === null) {
+        window.scrollTo(0, 0);
+      }
+    }}
+  >
+    {props.children}
+  </div>
+);
 
 export default Bloc;

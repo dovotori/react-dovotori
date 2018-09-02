@@ -4,122 +4,112 @@ import styled, { keyframes } from "styled-components";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Switch, withRouter } from "react-router-dom";
 
-const translateIn = keyframes`
-0% { transform: translateX(-100%); }
-100% { transform: none; }
+const TIME = 300;
+const OFFSET = 10;
+
+const In = keyframes`
+	0% { opacity: 0; transform: translate3d(${OFFSET * 2}px, ${OFFSET}px, 0); }
+	10% { transform: translate3d(-${OFFSET}px, -${OFFSET * 2}px, 0); }
+	20% { transform: translate3d(-${OFFSET * 3}px, 0px, 0); }
+	30% { transform: translate3d(0px, ${OFFSET * 2}px, 0); }
+	40% { transform: translate3d(${OFFSET}px, -${OFFSET}px, 0); }
+	50% { transform: translate3d(-${OFFSET}px, ${OFFSET * 2}px, 0); }
+	60% { transform: translate3d(-${OFFSET * 3}px, ${OFFSET}px, 0); }
+	70% { transform: translate3d(${OFFSET * 2}px, ${OFFSET}px, 0); }
+	80% { transform: translate3d(-${OFFSET}px, -${OFFSET}px, 0); }
+	90% { transform: translate3d(${OFFSET * 2}px, ${OFFSET * 2}px, 0); }
+	100% { opacity: 1; transform: translate3d(${OFFSET}px, -${OFFSET * 2}px, 0); }
 `;
 
-const translateOut = keyframes`
-0% { transform: none; }
-100% { transform: translateX(-100%); }
+const glitchHorizontal = keyframes`
+	0% {
+    top: 2%;
+    height: 3%;
+	}
+	10% {
+    top: 15%;
+    height: 1%;
+	}
+	20% {
+    top: 10%;
+    height: 10%;
+	}
+	30% {
+    top: 1%;
+    height: 1%;
+	}
+	40% {
+    top: 33%;
+    height: 33%;
+	}
+	50% {
+    top: 44%;
+    height: 16%;
+	}
+	60% {
+    top: 50%;
+    height: 30%;
+	}
+	70% {
+    top: 70%;
+    height: 20%;
+	}
+	80% {
+    top: 80%;
+    height: 20%;
+	}
+	90% {
+    top: 50%;
+    height: 5%;
+	}
+	100% {
+    top: 70%;
+    height: 10%;
+	}
 `;
 
-const Styled = styled(TransitionGroup)`
-  position: relative;
-  overflow: visible;
-  width: 100%;
-  height: 100%;
-
-  ${p => {
-    switch (p.names) {
-      default:
-      case "left":
-        return `
-        .left-enter, .left-exit {
-          overflow: hidden;
-        }
-        .left-enter, .left-exit {
-          .anim-content {
-            transform-origin: 50% 50%;
-            transform: translateX(-100%);
-            transition: transform ${p.timeout}ms ${p.timing};
-          }
-        }
-        .left-enter.left-enter-active {
-          .anim-content {
-            transform: none;
-          }
-        }
-        .left-exit.left-exit-active {
-          .anim-content {
-            transform: translateX(-100%);
-          }
-        }
-        `;
-      case "translate":
-        return `
-        .translate-enter, .translate-exit {
-          position: absolute;
-          top: 0;
-          left: 0;
-          overflow: visible;
-          height: 100%;
-          width: 100%;
-
-          .wrap-content {
-            overflow: hidden;
-          }
-        }
-        .translate-enter {
-          .anim-content {
-            transform-origin: 0 0;
-            transform: translateX(-100%);
-          }
-        }
-        .translate-enter.translate-enter-active {
-          .anim-content {
-            animation: ${translateIn} ${p.timeout / 2}ms ${
-          p.timing
-        } 1 ${p.timeout / 2}ms forwards;
-          }
-        }
-
-        .translate-exit {
-          .anim-content {
-            transform-origin: 0 0;
-            transform: none;
-          }
-        }
-
-        .translate-exit.translate-exit-active {
-          .anim-content {
-            animation: ${translateOut} ${p.timeout / 2}ms ${
-          p.timing
-        } 1 0ms forwards;
-          }
-        }
-        `;
+const StyledTransitionGroup = styled(TransitionGroup)`
+  .fade-enter-active,
+  .fade-exit-active {
+    @supports (
+      (clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%)) or
+        (-webkit-clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%))
+    ) {
+      &::after {
+        content: "";
+        position: fixed;
+        top: 2%;
+        left: 0;
+        width: 100%;
+        height: 3%;
+        background-color: ${p => p.theme.primary};
+        animation: ${glitchHorizontal} ${TIME}ms infinite linear alternate;
+        background-blend-mode: multiply;
+      }
     }
-  }};
+  }
+  .fade-enter-active {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    animation: ${In} ${TIME}ms linear forwards;
+  }
+  .fade-exit-active {
+    animation: ${In} ${TIME}ms linear forwards reverse;
+  }
 `;
 
-class TransitionRoute extends Component {
-  render() {
-    const { location, names, timeout, timing } = this.props;
-    return (
-      <Styled names={names} timeout={timeout} timing={timing}>
-        <CSSTransition key={location.key} classNames={names} timeout={timeout}>
-          <Switch location={location}>{this.props.children}</Switch>
-        </CSSTransition>
-      </Styled>
-    );
-  }
-}
-
-if (process.env.NODE_ENV !== "production") {
-  TransitionRoute.propTypes = {
-    children: PropTypes.node,
-    names: PropTypes.string,
-    timeout: PropTypes.number,
-    timing: PropTypes.string
-  };
-}
-
-TransitionRoute.defaultProps = {
-  children: null,
-  names: "left",
-  timeout: 300,
-  timing: "ease-out"
+const TransitionRoute = props => {
+  const { location, names, timeout, timing, children } = props;
+  return (
+    <StyledTransitionGroup names={names} timeout={timeout} timing={timing}>
+      <CSSTransition key={location.key} timeout={TIME} classNames="fade">
+        <Switch location={location}>{children}</Switch>
+      </CSSTransition>
+    </StyledTransitionGroup>
+  );
 };
 
 export default withRouter(TransitionRoute);

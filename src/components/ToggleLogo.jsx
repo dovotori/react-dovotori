@@ -5,17 +5,11 @@ import styled from "styled-components";
 import Svg from "./Svg";
 import SvgAnimation from "./SvgAnimation";
 
-const Button = styled.button.attrs({
-  className: "toggle-logo"
-})`
-  position: fixed;
-  z-index: ${p => p.theme.zindex.logo};
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
+const Button = styled.button`
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: #fff;
+  background: ${p => p.theme.dark};
   transition: box-shadow 300ms ease-out;
 
   &:focus {
@@ -70,9 +64,12 @@ class ToggleLogo extends Component {
   }
 
   render() {
-    const { isMenuOpened } = this.props;
+    const { isMenuOpened, className } = this.props;
     return (
-      <Button onClick={isMenuOpened ? this.close : this.open}>
+      <Button
+        className={className}
+        onClick={isMenuOpened ? this.close : this.open}
+      >
         <CrossIcon useid={"cross"} in={isMenuOpened} />
         <LogoIcon useid={"logo"} in={!isMenuOpened} />
       </Button>

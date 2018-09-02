@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Bloc from "./Bloc";
-import Signature from "./Signature2";
+import Signature from "./Signature";
+import TeasersListContainer from "../containers/TeasersListContainer";
 
-const StyledHome = styled(Bloc).attrs({
-  className: "home"
-})`
+const StyledHome = styled(Bloc)`
   margin: 0 auto;
   padding: 10% 0;
 `;
@@ -21,8 +20,8 @@ class Home extends Component {
   render() {
     return (
       <StyledHome>
-        {/* <Link to="/projects" /> */}
         <Signature />
+        <TeasersListContainer />
       </StyledHome>
     );
   }

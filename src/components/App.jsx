@@ -1,23 +1,12 @@
-import React, { Component } from "react";
-import { injectGlobal, ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import styled from "styled-components";
+import React, { Component, Fragment } from "react";
+import styled, { injectGlobal, ThemeProvider } from "styled-components";
 
 import theme from "../themes/theme";
-import Routes from "./Routes3";
+import RoutesContainer from "../containers/RoutesContainer";
 import commonCss from "../themes/commonCss";
 import HeaderContainer from "../containers/HeaderContainer";
 import MenuContainer from "../containers/MenuContainer";
-import LogoContainer from "../containers/LogoContainer";
 import Footer from "./Footer";
-// import AnimatedBackground from "./AnimatedBackground";
-// import Signature from "./Signature";
-import SvgDisplayer from "./SvgDisplayer";
-
-const Wrap = styled.div`
-  height: 100%;
-  ${p => p.theme.scrollbar};
-`;
 
 class App extends Component {
   componentWillMount() {
@@ -34,23 +23,13 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Wrap>
-          <SvgDisplayer />
-          <LogoContainer />
+        <Fragment>
           <MenuContainer />
-          <Router>
-            <Routes />
-          </Router>
-        </Wrap>
+          <RoutesContainer />
+        </Fragment>
       </ThemeProvider>
     );
   }
 }
-
-if (process.env.NODE_ENV !== "production") {
-  App.propTypes = {};
-}
-
-App.defaultProps = {};
 
 export default App;

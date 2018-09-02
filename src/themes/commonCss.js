@@ -28,8 +28,10 @@ button:focus {
 
 body {
   font-size: 16px;
-  font-family: 'White Rabbit', sans-serif;
+  font-family: sans-serif;
+  background-color: ${theme.dark};
   ${theme.scrollbar}
+  height: 100%;
 }
 
 @font-face {

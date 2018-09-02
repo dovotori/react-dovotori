@@ -1,22 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import Loader from "./Loader";
-
-const WrapTexte = styled.div``;
+import GlitchImage from "./GlitchImage";
 
 const Wrap = styled.div`
   position: relative;
-  width: 100%;
-  height: ${p => (p.loaded ? "auto" : `${p.waitingHeight}px`)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 `;
-
 const IMG = styled.img`
   opacity: ${p => (p.loaded ? 1 : 0)};
+  visibility: ${p => (p.loaded ? "visible" : "hidden")};
   transition: opacity 300ms ease-out;
 `;
 
@@ -33,39 +26,31 @@ class LazyImage extends Component {
 
   render() {
     const { loaded } = this.state;
-    const { className, waitingHeight, alt } = this.props;
+    const {
+      className,
+      waitingHeight,
+      withGlitch,
+      alt,
+      width,
+      height,
+      children,
+      src
+    } = this.props;
     return (
-      <Wrap
-        className={className}
-        loaded={loaded}
-        waitingHeight={waitingHeight}
-        alt={alt}
-      >
+      <Wrap className={className}>
         <IMG
-          alt="."
-          src={this.props.src}
+          alt={alt}
+          src={src}
           onLoad={this.handleLoad}
           loaded={loaded}
+          width={width || "auto"}
+          height={height || "auto"}
         />
-        {!loaded && <Loader />}
+        {loaded && withGlitch && <GlitchImage src={src} />}
+        {!loaded && children}
       </Wrap>
     );
   }
 }
-
-if (process.env.NODE_ENV !== "production") {
-  LazyImage.propTypes = {
-    className: PropTypes.string,
-    alt: PropTypes.string,
-    src: PropTypes.string.isRequired,
-    waitingHeight: PropTypes.number
-  };
-}
-
-LazyImage.defaultProps = {
-  alt: "",
-  className: "",
-  waitingHeight: 400
-};
 
 export default LazyImage;

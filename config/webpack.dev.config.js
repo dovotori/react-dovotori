@@ -11,11 +11,11 @@ module.exports = {
     "webpack/hot/only-dev-server",
     "babel-polyfill",
     `webpack-dev-server/client?http://${host}:${port}`,
-    "./src/index",
+    "./src/index"
   ],
   output: {
     filename: "dovotori-main.js",
-    publicPath: "/",
+    publicPath: "/"
   },
   devtool: "eval",
   module: {
@@ -23,29 +23,29 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: "babel-loader"
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      }
+        use: ["@svgr/webpack"]
+      },
       {
         test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url-loader?name=/img/[name].[ext]?[hash]?limit=100000',
-      },
-    ],
+        loader: "url-loader?name=/img/[name].[ext]?[hash]?limit=100000"
+      }
+    ]
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx"]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify("developement"),
-      },
-    }),
+        NODE_ENV: JSON.stringify("developement")
+      }
+    })
   ],
   devServer: {
     host,
@@ -53,6 +53,6 @@ module.exports = {
     hot: true,
     inline: true,
     port,
-    publicPath: "/",
-  },
+    publicPath: "/"
+  }
 };

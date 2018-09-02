@@ -2,45 +2,36 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import Bloc from "./Bloc";
 import LazyImage from "./LazyImage";
-import Overline from "./Overline";
+import Loader from "./Loader";
+import ButtonBack from "./ButtonBack";
+import Bloc from "./Bloc";
+import { getProjectImagePath } from "../utils";
 
 const TEXT_WIDTH = 700;
 
-const StyledProject = styled(Bloc).attrs({
-  className: "project"
-})`
+const StyledProject = styled(Bloc)`
   padding: 10% 0;
 `;
 
-const WrapContent = styled.div.attrs({
-  className: "wrap-content"
-})`
+const WrapContent = styled.div`
   margin: 0 auto;
   max-width: ${p => p.theme.breakpoint.tablet}px;
 `;
 
 const WrapTexte = styled.div``;
 
-const Hidden = styled.div`
-  position: relative;
-  overflow: hidden;
-  z-index: 0;
-`;
-
-const H1 = styled.h1.attrs({
-  className: "slide-bottom"
-})`
+const Title = styled.h1`
   text-align: left;
-  font-size: 3em;
+  font-size: 5em;
   font-weight: 100;
   color: #fff;
-  text-shadow: 2px -1px 0 ${p => (p.isprimary ? p.theme.primaryDark : p.theme.secondaryDark)};
+  text-shadow: 0.2rem 0.2rem 0
+    ${p => (p.isprimary ? p.theme.primaryDark : p.theme.secondaryDark)};
   overflow-wrap: break-word;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  margin: 0;
+  margin: 1rem 0;
   padding: 0;
 
   ${p => p.theme.media.tablet`
@@ -48,20 +39,13 @@ const H1 = styled.h1.attrs({
   `};
 `;
 
-const Description = styled.div.attrs({
-  className: "description"
-})`
+const Description = styled.div`
   text-align: left;
   font-size: 1em;
   color: ${p => p.theme.dark};
   width: 100%;
-  margin: 0 auto 10px;
-  line-height: 1.6;
-  transform-origin: center top;
-`;
-
-const Text = styled.p`
-  width: 100%;
+  margin: 1rem 0;
+  line-height: 1.4;
   padding: 20px;
   background-color: #fff;
   max-width: ${TEXT_WIDTH}px;
@@ -71,9 +55,7 @@ const Text = styled.p`
   `};
 `;
 
-const ImagesList = styled.div.attrs({
-  className: "images-list"
-})`
+const ImagesList = styled.div`
   margin: 0 auto;
   ${p => p.theme.scrollbar} img {
     display: block;
@@ -90,28 +72,25 @@ const ImagesList = styled.div.attrs({
   `};
 `;
 
-const Images = styled.div.attrs({
-  className: "images"
-})``;
+const Images = styled.div``;
 
 const StyledLazyImage = styled(LazyImage)`
-  margin-bottom: 10px;
-  background: ${p => p.theme.mild};
+  margin: 10px 0;
+  min-height: 100px;
 `;
 
-const Date = styled.p.attrs({
-  className: "date"
-})`
-  position: relative;
-  z-index: 1;
-  text-align: left;
+const StyledLoader = styled(Loader)``;
 
-  span {
-    display: inline-block;
-    background-color: ${p =>
-      p.isprimary ? p.theme.primary : p.theme.secondary};
-    color: ${p => p.theme.dark};
-  }
+const Date = styled.p`
+  text-align: left;
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  margin: 0;
+  padding: 0.4rem 0.2rem 0.4rem 0.4rem;
+  background-color: ${p => (p.isprimary ? p.theme.primary : p.theme.secondary)};
+  color: ${p => p.theme.dark};
+  font-family: monospace;
 `;
 
 class Project extends Component {
@@ -132,35 +111,36 @@ class Project extends Component {
     const isprimary = category === 0;
 
     return (
-      <StyledProject>
+      <StyledProject
+        innerRef={d => {
+          if (d === null) {
+            window.scrollTo(0, 0);
+          }
+        }}
+      >
         <WrapContent>
-          <div className="anim-content">
-            <WrapTexte>
-              <Hidden isprimary={isprimary}>
-                <H1 isprimary={isprimary}>{title}</H1>
-              </Hidden>
-              <Date isprimary={isprimary}>
-                <Overline>{date}</Overline>
-              </Date>
-              <Description>
-                <Text>{description}</Text>
-              </Description>
-            </WrapTexte>
-            <ImagesList>
-              {images && (
-                <Images>
-                  {Array(images)
-                    .fill()
-                    .map((_, idx) => (
-                      <StyledLazyImage
-                        src={`./assets/img/${slug}/${slug}-${idx}.jpg`}
-                        key={`image-${slug}-${idx}`}
-                      />
-                    ))}
-                </Images>
-              )}
-            </ImagesList>
-          </div>
+          <WrapTexte>
+            <Title isprimary={isprimary}>{title}</Title>
+            <Date isprimary={isprimary}>{date}</Date>
+            <Description>{description}</Description>
+          </WrapTexte>
+          <ImagesList>
+            {images && (
+              <Images>
+                {Array(images)
+                  .fill()
+                  .map((_, idx) => (
+                    <StyledLazyImage
+                      src={getProjectImagePath(slug, idx)}
+                      key={`image-${slug}-${idx}`}
+                    >
+                      <Loader />
+                    </StyledLazyImage>
+                  ))}
+              </Images>
+            )}
+          </ImagesList>
+          <ButtonBack />
         </WrapContent>
       </StyledProject>
     );

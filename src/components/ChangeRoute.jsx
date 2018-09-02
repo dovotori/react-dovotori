@@ -1,11 +1,9 @@
 import { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-export default class extends Component {
+class ChangeRoute extends Component {
   componentWillUpdate(newProps) {
     if (newProps.location.pathname !== this.props.location.pathname) {
-      window.setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 500);
     }
   }
 
@@ -13,3 +11,5 @@ export default class extends Component {
     return null;
   }
 }
+
+export default withRouter(ChangeRoute);

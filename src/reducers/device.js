@@ -1,7 +1,8 @@
 import { DEVICE_IS_TOUCH } from "../constants/actionsTypes";
+import { isTouchDevice } from "../utils";
 
 const initialState = {
-  isTouch: false
+  isTouch: isTouchDevice()
 };
 
 export default function device(state = initialState, action) {
