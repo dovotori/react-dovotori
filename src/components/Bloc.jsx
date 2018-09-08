@@ -1,16 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Bloc = props => (
-  <div
-    className={props.className}
-    ref={d => {
-      if (d === null) {
-        window.scrollTo(0, 0);
-      }
-    }}
-  >
-    {props.children}
-  </div>
-);
+class Bloc extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+  render() {
+    return (
+      <div
+        className={this.props.className}
+        ref={d => {
+          if (d === null) {
+            window.scrollTo(0, 0);
+          }
+        }}
+      >
+        {this.props.children}
+      </div>
+    );
+  }
+}
 
 export default Bloc;

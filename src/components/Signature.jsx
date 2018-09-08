@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 import Logo from "../../assets/svg/head.svg";
+import Body from "../../assets/svg/body.svg";
 import C from "../../assets/svg/C.svg";
 import O from "../../assets/svg/O.svg";
 import D from "../../assets/svg/D.svg";
@@ -74,25 +76,69 @@ const StyledN = styled(N)`
   ${commonLetter};
 `;
 
-const StyledLogo = styled(Logo)`
+const StyledLink = styled(Link)`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  fill: ${p => p.theme.mild};
   width: 100px;
   height: 100px;
+  transform: ${p =>
+    p.hover
+      ? "translate3d(-50%, -50%, 0) scale(1.2)"
+      : "translate3d(-50%, -50%, 0)"};
+  transition: transform 300ms ${p => p.theme.elastic2};
+`;
+
+const StyledLogo = styled(Logo)`
+  stroke: ${p => p.theme.mild};
+  fill: ${p => (p.hover ? p.theme.mild : "none")};
+  stroke-width: 0.1;
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledBody = styled(Body)`
+  stroke: ${p => p.theme.mild};
+  fill: ${p => p.theme.mild};
+  stroke-width: 0.1;
+  overflow: visible;
+  width: 200px;
+  height: auto;
 `;
 
 class Signature extends Component {
   constructor(props) {
     super(props);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.state = { hover: false };
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    return this.state.hover !== newState.hover;
+  }
+
+  onMouseEnter() {
+    this.setState(() => ({ hover: true }));
+  }
+
+  onMouseLeave() {
+    this.setState(() => ({ hover: false }));
   }
 
   render() {
     return (
       <Styled>
-        <StyledLogo />
+        <StyledLink
+          to="/about"
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          hover={this.state.hover ? 1 : 0}
+        >
+          <StyledLogo hover={this.state.hover ? 1 : 0} />
+          {this.state.hover && <StyledBody />}
+        </StyledLink>
         <WrapCode>
           <StyledC />
           <StyledO />

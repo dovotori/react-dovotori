@@ -52,6 +52,7 @@ const Infos = styled.div`
   right: ${p => (p.isLeft ? "50%" : "auto")};
   left: ${p => (p.isLeft ? "auto" : "50%")};
   transform: translate3d(0, -50%, 0);
+  background: rgba(0, 0, 0, 0.3);
 `;
 
 const Text = styled.div`

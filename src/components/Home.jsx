@@ -9,7 +9,7 @@ import TeasersListContainer from "../containers/TeasersListContainer";
 
 const StyledHome = styled(Bloc)`
   margin: 0 auto;
-  padding: 10% 0;
+  padding: 60vh 0;
 `;
 
 class Home extends Component {

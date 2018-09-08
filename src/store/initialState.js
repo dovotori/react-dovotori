@@ -178,7 +178,40 @@ const initialState = {
     //   sources: '',
     //   context: '',
     // },
-  ]
+  ],
+  about: {
+    formation: [
+      {
+        date: 2013,
+        text:
+          "Diplôme national d’expression plastique avec félicitations du jury  à l’école supérieure d’art et design de Saint-Étienne section design "
+      },
+      {
+        date: 2013,
+        text:
+          "Exposition lors de la biennale internationale du design  de Saint-Étienne avec le projet Barasson au Fil "
+      },
+      {
+        date: 2012,
+        text:
+          "Semestre dans le département Multimedia / Réalité virtuelle  de l’école d’art Burg Giebichenstein à Halle en Allemagne "
+      },
+      {
+        date: 2011,
+        text:
+          "Diplôme national d’arts plastiques avec mention à l’école supérieure d’art et design de Saint-Étienne section design "
+      },
+      {
+        date: 2009,
+        text:
+          "Diplôme de graphisme / multimédia à LISAA Paris l’institut supérieur des arts appliqués"
+      },
+      {
+        date: 2006,
+        text: "Baccalauréat général série scientifique"
+      }
+    ]
+  }
 };
 
 export default initialState;

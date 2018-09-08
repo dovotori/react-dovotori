@@ -111,13 +111,7 @@ class Project extends Component {
     const isprimary = category === 0;
 
     return (
-      <StyledProject
-        innerRef={d => {
-          if (d === null) {
-            window.scrollTo(0, 0);
-          }
-        }}
-      >
+      <StyledProject>
         <WrapContent>
           <WrapTexte>
             <Title isprimary={isprimary}>{title}</Title>

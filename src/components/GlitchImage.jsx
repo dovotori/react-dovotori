@@ -6,39 +6,43 @@ const glitchHorizontal = keyframes`
 		-webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
 		clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
 	}
-	10% {
+	50% { 
+		-webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+		clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+	}
+	55% {
 		-webkit-clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
 		clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
 	}
-	20% {
+	60% {
 		-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
 		clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
 	}
-	30% {
+	65% {
 		-webkit-clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
 		clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
 	}
-	40% {
+	70% {
 		-webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
 		clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
 	}
-	50% {
+	75% {
 		-webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
 		clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
 	}
-	60% {
+	80% {
 		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
 		clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
 	}
-	70% {
+	85% {
 		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
 		clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
 	}
-	80% {
+	90% {
 		-webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
 		clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
 	}
-	90% {
+	95% {
 		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
 		clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
 	}
@@ -49,13 +53,13 @@ const glitchHorizontal = keyframes`
 `;
 
 const glitchFlash = keyframes`
-  0% { 
-		opacity: 0.2; 
-		transform: translate3d(40px, 40px, 0);
+  50% { 
+		opacity: 0.5; 
+		transform: translate3d(-10%, -10%, 0);
 	}
-	33%, 100% { 
+	0%, 60%, 100% { 
 		opacity: 0;
-		transform: translate3d(0,0,0);
+		transform: none;
 	}
 `;
 
@@ -74,15 +78,25 @@ const Glitch = styled.div`
     background: url(${p => p.src}) no-repeat 50% 0;
     background-size: cover;
     background-blend-mode: multiply;
+    transform: translate3d(40px, 0, 0);
+    animation: ${glitchHorizontal} 1s infinite linear alternate;
+  }
+`;
 
-    &:nth-child(1) {
-      transform: translate3d(40px, 0, 0);
-      animation: ${glitchHorizontal} 1s infinite linear alternate;
-    }
-
-    &:nth-child(2) {
-      animation: ${glitchFlash} 0.5s steps(1, end) infinite;
-    }
+const GlitchBlink = styled.div`
+  @supports (
+    (clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%)) or
+      (-webkit-clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%))
+  ) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 110%;
+    background: url(${p => p.src}) no-repeat 50% 0;
+    background-size: cover;
+    background-blend-mode: multiply;
+    animation: ${glitchFlash} 2s steps(1, end) infinite;
   }
 `;
 
@@ -92,7 +106,7 @@ class GlitchImage extends Component {
     return (
       <Wrap className={className}>
         <Glitch src={src} />
-        <Glitch src={src} />
+        <GlitchBlink src={src} />
       </Wrap>
     );
   }
